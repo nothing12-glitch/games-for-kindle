@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шахи</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #fff; }
+        h1 { font-size: 28px; }
+        #board { display: grid; grid-template-columns: repeat(8, 45px); gap: 0; max-width: 360px; margin: 20px auto; border: 3px solid #000; }
+        .square { width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; }
+        .square.light { background: #fff; }
+        .square.dark { background: #ccc; }
+        .square.selected { background: #ffff00; }
+        .square.valid { background: #90EE90; }
+        #status { font-size: 20px; margin: 20px 0; }
+        #new-game { padding: 15px 30px; font-size: 20px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; margin: 10px; }
+        #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Шахи</h1>
+    <p>Натисніть на фігуру, потім на куди перемістити</p>
+    
+    <div id="status">Хід білих</div>
+    <div id="board"></div>
+    
+    <button id="new-game" onclick="initGame()">Нова гра</button>
+    <br>
+    <a href="index.html" id="back-btn">До меню</a>
+
+    <script>
+        const pieces = {
+            'R': '♜', 'N': '♞', 'B': '♝', 'Q': '♛', 'K': '♚', 'P': '♟',
+            'r': '♖', 'n': '♘', 'b': '♗', 'q': '♕', 'k': '♔', 'p': '♙'
+        };
+        
+        let board, selected, currentPlayer;
+
+        function initGame() {
+            board = [
+                ['r','n','b','q','k','b','n','r'],
+                ['p','p','p','p','p','p','p','p'],
+                ['','','','','','','',''],
+                ['','','','','','','',''],
+                ['','','','','','','',''],
+                ['','','','','','','',''],
+                ['P','P','P','P','P','P','P','P'],
+                ['R','N','B','Q','K','B','N','R']
+            ];
+            selected = null;
+            currentPlayer = 'white';
+            document.getElementById('status').textContent = 'Хід білих';
+            renderBoard();
+        }
+
+        function renderBoard() {
+            const boardEl = document.getElementById('board');
+            boardEl.innerHTML = '';
+            
+            for (let r = 0; r < 8; r++) {
+                for (let c = 0; c < 8; c++) {
+                    const square = document.createElement('div');
+                    square.className = 'square ' + ((r + c) % 2 === 0 ? 'light' : 'dark');
+                    
+                    if (board[r][c]) {
+                        square.textContent = pieces[board[r][c]];
+                    }
+                    
+                    if (selected && selected.r === r && selected.c === c) {
+                        square.classList.add('selected');
+                    }
+                    
+                    square.onclick = () => clickSquare(r, c);
+                    boardEl.appendChild(square);
+                }
+            }
+        }
+
+        function clickSquare(r, c) {
+            const piece = board[r][c];
+            const isWhite = piece && piece === piece.toUpperCase();
+            const isBlack = piece && piece === piece.toLowerCase();
+            
+            if (selected) {
+                // Переміщення
+                if (isValidMove(selected.r, selected.c, r, c)) {
+                    board[r][c] = board[selected.r][selected.c];
+                    board[selected.r][selected.c] = '';
+                    selected = null;
+                    currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
+                    document.getElementById('status').textContent = 'Хід ' + (currentPlayer === 'white' ? 'білих' : 'чорних');
+                } else {
+                    selected = null;
+                }
+            } else if (piece) {
+                // Вибір фігури
+                if ((currentPlayer === 'white' && isWhite) || (currentPlayer === 'black' && isBlack)) {
+                    selected = { r, c };
+                }
+            }
+            
+            renderBoard();
+        }
+
+        function isValidMove(fromR, fromC, toR, toC) {
+            const piece = board[fromR][fromC];
+            const target = board[toR][toC];
+            const isWhite = piece === piece.toUpperCase();
+            const targetIsWhite = target && target === target.toUpperCase();
+            
+            // Не можна бити свої фігури
+            if (target && isWhite === targetIsWhite) return false;
+            
+            // Спрощена логіка: дозволяємо будь-який хід (для демо)
+            // Тут можна додати повну логіку шахів
+            return true;
+        }
+
+        initGame();
+    </script>
+</body>
+</html>
