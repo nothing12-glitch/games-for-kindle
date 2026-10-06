@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест на реакцію</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #fff; }
+        h1 { font-size: 28px; }
+        #game-area { width: 100%; max-width: 400px; height: 300px; margin: 30px auto; border: 3px solid #000; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; user-select: none; }
+        #game-area.waiting { background: #ff4444; color: #fff; }
+        #game-area.ready { background: #44ff44; color: #000; }
+        #game-area.result { background: #fff; color: #000; }
+        #best-time { font-size: 20px; margin: 20px 0; color: #666; }
+        #attempts { font-size: 20px; margin: 20px 0; }
+        #new-game { padding: 15px 30px; font-size: 20px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; margin: 10px; }
+        #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Тест на реакцію</h1>
+    <p>Натисніть, коли екран стане зеленим!</p>
+    
+    <div id="best-time">Найкращий час: -</div>
+    <div id="attempts">Спроб: 0</div>
+    
+    <div id="game-area" class="result" onclick="handleClick()">
+        Натисніть, щоб почати
+    </div>
+    
+    <button id="new-game" onclick="resetGame()">Скинути результат</button>
+    <br>
+    <a href="index.html" id="back-btn">До меню</a>
+
+    <script>
+        const gameArea = document.getElementById('game-area');
+        let state = 'idle';
+        let startTime;
+        let timeoutId;
+        let bestTime = Infinity;
+        let attempts = 0;
+        let times = [];
+
+        function handleClick() {
+            if (state === 'idle') {
+                startGame();
+            } else if (state === 'waiting') {
+                tooEarly();
+            } else if (state === 'ready') {
+                recordTime();
+            } else if (state === 'result') {
+                startGame();
+            }
+        }
+
+        function startGame() {
+            state = 'waiting';
+            gameArea.className = 'waiting';
+            gameArea.textContent = 'Чекайте на зелений...';
+            
+            const delay = 1000 + Math.random() * 4000;
+            timeoutId = setTimeout(() => {
+                state = 'ready';
+                gameArea.className = 'ready';
+                gameArea.textContent = 'НАТИСНІТЬ!';
+                startTime = Date.now();
+            }, delay);
+        }
+
+        function tooEarly() {
+            clearTimeout(timeoutId);
+            state = 'result';
+            gameArea.className = 'result';
+            gameArea.textContent = 'Занадто рано! Натисніть, щоб спробувати ще.';
+        }
+
+        function recordTime() {
+            const reactionTime = Date.now() - startTime;
+            times.push(reactionTime);
+            attempts++;
+            
+            if (reactionTime < bestTime) {
+                bestTime = reactionTime;
+                document.getElementById('best-time').textContent = 'Найкращий час: ' + bestTime + ' мс';
+            }
+            
+            document.getElementById('attempts').textContent = 'Спроб: ' + attempts;
+            
+            state = 'result';
+            gameArea.className = 'result';
+            gameArea.innerHTML = reactionTime + ' мс<br><br>Натисніть, щоб спробувати ще';
+        }
+
+        function resetGame() {
+            clearTimeout(timeoutId);
+            state = 'idle';
+            bestTime = Infinity;
+            attempts = 0;
+            times = [];
+            gameArea.className = 'result';
+            gameArea.textContent = 'Натисніть, щоб почати';
+            document.getElementById('best-time').textContent = 'Найкращий час: -';
+            document.getElementById('attempts').textContent = 'Спроб: 0';
+        }
+    </script>
+</body>
+</html>
