@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вгадай слово</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #fff; }
+        h1 { font-size: 28px; }
+        #guesses { display: flex; flex-direction: column; gap: 5px; margin: 20px auto; max-width: 300px; }
+        .row { display: flex; gap: 5px; justify-content: center; }
+        .letter { width: 50px; height: 50px; border: 2px solid #000; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; text-transform: uppercase; }
+        .letter.correct { background: #90EE90; }
+        .letter.present { background: #FFD700; }
+        .letter.absent { background: #ddd; }
+        #input { margin: 20px 0; }
+        #word-input { padding: 10px; font-size: 24px; width: 200px; text-align: center; text-transform: uppercase; border: 2px solid #000; }
+        #submit { padding: 10px 20px; font-size: 20px; background: #fff; border: 2px solid #000; cursor: pointer; margin-left: 10px; }
+        #message { font-size: 20px; margin: 20px 0; min-height: 30px; }
+        #new-game { padding: 15px 30px; font-size: 20px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; margin: 10px; }
+        #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Вгадай слово</h1>
+    <p>Вгадайте слово з 5 літер за 6 спроб</p>
+    
+    <div id="guesses"></div>
+    <div id="message"></div>
+    
+    <div id="input">
+        <input type="text" id="word-input" maxlength="5" placeholder="Введіть слово">
+        <button id="submit" onclick="submitGuess()">OK</button>
+    </div>
+    
+    <button id="new-game" onclick="initGame()">Нова гра</button>
+    <br>
+    <a href="index.html" id="back-btn">До меню</a>
+
+    <script>
+        const words = ['КНИГА', 'ЕКРАН', 'СЛОВО', 'ТЕКСТ', 'АВТОР', 'ГЛАВА', 'СЦЕНА', 'ФІЛЬМ', 'МУЗИКА', 'ПІСНЯ'];
+        let target, guesses, gameOver;
+
+        function initGame() {
+            target = words[Math.floor(Math.random() * words.length)];
+            guesses = [];
+            gameOver = false;
+            document.getElementById('message').textContent = '';
+            document.getElementById('word-input').value = '';
+            renderGuesses();
+        }
+
+        function renderGuesses() {
+            const guessesEl = document.getElementById('guesses');
+            guessesEl.innerHTML = '';
+            
+            for (let i = 0; i < 6; i++) {
+                const row = document.createElement('div');
+                row.className = 'row';
+                
+                for (let j = 0; j < 5; j++) {
+                    const letter = document.createElement('div');
+                    letter.className = 'letter';
+                    
+                    if (guesses[i]) {
+                        letter.textContent = guesses[i].word[j];
+                        if (guesses[i].result[j] === 'correct') letter.classList.add('correct');
+                        else if (guesses[i].result[j] === 'present') letter.classList.add('present');
+                        else if (guesses[i].result[j] === 'absent') letter.classList.add('absent');
+                    }
+                    
+                    row.appendChild(letter);
+                }
+                
+                guessesEl.appendChild(row);
+            }
+        }
+
+        function submitGuess() {
+            if (gameOver) return;
+            
+            const input = document.getElementById('word-input');
+            const guess = input.value.toUpperCase();
+            
+            if (guess.length !== 5) {
+                document.getElementById('message').textContent = 'Введіть слово з 5 літер!';
+                return;
+            }
+            
+            const result = Array(5).fill('absent');
+            const targetLetters = target.split('');
+            const guessLetters = guess.split('');
+            
+            // Спочатку перевіряємо правильні позиції
+            for (let i = 0; i < 5; i++) {
+                if (guessLetters[i] === targetLetters[i]) {
+                    result[i] = 'correct';
+                    targetLetters[i] = null;
+                    guessLetters[i] = null;
+                }
+            }
+            
+            // Потім перевіряємо наявність літер
+            for (let i = 0; i < 5; i++) {
+                if (guessLetters[i] && targetLetters.includes(guessLetters[i])) {
+                    result[i] = 'present';
+                    targetLetters[targetLetters.indexOf(guessLetters[i])] = null;
+                }
+            }
+            
+            guesses.push({ word: guess, result });
+            input.value = '';
+            renderGuesses();
+            
+            if (guess === target) {
+                document.getElementById('message').textContent = 'Ви виграли!';
+                gameOver = true;
+            } else if (guesses.length === 6) {
+                document.getElementById('message').textContent = 'Ви програли! Слово було: ' + target;
+                gameOver = true;
+            }
+        }
+
+        document.getElementById('word-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') submitGuess();
+        });
+
+        initGame();
+    </script>
+</body>
+</html>
