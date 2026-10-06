@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Меморі</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #fff; }
+        h1 { font-size: 28px; }
+        #board { display: grid; grid-template-columns: repeat(4, 70px); gap: 10px; max-width: 320px; margin: 20px auto; }
+        .card { width: 70px; height: 70px; background: #000; border: 3px solid #000; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; color: #fff; }
+        .card.flipped { background: #fff; color: #000; }
+        .card.matched { background: #90EE90; color: #000; }
+        #info { font-size: 20px; margin: 20px 0; }
+        #new-game { padding: 15px 30px; font-size: 20px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; margin: 10px; }
+        #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Меморі</h1>
+    <p>Знайдіть всі пари однакових карток</p>
+    
+    <div id="info">Ходів: 0 | Знайдено пар: 0/8</div>
+    <div id="board"></div>
+    
+    <button id="new-game" onclick="initGame()">Нова гра</button>
+    <br>
+    <a href="index.html" id="back-btn">До меню</a>
+
+    <script>
+        const symbols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+        let cards, flipped, matched, moves, canFlip;
+
+        function initGame() {
+            const pairs = [...symbols, ...symbols];
+            cards = pairs.sort(() => Math.random() - 0.5);
+            flipped = [];
+            matched = Array(16).fill(false);
+            moves = 0;
+            canFlip = true;
+            updateInfo();
+            renderBoard();
+        }
+
+        function updateInfo() {
+            const found = matched.filter(m => m).length / 2;
+            document.getElementById('info').textContent = 'Ходів: ' + moves + ' | Знайдено пар: ' + found + '/8';
+        }
+
+        function renderBoard() {
+            const boardEl = document.getElementById('board');
+            boardEl.innerHTML = '';
+            for (let i = 0; i < 16; i++) {
+                const card = document.createElement('div');
+                card.className = 'card';
+                if (flipped.includes(i) || matched[i]) {
+                    card.textContent = cards[i];
+                    card.classList.add('flipped');
+                    if (matched[i]) card.classList.add('matched');
+                }
+                card.onclick = () => flipCard(i);
+                boardEl.appendChild(card);
+            }
+        }
+
+        function flipCard(index) {
+            if (!canFlip || flipped.includes(index) || matched[index]) return;
+            
+            flipped.push(index);
+            renderBoard();
+            
+            if (flipped.length === 2) {
+                moves++;
+                canFlip = false;
+                const [i, j] = flipped;
+                
+                if (cards[i] === cards[j]) {
+                    matched[i] = true;
+                    matched[j] = true;
+                    flipped = [];
+                    canFlip = true;
+                    updateInfo();
+                    renderBoard();
+                    
+                    if (matched.every(m => m)) {
+                        document.getElementById('info').textContent = 'Ви виграли за ' + moves + ' ходів!';
+                    }
+                } else {
+                    setTimeout(() => {
+                        flipped = [];
+                        canFlip = true;
+                        renderBoard();
+                    }, 1000);
+                }
+            }
+        }
+
+        initGame();
+    </script>
+</body>
+</html>
