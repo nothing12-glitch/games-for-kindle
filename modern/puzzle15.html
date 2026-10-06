@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>П'ятнашки</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #fff; }
+        h1 { font-size: 28px; }
+        #moves { font-size: 22px; margin: 20px 0; }
+        #board { display: grid; grid-template-columns: repeat(4, 70px); gap: 5px; max-width: 305px; margin: 20px auto; }
+        .tile { width: 70px; height: 70px; background: #fff; border: 3px solid #000; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: bold; cursor: pointer; }
+        .tile:active { background: #eee; }
+        .tile.empty { background: transparent; border: none; cursor: default; }
+        #new-game { padding: 15px 30px; font-size: 20px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; margin: 10px; }
+        #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>П'ятнашки</h1>
+    <p>Розташуйте числа по порядку від 1 до 15</p>
+    
+    <div id="moves">Ходів: 0</div>
+    <div id="board"></div>
+    
+    <button id="new-game" onclick="initGame()">Нова гра</button>
+    <br>
+    <a href="index.html" id="back-btn">До меню</a>
+
+    <script>
+        let tiles, emptyPos, moves;
+
+        function initGame() {
+            tiles = [];
+            for (let i = 1; i <= 15; i++) tiles.push(i);
+            tiles.push(0);
+            emptyPos = 15;
+            moves = 0;
+            
+            // Перемішуємо
+            for (let i = 0; i < 100; i++) {
+                const neighbors = getNeighbors(emptyPos);
+                const randomNeighbor = neighbors[Math.floor(Math.random() * neighbors.length)];
+                swap(emptyPos, randomNeighbor);
+                emptyPos = randomNeighbor;
+            }
+            
+            updateDisplay();
+        }
+
+        function getNeighbors(pos) {
+            const row = Math.floor(pos / 4);
+            const col = pos % 4;
+            const neighbors = [];
+            
+            if (row > 0) neighbors.push(pos - 4);
+            if (row < 3) neighbors.push(pos + 4);
+            if (col > 0) neighbors.push(pos - 1);
+            if (col < 3) neighbors.push(pos + 1);
+            
+            return neighbors;
+        }
+
+        function swap(pos1, pos2) {
+            [tiles[pos1], tiles[pos2]] = [tiles[pos2], tiles[pos1]];
+        }
+
+        function updateDisplay() {
+            const boardEl = document.getElementById('board');
+            boardEl.innerHTML = '';
+            document.getElementById('moves').textContent = 'Ходів: ' + moves;
+            
+            tiles.forEach((tile, index) => {
+                const tileEl = document.createElement('div');
+                tileEl.className = 'tile';
+                
+                if (tile === 0) {
+                    tileEl.classList.add('empty');
+                } else {
+                    tileEl.textContent = tile;
+                    tileEl.onclick = () => moveTile(index);
+                }
+                
+                boardEl.appendChild(tileEl);
+            });
+            
+            checkWin();
+        }
+
+        function moveTile(pos) {
+            const neighbors = getNeighbors(emptyPos);
+            if (neighbors.includes(pos)) {
+                swap(pos, emptyPos);
+                emptyPos = pos;
+                moves++;
+                updateDisplay();
+            }
+        }
+
+        function checkWin() {
+            for (let i = 0; i < 15; i++) {
+                if (tiles[i] !== i + 1) return;
+            }
+            document.getElementById('moves').textContent = 'Ви виграли за ' + moves + ' ходів!';
+        }
+
+        initGame();
+    </script>
+</body>
+</html>
