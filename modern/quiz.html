@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вікторина</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #fff; }
+        h1 { font-size: 28px; }
+        #question { font-size: 24px; margin: 30px 0; font-weight: bold; }
+        #answers { display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto; }
+        .answer-btn { padding: 20px; font-size: 20px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; text-align: left; }
+        .answer-btn:active { background: #000; color: #fff; }
+        .answer-btn.correct { background: #90EE90; }
+        .answer-btn.wrong { background: #ffcccc; }
+        #score { font-size: 22px; margin: 20px 0; }
+        #new-game { padding: 15px 30px; font-size: 20px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; margin: 10px; }
+        #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Вікторина</h1>
+    
+    <div id="score">Питання: 1/10 | Правильних: 0</div>
+    <div id="question"></div>
+    <div id="answers"></div>
+    
+    <button id="new-game" onclick="initGame()">Нова гра</button>
+    <br>
+    <a href="index.html" id="back-btn">До меню</a>
+
+    <script>
+        const questions = [
+            { q: 'Яка столиця України?', a: ['Київ', 'Львів', 'Одеса', 'Харків'], correct: 0 },
+            { q: 'Скільки планет у Сонячній системі?', a: ['7', '8', '9', '10'], correct: 1 },
+            { q: 'Хто написав "Кобзар"?', a: ['Франко', 'Шевченко', 'Леся Українка', 'Котляревський'], correct: 1 },
+            { q: 'Який рік заснування Києва?', a: ['482', '988', '1240', '1648'], correct: 0 },
+            { q: 'Найдовша річка України?', a: ['Дніпро', 'Дністер', 'Десна', 'Південний Буг'], correct: 0 },
+            { q: 'Скільки кольорів у веселці?', a: ['5', '6', '7', '8'], correct: 2 },
+            { q: 'Яка мова найпоширеніша у світі?', a: ['Англійська', 'Китайська', 'Іспанська', 'Хінді'], correct: 1 },
+            { q: 'Хто перший полетів у космос?', a: ['Армстронг', 'Гагарін', 'Корольов', 'Титов'], correct: 1 },
+            { q: 'Скільки днів у високосному році?', a: ['364', '365', '366', '367'], correct: 2 },
+            { q: 'Який океан найбільший?', a: ['Атлантичний', 'Індійський', 'Тихий', 'Північний Льодовитий'], correct: 2 }
+        ];
+        
+        let currentQ, score, answered;
+
+        function initGame() {
+            currentQ = 0;
+            score = 0;
+            answered = false;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQ >= questions.length) {
+                document.getElementById('question').textContent = 'Вікторина завершена!';
+                document.getElementById('answers').innerHTML = '';
+                document.getElementById('score').textContent = 'Результат: ' + score + '/' + questions.length;
+                return;
+            }
+            
+            answered = false;
+            const q = questions[currentQ];
+            document.getElementById('question').textContent = q.q;
+            document.getElementById('score').textContent = 'Питання: ' + (currentQ + 1) + '/' + questions.length + ' | Правильних: ' + score;
+            
+            const answersEl = document.getElementById('answers');
+            answersEl.innerHTML = '';
+            
+            q.a.forEach((answer, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn';
+                btn.textContent = answer;
+                btn.onclick = () => selectAnswer(i, btn);
+                answersEl.appendChild(btn);
+            });
+        }
+
+        function selectAnswer(index, btn) {
+            if (answered) return;
+            answered = true;
+            
+            const q = questions[currentQ];
+            const buttons = document.querySelectorAll('.answer-btn');
+            
+            if (index === q.correct) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                buttons[q.correct].classList.add('correct');
+            }
+            
+            setTimeout(() => {
+                currentQ++;
+                showQuestion();
+            }, 1500);
+        }
+
+        initGame();
+    </script>
+</body>
+</html>
