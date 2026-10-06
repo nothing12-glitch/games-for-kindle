@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Хрестики-нулики</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #fff; }
+        h1 { font-size: 28px; }
+        #board { display: grid; grid-template-columns: repeat(3, 80px); gap: 5px; max-width: 260px; margin: 30px auto; }
+        .cell { width: 80px; height: 80px; background: #fff; border: 3px solid #000; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: bold; cursor: pointer; }
+        .cell:active { background: #eee; }
+        #status { font-size: 24px; margin: 20px 0; min-height: 30px; }
+        #new-game { padding: 15px 30px; font-size: 20px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; margin: 10px; }
+        #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Хрестики-нулики</h1>
+    <p>Ви граєте за X. Комп'ютер грає за O.</p>
+    
+    <div id="status">Ваш хід</div>
+    <div id="board"></div>
+    
+    <button id="new-game" onclick="initGame()">Нова гра</button>
+    <br>
+    <a href="index.html" id="back-btn">До меню</a>
+
+    <script>
+        let board, currentPlayer, gameOver;
+
+        function initGame() {
+            board = Array(9).fill('');
+            currentPlayer = 'X';
+            gameOver = false;
+            document.getElementById('status').textContent = 'Ваш хід';
+            renderBoard();
+        }
+
+        function renderBoard() {
+            const boardEl = document.getElementById('board');
+            boardEl.innerHTML = '';
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.textContent = board[i];
+                cell.onclick = () => makeMove(i);
+                boardEl.appendChild(cell);
+            }
+        }
+
+        function makeMove(index) {
+            if (gameOver || board[index] || currentPlayer !== 'X') return;
+            
+            board[index] = 'X';
+            renderBoard();
+            
+            if (checkWin('X')) {
+                document.getElementById('status').textContent = 'Ви виграли!';
+                gameOver = true;
+                return;
+            }
+            
+            if (board.every(cell => cell)) {
+                document.getElementById('status').textContent = 'Нічия!';
+                gameOver = true;
+                return;
+            }
+            
+            currentPlayer = 'O';
+            document.getElementById('status').textContent = 'Хід комп\'ютера...';
+            setTimeout(computerMove, 500);
+        }
+
+        function computerMove() {
+            if (gameOver) return;
+            
+            // Простий AI: випадковий хід
+            let available = board.map((cell, i) => cell === '' ? i : null).filter(i => i !== null);
+            let move = available[Math.floor(Math.random() * available.length)];
+            
+            board[move] = 'O';
+            renderBoard();
+            
+            if (checkWin('O')) {
+                document.getElementById('status').textContent = 'Комп\'ютер виграв!';
+                gameOver = true;
+                return;
+            }
+            
+            if (board.every(cell => cell)) {
+                document.getElementById('status').textContent = 'Нічия!';
+                gameOver = true;
+                return;
+            }
+            
+            currentPlayer = 'X';
+            document.getElementById('status').textContent = 'Ваш хід';
+        }
+
+        function checkWin(player) {
+            const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            return wins.some(([a,b,c]) => board[a] === player && board[b] === player && board[c] === player);
+        }
+
+        initGame();
+    </script>
+</body>
+</html>
