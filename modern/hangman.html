@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шибениця</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #fff; }
+        h1 { font-size: 28px; }
+        #word { font-size: 36px; letter-spacing: 10px; margin: 30px 0; font-weight: bold; }
+        #message { font-size: 22px; margin: 20px 0; min-height: 30px; }
+        #attempts { font-size: 20px; color: #666; margin-bottom: 30px; }
+        .letters { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; max-width: 500px; margin: 0 auto; }
+        .letter-btn { padding: 15px; font-size: 22px; font-weight: bold; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; }
+        .letter-btn:disabled { background: #ddd; color: #999; }
+        .letter-btn:active:not(:disabled) { background: #000; color: #fff; }
+        #new-game { margin-top: 30px; padding: 15px 30px; font-size: 20px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; }
+        #back-btn { display: inline-block; margin-top: 20px; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Шибениця</h1>
+    <p>Вгадайте слово, натискаючи на літери</p>
+    
+    <div id="word"></div>
+    <div id="message"></div>
+    <div id="attempts">Спроб залишилось: 6</div>
+    
+    <div class="letters" id="keyboard"></div>
+    
+    <button id="new-game" onclick="initGame()">Нова гра</button>
+    <br>
+    <a href="index.html" id="back-btn">До меню</a>
+
+    <script>
+        const words = ['КНИГА', 'ЕКРАН', 'СЛОВО', 'ГРАФІК', 'ТЕКСТ', 'СТОРІНКА', 'РОЗДІЛ', 'ГЛАВА', 'АВТОР', 'ОПОВІДАННЯ'];
+        let word, guessed, attempts, gameOver;
+
+        function initGame() {
+            word = words[Math.floor(Math.random() * words.length)];
+            guessed = Array(word.length).fill(false);
+            attempts = 6;
+            gameOver = false;
+            document.getElementById('message').textContent = '';
+            updateDisplay();
+            createKeyboard();
+        }
+
+        function updateDisplay() {
+            let display = '';
+            for (let i = 0; i < word.length; i++) {
+                display += guessed[i] ? word[i] : '_';
+                if (i < word.length - 1) display += ' ';
+            }
+            document.getElementById('word').textContent = display;
+            document.getElementById('attempts').textContent = 'Спроб залишилось: ' + attempts;
+            
+            if (guessed.every(g => g)) {
+                document.getElementById('message').textContent = 'Ви виграли!';
+                gameOver = true;
+            }
+        }
+
+        function createKeyboard() {
+            const keyboard = document.getElementById('keyboard');
+            keyboard.innerHTML = '';
+            const letters = 'АБВГДЕЖЗИІЇКЛМНОПРСТУФХЦЧШЩЬЮЯ';
+            for (let letter of letters) {
+                const btn = document.createElement('button');
+                btn.className = 'letter-btn';
+                btn.textContent = letter;
+                btn.onclick = () => guessLetter(letter, btn);
+                keyboard.appendChild(btn);
+            }
+        }
+
+        function guessLetter(letter, btn) {
+            if (gameOver) return;
+            btn.disabled = true;
+            
+            if (word.includes(letter)) {
+                for (let i = 0; i < word.length; i++) {
+                    if (word[i] === letter) guessed[i] = true;
+                }
+                updateDisplay();
+            } else {
+                attempts--;
+                document.getElementById('attempts').textContent = 'Спроб залишилось: ' + attempts;
+                if (attempts === 0) {
+                    document.getElementById('message').textContent = 'Ви програли! Слово було: ' + word;
+                    gameOver = true;
+                }
+            }
+        }
+
+        initGame();
+    </script>
+</body>
+</html>
