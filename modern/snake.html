@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Змійка</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #fff; }
+        h1 { font-size: 28px; }
+        #score { font-size: 22px; margin: 20px 0; }
+        #board { display: grid; grid-template-columns: repeat(15, 20px); gap: 1px; max-width: 315px; margin: 20px auto; background: #000; padding: 1px; }
+        .cell { width: 20px; height: 20px; background: #fff; }
+        .cell.snake { background: #000; }
+        .cell.food { background: #ff0000; }
+        #controls { margin: 20px 0; }
+        .control-btn { padding: 15px 25px; font-size: 20px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; margin: 5px; }
+        .control-btn:active { background: #000; color: #fff; }
+        #new-game { padding: 15px 30px; font-size: 20px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; margin: 10px; }
+        #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Змійка</h1>
+    <p>Керуйте змійкою та їжте їжу!</p>
+    
+    <div id="score">Рахунок: 0</div>
+    <div id="board"></div>
+    
+    <div id="controls">
+        <button class="control-btn" onclick="changeDirection('up')">↑</button><br>
+        <button class="control-btn" onclick="changeDirection('left')">←</button>
+        <button class="control-btn" onclick="changeDirection('down')">↓</button>
+        <button class="control-btn" onclick="changeDirection('right')">→</button>
+    </div>
+    
+    <button id="new-game" onclick="initGame()">Нова гра</button>
+    <br>
+    <a href="index.html" id="back-btn">До меню</a>
+
+    <script>
+        const SIZE = 15;
+        let snake, food, direction, nextDirection, score, gameOver, gameLoop;
+
+        function initGame() {
+            snake = [{x: 7, y: 7}];
+            direction = 'right';
+            nextDirection = 'right';
+            score = 0;
+            gameOver = false;
+            placeFood();
+            updateDisplay();
+            
+            if (gameLoop) clearInterval(gameLoop);
+            gameLoop = setInterval(gameStep, 200);
+        }
+
+        function placeFood() {
+            do {
+                food = {
+                    x: Math.floor(Math.random() * SIZE),
+                    y: Math.floor(Math.random() * SIZE)
+                };
+            } while (snake.some(s => s.x === food.x && s.y === food.y));
+        }
+
+        function updateDisplay() {
+            const boardEl = document.getElementById('board');
+            boardEl.innerHTML = '';
+            document.getElementById('score').textContent = 'Рахунок: ' + score;
+            
+            for (let y = 0; y < SIZE; y++) {
+                for (let x = 0; x < SIZE; x++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    
+                    if (snake.some(s => s.x === x && s.y === y)) {
+                        cell.classList.add('snake');
+                    } else if (food.x === x && food.y === y) {
+                        cell.classList.add('food');
+                    }
+                    
+                    boardEl.appendChild(cell);
+                }
+            }
+        }
+
+        function changeDirection(newDir) {
+            const opposites = {up: 'down', down: 'up', left: 'right', right: 'left'};
+            if (opposites[newDir] !== direction) {
+                nextDirection = newDir;
+            }
+        }
+
+        function gameStep() {
+            if (gameOver) return;
+            
+            direction = nextDirection;
+            const head = {...snake[0]};
+            
+            if (direction === 'up') head.y--;
+            else if (direction === 'down') head.y++;
+            else if (direction === 'left') head.x--;
+            else if (direction === 'right') head.x++;
+            
+            // Перевірка зіткнень
+            if (head.x < 0 || head.x >= SIZE || head.y < 0 || head.y >= SIZE || 
+                snake.some(s => s.x === head.x && s.y === head.y)) {
+                gameOver = true;
+                clearInterval(gameLoop);
+                document.getElementById('score').textContent = 'Гра закінчена! Рахунок: ' + score;
+                return;
+            }
+            
+            snake.unshift(head);
+            
+            if (head.x === food.x && head.y === food.y) {
+                score++;
+                placeFood();
+            } else {
+                snake.pop();
+            }
+            
+            updateDisplay();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowUp') changeDirection('up');
+            else if (e.key === 'ArrowDown') changeDirection('down');
+            else if (e.key === 'ArrowLeft') changeDirection('left');
+            else if (e.key === 'ArrowRight') changeDirection('right');
+        });
+
+        initGame();
+    </script>
+</body>
+</html>
