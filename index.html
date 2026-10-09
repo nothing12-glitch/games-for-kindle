@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kindle Games</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: Georgia, serif;
             font-size: 24px;
@@ -12,10 +15,9 @@
             color: #000;
             background: #fff;
             margin: 0;
-            padding: 30px 20px 200px;
+            padding: 30px 20px;
             text-align: center;
             min-height: 100vh;
-            box-sizing: border-box;
         }
         h1 { font-size: 32px; margin-bottom: 10px; }
         p { margin-bottom: 40px; color: #333; }
@@ -51,7 +53,7 @@
             box-shadow: 3px 3px 0px #000;
         }
         .language-selector {
-            position: fixed;
+            position: absolute;
             top: 10px;
             right: 10px;
             z-index: 1000;
@@ -65,76 +67,68 @@
             cursor: pointer;
             font-family: Georgia, serif;
         }
-        .project-info {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            max-width: 260px;
-            font-size: 13px;
-            color: #333;
+        
+        /* Footer - не fixed, а внизу сторінки */
+        .footer {
+            margin-top: 60px;
+            padding: 30px 20px;
+            border-top: 2px solid #000;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .footer-block {
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
             background: #f9f9f9;
             border: 2px solid #000;
             border-radius: 8px;
-            padding: 12px;
+            padding: 15px;
             box-shadow: 3px 3px 0px #000;
-            z-index: 1000;
             text-align: left;
         }
-        .project-info h3 {
-            margin: 0 0 8px 0;
-            font-size: 15px;
+        .footer-block h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
             border-bottom: 1px solid #000;
-            padding-bottom: 4px;
+            padding-bottom: 5px;
         }
-        .project-info p {
-            margin: 5px 0;
-            font-size: 12px;
+        .footer-block p {
+            margin: 8px 0;
+            font-size: 13px;
+            line-height: 1.4;
         }
-        .project-info a {
+        .footer-block a {
             color: #0066cc;
             text-decoration: underline;
             word-break: break-all;
         }
-        .quote-of-day {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            max-width: 280px;
-            font-size: 13px;
-            color: #333;
-            background: #f9f9f9;
-            border: 2px solid #000;
-            border-radius: 8px;
-            padding: 12px;
-            box-shadow: 3px 3px 0px #000;
-            z-index: 1000;
+        .footer-center {
+            text-align: center;
+        }
+        .footer-right {
             text-align: right;
             font-style: italic;
         }
-        .quote-of-day h3 {
-            margin: 0 0 8px 0;
-            font-size: 15px;
-            border-bottom: 1px solid #000;
-            padding-bottom: 4px;
-            font-style: normal;
-        }
-        .quote-of-day p {
-            margin: 5px 0;
-            font-size: 12px;
-        }
-        .made-by {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 13px;
-            color: #333;
-            background: #f9f9f9;
-            border: 2px solid #000;
-            border-radius: 8px;
-            padding: 10px 18px;
-            box-shadow: 3px 3px 0px #000;
-            z-index: 1000;
+        
+        /* Адаптив для вузьких екранів (Kindle) */
+        @media (max-width: 768px) {
+            .footer {
+                flex-direction: column;
+                align-items: center;
+            }
+            .footer-block {
+                max-width: 100%;
+                width: 100%;
+            }
+            body {
+                padding: 30px 15px;
+            }
         }
     </style>
 </head>
@@ -164,27 +158,31 @@
         <span style="font-size: 18px; font-weight: normal;" id="new-kindle-desc">(touchscreen, with JavaScript)</span>
     </a>
 
-    <!-- Tip (in main content, not fixed) -->
+    <!-- Tip -->
     <div class="hint" id="tip">
         💡 Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript).
     </div>
 
-    <!-- Project Info (Left Bottom) -->
-    <div class="project-info">
-        <h3 id="project-title">Project Info:</h3>
-        <p id="project-desc">This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.</p>
-        <p id="project-contact">Found a bug or have suggestions? Email: <a href="mailto:workingnothing12.github@gmail.com">workingnothing12.github@gmail.com</a></p>
-    </div>
+    <!-- Footer (внизу сторінки, не fixed) -->
+    <div class="footer">
+        <!-- Project Info (Left) -->
+        <div class="footer-block">
+            <h3 id="project-title">Project Info:</h3>
+            <p id="project-desc">This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.</p>
+            <p id="project-contact">Found a bug or have suggestions? Email: <a href="mailto:workingnothing12.github@gmail.com">workingnothing12.github@gmail.com</a></p>
+        </div>
 
-    <!-- Quote of the Day (Right Bottom) -->
-    <div class="quote-of-day">
-        <h3 id="quote-title">Quote of the Day:</h3>
-        <p id="quote-text">"Java is to JavaScript what car is to Carpet." - Chris Heilmann</p>
-    </div>
+        <!-- Made By (Center) -->
+        <div class="footer-block footer-center">
+            <h3>Credits:</h3>
+            <p id="made-by">Made with ❤️ for Kindle lovers</p>
+        </div>
 
-    <!-- Made By (Center Bottom) -->
-    <div class="made-by" id="made-by">
-        Made with ❤️ for Kindle lovers
+        <!-- Quote of the Day (Right) -->
+        <div class="footer-block footer-right">
+            <h3 id="quote-title">Quote of the Day:</h3>
+            <p id="quote-text">"Java is to JavaScript what car is to Carpet." - Chris Heilmann</p>
+        </div>
     </div>
 
     <script>
@@ -196,7 +194,7 @@
                 oldKindleDesc: "(with buttons, no JavaScript)",
                 newKindle: "New Kindle",
                 newKindleDesc: "(touchscreen, with JavaScript)",
-                tip: "💡 Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript).",
+                tip: " Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript).",
                 projectTitle: "Project Info:",
                 projectDesc: "This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.",
                 projectContact: "Found a bug or have suggestions? Email:",
