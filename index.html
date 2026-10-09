@@ -12,11 +12,10 @@
             color: #000;
             background: #fff;
             margin: 0;
-            padding: 30px 20px;
+            padding: 30px 20px 200px;
             text-align: center;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            box-sizing: border-box;
         }
         h1 { font-size: 32px; margin-bottom: 10px; }
         p { margin-bottom: 40px; color: #333; }
@@ -42,10 +41,14 @@
         }
         .hint {
             font-size: 16px;
-            color: #555;
-            margin-top: 50px;
-            border-top: 1px solid #ccc;
-            padding-top: 20px;
+            color: #333;
+            margin: 40px auto;
+            padding: 15px 20px;
+            border: 2px solid #000;
+            border-radius: 8px;
+            background: #f9f9f9;
+            max-width: 600px;
+            box-shadow: 3px 3px 0px #000;
         }
         .language-selector {
             position: fixed;
@@ -66,69 +69,70 @@
             position: fixed;
             bottom: 20px;
             left: 20px;
-            max-width: 280px;
-            font-size: 14px;
+            max-width: 260px;
+            font-size: 13px;
             color: #333;
             background: #f9f9f9;
             border: 2px solid #000;
             border-radius: 8px;
-            padding: 15px;
+            padding: 12px;
             box-shadow: 3px 3px 0px #000;
             z-index: 1000;
             text-align: left;
         }
         .project-info h3 {
-            margin: 0 0 10px 0;
-            font-size: 16px;
+            margin: 0 0 8px 0;
+            font-size: 15px;
             border-bottom: 1px solid #000;
-            padding-bottom: 5px;
+            padding-bottom: 4px;
         }
         .project-info p {
             margin: 5px 0;
-            font-size: 13px;
+            font-size: 12px;
         }
         .project-info a {
             color: #0066cc;
             text-decoration: underline;
+            word-break: break-all;
         }
         .quote-of-day {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            max-width: 300px;
-            font-size: 14px;
+            max-width: 280px;
+            font-size: 13px;
             color: #333;
             background: #f9f9f9;
             border: 2px solid #000;
             border-radius: 8px;
-            padding: 15px;
+            padding: 12px;
             box-shadow: 3px 3px 0px #000;
             z-index: 1000;
             text-align: right;
             font-style: italic;
         }
         .quote-of-day h3 {
-            margin: 0 0 10px 0;
-            font-size: 16px;
+            margin: 0 0 8px 0;
+            font-size: 15px;
             border-bottom: 1px solid #000;
-            padding-bottom: 5px;
+            padding-bottom: 4px;
             font-style: normal;
         }
         .quote-of-day p {
             margin: 5px 0;
-            font-size: 13px;
+            font-size: 12px;
         }
         .made-by {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 14px;
+            font-size: 13px;
             color: #333;
             background: #f9f9f9;
             border: 2px solid #000;
             border-radius: 8px;
-            padding: 10px 20px;
+            padding: 10px 18px;
             box-shadow: 3px 3px 0px #000;
             z-index: 1000;
         }
@@ -160,8 +164,9 @@
         <span style="font-size: 18px; font-weight: normal;" id="new-kindle-desc">(touchscreen, with JavaScript)</span>
     </a>
 
+    <!-- Tip (in main content, not fixed) -->
     <div class="hint" id="tip">
-        Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript).
+        💡 Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript).
     </div>
 
     <!-- Project Info (Left Bottom) -->
@@ -183,7 +188,6 @@
     </div>
 
     <script>
-        // Translations
         const translations = {
             en: {
                 title: "Kindle Games",
@@ -192,7 +196,7 @@
                 oldKindleDesc: "(with buttons, no JavaScript)",
                 newKindle: "New Kindle",
                 newKindleDesc: "(touchscreen, with JavaScript)",
-                tip: "Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript).",
+                tip: "💡 Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript).",
                 projectTitle: "Project Info:",
                 projectDesc: "This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.",
                 projectContact: "Found a bug or have suggestions? Email:",
@@ -205,7 +209,7 @@
                 oldKindleDesc: "(з кнопками, без JavaScript)",
                 newKindle: "Новий Kindle",
                 newKindleDesc: "(сенсорний, з JavaScript)",
-                tip: "Порада: Якщо ігри не працюють, увімкніть JavaScript у налаштуваннях браузера Kindle (Menu → Settings → Advanced → Enable JavaScript).",
+                tip: "💡 Порада: Якщо ігри не працюють, увімкніть JavaScript у налаштуваннях браузера Kindle (Menu → Settings → Advanced → Enable JavaScript).",
                 projectTitle: "Про проект:",
                 projectDesc: "Цей проект створено для любителів Kindle. Ігри оптимізовані для E-Ink дисплеїв.",
                 projectContact: "Знайшли помилку або маєте пропозиції? Пишіть:",
@@ -218,7 +222,7 @@
                 oldKindleDesc: "(mit Tasten, kein JavaScript)",
                 newKindle: "Neuer Kindle",
                 newKindleDesc: "(Touchscreen, mit JavaScript)",
-                tip: "Tipp: Wenn Spiele nicht funktionieren, aktivieren Sie JavaScript in den Kindle-Browsereinstellungen (Menü → Einstellungen → Erweitert → JavaScript aktivieren).",
+                tip: "💡 Tipp: Wenn Spiele nicht funktionieren, aktivieren Sie JavaScript in den Kindle-Browsereinstellungen (Menü → Einstellungen → Erweitert → JavaScript aktivieren).",
                 projectTitle: "Projekt Info:",
                 projectDesc: "Dieses Projekt wurde für Kindle-Liebhaber erstellt. Spiele optimiert für E-Ink-Displays.",
                 projectContact: "Fehler gefunden oder Vorschläge? Email:",
@@ -231,7 +235,7 @@
                 oldKindleDesc: "(z przyciskami, bez JavaScript)",
                 newKindle: "Nowy Kindle",
                 newKindleDesc: "(dotykowy, z JavaScript)",
-                tip: "Wskazówka: Jeśli gry nie działają, włącz JavaScript w ustawieniach przeglądarki Kindle (Menu → Ustawienia → Zaawansowane → Włącz JavaScript).",
+                tip: "💡 Wskazówka: Jeśli gry nie działają, włącz JavaScript w ustawieniach przeglądarki Kindle (Menu → Ustawienia → Zaawansowane → Włącz JavaScript).",
                 projectTitle: "Info o projekcie:",
                 projectDesc: "Ten projekt został stworzony dla miłośników Kindle. Gry zoptymalizowane dla wyświetlaczy E-Ink.",
                 projectContact: "Znalazłeś błąd lub masz sugestie? Email:",
@@ -239,17 +243,15 @@
             }
         };
 
-        // Quotes of the day (rotate daily)
         const quotes = [
-            { en: '"Java is to JavaScript what car is to Carpet." - Chris Heilmann', uk: '"Java відноситься до JavaScript як килим до автомобіля." - Кріс Хайльман', de: '"Java ist zu JavaScript, was Teppich zu Auto ist." - Chris Heilmann', pl: '"Java ma się do JavaScript jak dywan do samochodu." - Chris Heilmann' },
-            { en: '"The only way to do great work is to love what you do." - Steve Jobs', uk: '"Єдиний спосіб робити великі справи - любити те, що робиш." - Стів Джобс', de: '"Der einzige Weg, großartige Arbeit zu leisten, ist zu lieben, was man tut." - Steve Jobs', pl: '"Jedyny sposób na wykonanie wielkiej pracy to kochać to, co się robi." - Steve Jobs' },
-            { en: '"Code is like humor. When you have to explain it, it\'s bad." - Cory House', uk: '"Код як гумор. Якщо треба пояснювати - він поганий." - Корі Хаус', de: '"Code ist wie Humor. Wenn man ihn erklären muss, ist er schlecht." - Cory House', pl: '"Kod jest jak humor. Kiedy trzeba go wyjaśniać, jest zły." - Cory House' },
-            { en: '"Simplicity is the ultimate sophistication." - Leonardo da Vinci', uk: '"Простота - це вища форма досконалості." - Леонардо да Вінчі', de: '"Einfachheit ist die höchste Form der Raffinesse." - Leonardo da Vinci', pl: '"Prostota to najwyższa forma wyrafinowania." - Leonardo da Vinci' },
-            { en: '"Make it work, make it right, make it fast." - Kent Beck', uk: '"Зроби щоб працювало, зроби правильно, зроби швидко." - Кент Бек', de: '"Lass es funktionieren, mach es richtig, mach es schnell." - Kent Beck', pl: '"Spraw, by działało, spraw, by było dobrze, spraw, by było szybko." - Kent Beck' }
+            { en: '"Java is to JavaScript what car is to Carpet." - Chris Heilmann', uk: '"Java відноситься до JavaScript як килим до автомобіля." - Chris Heilmann', de: '"Java ist zu JavaScript, was Teppich zu Auto ist." - Chris Heilmann', pl: '"Java ma się do JavaScript jak dywan do samochodu." - Chris Heilmann' },
+            { en: '"The only way to do great work is to love what you do." - Steve Jobs', uk: '"Єдиний спосіб робити великі справи - любити те, що робиш." - Steve Jobs', de: '"Der einzige Weg, großartige Arbeit zu leisten, ist zu lieben, was man tut." - Steve Jobs', pl: '"Jedyny sposób na wykonanie wielkiej pracy to kochać to, co się robi." - Steve Jobs' },
+            { en: '"Code is like humor. When you have to explain it, it\'s bad." - Cory House', uk: '"Код як гумор. Якщо треба пояснювати - він поганий." - Cory House', de: '"Code ist wie Humor. Wenn man ihn erklären muss, ist er schlecht." - Cory House', pl: '"Kod jest jak humor. Kiedy trzeba go wyjaśniać, jest zły." - Cory House' },
+            { en: '"Simplicity is the ultimate sophistication." - Leonardo da Vinci', uk: '"Простота - це вища форма досконалості." - Leonardo da Vinci', de: '"Einfachheit ist die höchste Form der Raffinesse." - Leonardo da Vinci', pl: '"Prostota to najwyższa forma wyrafinowania." - Leonardo da Vinci' },
+            { en: '"Make it work, make it right, make it fast." - Kent Beck', uk: '"Зроби щоб працювало, зроби правильно, зроби швидко." - Kent Beck', de: '"Lass es funktionieren, mach es richtig, mach es schnell." - Kent Beck', pl: '"Spraw, by działało, spraw, by było dobrze, spraw, by było szybko." - Kent Beck' }
         ];
 
         function changeLanguage(lang) {
-            // Update all elements
             document.getElementById('title').textContent = translations[lang].title;
             document.getElementById('subtitle').textContent = translations[lang].subtitle;
             document.getElementById('old-kindle').textContent = translations[lang].oldKindle;
@@ -261,26 +263,20 @@
             document.getElementById('project-desc').textContent = translations[lang].projectDesc;
             document.getElementById('made-by').textContent = translations[lang].madeBy;
             
-            // Update quote
             const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
             document.getElementById('quote-text').textContent = quotes[dayIndex][lang];
             
-            // Update language selector
             document.getElementById('lang-en').selected = (lang === 'en');
             document.getElementById('lang-uk').selected = (lang === 'uk');
             document.getElementById('lang-de').selected = (lang === 'de');
             document.getElementById('lang-pl').selected = (lang === 'pl');
             
-            // Save preference
             localStorage.setItem('language', lang);
         }
 
-        // Initialize
         window.onload = function() {
             const savedLang = localStorage.getItem('language') || 'en';
             changeLanguage(savedLang);
-            
-            // Set quote
             const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
             document.getElementById('quote-text').textContent = quotes[dayIndex][savedLang];
         };
