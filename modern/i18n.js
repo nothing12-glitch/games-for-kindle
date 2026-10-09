@@ -1,4 +1,4 @@
-(function() {
+ (function() {
     'use strict';
     
     const translations = {
@@ -27,6 +27,12 @@
                 puzzle15: { name: "Puzzle 15", desc: "Arrange numbers" },
                 reaction: { name: "Reaction Test", desc: "Test your speed" },
                 tetris: { name: "Tetris", desc: "Block-stacking game" }
+            },
+            quests: {
+                lighthouse: { name: "Lighthouse Mystery", desc: "Discover the truth" },
+                spacestation: { name: "Space Station", desc: "Sci-fi survival" },
+                castle: { name: "Castle of Shadows", desc: "Fantasy adventure" },
+                detective: { name: "Detective Case #47", desc: "Solve the mystery" }
             }
         },
         uk: {
@@ -54,6 +60,12 @@
                 puzzle15: { name: "П'ятнашки", desc: "Розташуй числа" },
                 reaction: { name: "Тест на реакцію", desc: "Перевір швидкість" },
                 tetris: { name: "Тетріс", desc: "Гра з блоками" }
+            },
+            quests: {
+                lighthouse: { name: "Таємниця маяка", desc: "Розкрий правду" },
+                spacestation: { name: "Космічна станція", desc: "Виживання в космосі" },
+                castle: { name: "Замок Тіней", desc: "Фентезі пригода" },
+                detective: { name: "Справа №47", desc: "Розкрий злочин" }
             }
         },
         de: {
@@ -81,6 +93,12 @@
                 puzzle15: { name: "Puzzle 15", desc: "Zahlen ordnen" },
                 reaction: { name: "Reaktionstest", desc: "Geschwindigkeit testen" },
                 tetris: { name: "Tetris", desc: "Block-Spiel" }
+            },
+            quests: {
+                lighthouse: { name: "Leuchtturm-Mystery", desc: "Entdecke die Wahrheit" },
+                spacestation: { name: "Raumstation", desc: "Sci-Fi Überleben" },
+                castle: { name: "Schloss der Schatten", desc: "Fantasy-Abenteuer" },
+                detective: { name: "Detektivfall #47", desc: "Löse das Rätsel" }
             }
         },
         pl: {
@@ -108,6 +126,12 @@
                 puzzle15: { name: "Puzzle 15", desc: "Ułóż liczby" },
                 reaction: { name: "Test reakcji", desc: "Sprawdź szybkość" },
                 tetris: { name: "Tetris", desc: "Gra w bloki" }
+            },
+            quests: {
+                lighthouse: { name: "Tajemnica latarni", desc: "Odkryj prawdę" },
+                spacestation: { name: "Stacja kosmiczna", desc: "Sci-fi przetrwanie" },
+                castle: { name: "Zamek Cieni", desc: "Fantasy przygoda" },
+                detective: { name: "Sprawa detektywistyczna #47", desc: "Rozwiąż zagadkę" }
             }
         }
     };
