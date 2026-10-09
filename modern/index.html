@@ -3,77 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сучасні ігри для Kindle</title>
+    <title>Modern Games for Kindle</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>Сучасні ігри</h1>
-    <p>Оптимізовано для сенсорних екранів Kindle Paperwhite, Oasis та Scribe.</p>
+    <h1 data-i18n="title">Modern Games</h1>
+    <p data-i18n="subtitle">Optimized for touchscreen Kindle Paperwhite, Oasis and Scribe.</p>
 
-    <div class="game-grid">
-        <a href="sudoku.html" class="game-card">
-            <div class="title">Судоку</div>
-            <div class="desc">Класична логічна гра з цифрами</div>
-        </a>
-        
-        <a href="hangman.html" class="game-card">
-            <div class="title">Шибениця</div>
-            <div class="desc">Вгадайте слово по літерах</div>
-        </a>
-
-        <a href="minesweeper.html" class="game-card">
-            <div class="title">Сапер</div>
-            <div class="desc">Знайдіть всі міни на полі</div>
-        </a>
-
-        <a href="tictactoe.html" class="game-card">
-            <div class="title">Хрестики-нулики</div>
-            <div class="desc">Гра проти комп'ютера</div>
-        </a>
-
-        <a href="memory.html" class="game-card">
-            <div class="title">Меморі</div>
-            <div class="desc">Знайдіть пари однакових карток</div>
-        </a>
-
-        <a href="wordle.html" class="game-card">
-            <div class="title">Вгадай слово</div>
-            <div class="desc">5 спроб вгадати слово з 5 літер</div>
-        </a>
-
-        <a href="quiz.html" class="game-card">
-            <div class="title">Вікторина</div>
-            <div class="desc">10 питань на різні теми</div>
-        </a>
-
-        <a href="chess.html" class="game-card">
-            <div class="title">Шахи</div>
-            <div class="desc">Класична гра на дошці 8x8</div>
-        </a>
-
-        <a href="game2048.html" class="game-card">
-            <div class="title">2048</div>
-            <div class="desc">З'єднуйте числа, щоб отримати 2048</div>
-        </a>
-
-        <a href="snake.html" class="game-card">
-            <div class="title">Змійка</div>
-            <div class="desc">Класична аркадна гра</div>
-        </a>
-
-        <a href="puzzle15.html" class="game-card">
-            <div class="title">П'ятнашки</div>
-            <div class="desc">Розташуйте числа по порядку</div>
-        </a>
-
-        <a href="reaction.html" class="game-card">
-            <div class="title">Тест на реакцію</div>
-            <div class="desc">Перевірте швидкість своєї реакції</div>
-        </a>
-
-        <a href="../index.html" class="back-btn">На головну</a>
+    <div class="section">
+        <h2 data-i18n="sections.puzzles">Puzzles & Logic</h2>
+        <div class="game-grid">
+            <a href="games/sudoku.html" class="game-card">
+                <div class="title" data-i18n="games.sudoku.name">Sudoku</div>
+                <div class="desc" data-i18n="games.sudoku.desc">Classic logic puzzle with numbers</div>
+            </a>
+            <a href="games/minesweeper.html" class="game-card">
+                <div class="title" data-i18n="games.minesweeper.name">Minesweeper</div>
+                <div class="desc" data-i18n="games.minesweeper.desc">Find all mines on the field</div>
+            </a>
+            <a href="games/puzzle15.html" class="game-card">
+                <div class="title" data-i18n="games.puzzle15.name">Puzzle 15</div>
+                <div class="desc" data-i18n="games.puzzle15.desc">Arrange numbers in order</div>
+            </a>
+            <a href="games/game2048.html" class="game-card">
+                <div class="title" data-i18n="games.game2048.name">2048</div>
+                <div class="desc" data-i18n="games.game2048.desc">Combine numbers to reach 2048</div>
+            </a>
+            <a href="games/tetris.html" class="game-card">
+                <div class="title" data-i18n="games.tetris.name">Tetris</div>
+                <div class="desc" data-i18n="games.tetris.desc">Classic block-stacking game</div>
+            </a>
+        </div>
     </div>
 
+    <div class="section">
+        <h2 data-i18n="sections.arcade">Arcade Games</h2>
+        <div class="game-grid">
+            <a href="games/snake.html" class="game-card">
+                <div class="title" data-i18n="games.snake.name">Snake</div>
+                <div class="desc" data-i18n="games.snake.desc">Classic arcade game</div>
+            </a>
+            <a href="games/reaction.html" class="game-card">
+                <div class="title" data-i18n="games.reaction.name">Reaction Test</div>
+                <div class="desc" data-i18n="games.reaction.desc">Test your reaction speed</div>
+            </a>
+            <a href="games/tictactoe.html" class="game-card">
+                <div class="title" data-i18n="games.tictactoe.name">Tic-Tac-Toe</div>
+                <div class="desc" data-i18n="games.tictactoe.desc">Play against computer</div>
+            </a>
+            <a href="games/memory.html" class="game-card">
+                <div class="title" data-i18n="games.memory.name">Memory</div>
+                <div class="desc" data-i18n="games.memory.desc">Find matching pairs of cards</div>
+            </a>
+            <a href="games/cards.html" class="game-card">
+                <div class="title" data-i18n="games.cards.name">Solitaire</div>
+                <div class="desc" data-i18n="games.cards.desc">Classic card game</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 data-i18n="sections.quests">Text Quests</h2>
+        <div class="game-grid">
+            <a href="quests/index.html" class="game-card">
+                <div class="title" data-i18n="sections.quests">Text Quests</div>
+                <div class="desc">Lighthouse, Space Station, Castle, Detective</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 data-i18n="sections.word">Word Games</h2>
+        <div class="game-grid">
+            <a href="games/hangman.html" class="game-card">
+                <div class="title" data-i18n="games.hangman.name">Hangman</div>
+                <div class="desc" data-i18n="games.hangman.desc">Guess the word letter by letter</div>
+            </a>
+            <a href="games/wordle.html" class="game-card">
+                <div class="title" data-i18n="games.wordle.name">Word Guess</div>
+                <div class="desc" data-i18n="games.wordle.desc">5 attempts to guess a 5-letter word</div>
+            </a>
+            <a href="games/quiz.html" class="game-card">
+                <div class="title" data-i18n="games.quiz.name">Quiz</div>
+                <div class="desc" data-i18n="games.quiz.desc">10 questions on various topics</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Board Games</h2>
+        <div class="game-grid">
+            <a href="games/chess.html" class="game-card">
+                <div class="title" data-i18n="games.chess.name">Chess</div>
+                <div class="desc" data-i18n="games.chess.desc">Classic 8x8 board game</div>
+            </a>
+        </div>
+    </div>
+
+    <a href="../index.html" class="back-btn" data-i18n="backToHome">Back to Home</a>
+
+    <script src="i18n.js"></script>
 </body>
 </html>
