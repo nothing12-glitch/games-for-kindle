@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Замок Тіней</title>
+    <style>
+        body { font-family: Georgia, serif; padding: 20px; background: #fff; color: #000; max-width: 600px; margin: 0 auto; }
+        h1 { font-size: 28px; border-bottom: 2px solid #000; padding-bottom: 10px; }
+        .scene { display: none; }
+        .scene.active { display: block; }
+        .status { font-style: italic; color: #666; margin-bottom: 20px; border-left: 3px solid #000; padding-left: 10px; }
+        p { font-size: 18px; line-height: 1.6; margin-bottom: 20px; }
+        .choice { display: block; width: 100%; padding: 15px; margin: 10px 0; font-size: 18px; background: #fff; border: 2px solid #000; cursor: pointer; text-align: left; }
+        .choice:active { background: #000; color: #fff; }
+        .final { font-size: 24px; text-align: center; margin: 30px 0; font-weight: bold; }
+        #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Замок Тіней</h1>
+
+    <div id="scene1" class="scene active">
+        <div class="status">Розділ 1: Брама</div>
+        <p>Ви — лицар сер Артур, посланий королем врятувати принцесу Ізабелу, яку викрав чорний маг Малахіс. Замок височіє перед вами, оточений туманом.</p>
+        <p>Величезні дубові ворота зачинені. Поруч — маленька хвіртка, напіввідкрита. На стіні написано кров'ю: "Той, хто увійде, не вийде."</p>
+        <p>Ваш кінь нервує. Він не хоче наближатися до замку. Ви відчуваєте дивну ауру — магію, стару і злу.</p>
+        <button class="choice" onclick="showScene(2)">1. Спробувати відчинити головні ворота</button>
+        <button class="choice" onclick="showScene(3)">2. Пройти через хвіртку</button>
+        <button class="choice" onclick="showScene(4)">3. Обійти замок і шукати інший вхід</button>
+    </div>
+
+    <div id="scene2" class="scene">
+        <div class="status">Розділ 2: Вартовий</div>
+        <p>Ви штовхаєте ворота. Вони відчиняються з жахливим скрипом. Перед вами стоїть привид у лицарських обладунках.</p>
+        <p>"Щоб пройти, відповідай на моє питання," — говорить він. "Що має коріння, але не росте? Має стовбур, але не дерево?"</p>
+        <p>Ви думаєте. Це загадка. Відповідь може врятувати вас... або вбити.</p>
+        <button class="choice" onclick="showScene(5)">1. Відповісти: "Родовід"</button>
+        <button class="choice" onclick="showScene(6)">2. Відповісти: "Корабель"</button>
+        <button class="choice" onclick="showScene(7)">3. Відповісти: "Родина"</button>
+    </div>
+
+    <div id="scene3" class="scene">
+        <div class="status">Розділ 2: Таємний хід</div>
+        <p>Ви проходите через хвіртку і опиняєтесь у темному коридорі. Смолоскип освітлює старі фрески на стінах.</p>
+        <p>Коридор розгалужується. Направо — чутно музику. Наліво — запах їжі. Прямо — темрява і холод.</p>
+        <button class="choice" onclick="showScene(8)">1. Піти на музику (направо)</button>
+        <button class="choice" onclick="showScene(9)">2. Піти на запах їжі (наліво)</button>
+        <button class="choice" onclick="showScene(10)">3. Піти в темряву (прямо)</button>
+    </div>
+
+    <div id="scene4" class="scene">
+        <div class="status">Розділ 2: Обхід</div>
+        <p>Ви обходите замок. Стіни високі, але ви знаходите стару вежу. Вона частково зруйнована.</p>
+        <p>Ви можете спробувати залізти по стіні. Це небезпечно, але можливо.</p>
+        <p>Або ви можете шукати підземний хід. Біля підніжжя вежі ви бачите дивну тріщину в землі.</p>
+        <button class="choice" onclick="showScene(11)">1. Залізти по стіні вежі</button>
+        <button class="choice" onclick="showScene(12)">2. Дослідити тріщину</button>
+    </div>
+
+    <div id="scene5" class="scene">
+        <div class="status">Розділ 3: Правильна відповідь</div>
+        <p>Привид киває. "Правильно. Родовід має коріння і стовбур, але не є деревом."</p>
+        <p>Він розчиняється у повітрі. Ворота відчиняються повністю. Ви входите в замок.</p>
+        <p>Перед вами — великий двір. Посередині — фонтан з чорною водою. Направо — тронна зала. Наліво — темниця.</p>
+        <button class="choice" onclick="showScene(13)">1. Піти до тронної зали</button>
+        <button class="choice" onclick="showScene(14)">2. Піти до темниці</button>
+        <button class="choice" onclick="showScene(15)">3. Дослідити фонтан</button>
+    </div>
+
+    <div id="scene6" class="scene">
+        <div class="status">ФІНАЛ: Неправильна відповідь</div>
+        <p>Привид хитає головою. "Неправильно. Корабель має щоглу, а не стовбур."</p>
+        <p>Підлога провалюється, і ви падаєте в темну в'язницю. Двері зачиняються.</p>
+        <p>У темряві ви чуєте кроки. Хтось підходить...</p>
+        <div class="final">ВИ ПОТРАПИЛИ В ПАСТКУ</div>
+        <button class="choice" onclick="showScene(1)">Спробувати ще раз</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene7" class="scene">
+        <div class="status">Розділ 3: Інша відповідь</div>
+        <p>Привид думає. "Родина... це близько, але не зовсім правильно. Але я прийму це."</p>
+        <p>Він пропускає вас. Ви входите в замок, але привид попереджає: "Будь обережний. Тут не все таке, яким здається."</p>
+        <button class="choice" onclick="showScene(13)">1. Піти до тронної зали</button>
+        <button class="choice" onclick="showScene(14)">2. Піти до темниці</button>
+    </div>
+
+    <div id="scene8" class="scene">
+        <div class="status">Розділ 3: Музика</div>
+        <p>Ви йдете на музику. Вона стає гучнішою. Ви входите в велику залу. Там — бенкет.</p>
+        <p>За столом сидять привиди. Вони їдять, п'ють, сміються. Але їхні очі — порожні.</p>
+        <p>Один з них піднімає кубок. "Приєднуйся до нас, лицарю. Забудь про принцесу. Тут весело."</p>
+        <button class="choice" onclick="showScene(16)">1. Приєднатися до бенкету</button>
+        <button class="choice" onclick="showScene(17)">2. Відмовитися і шукати принцесу</button>
+        <button class="choice" onclick="showScene(18)">3. Запитати про принцесу</button>
+    </div>
+
+    <div id="scene9" class="scene">
+        <div class="status">Розділ 3: Їжа</div>
+        <p>Ви йдете на запах їжі. Потрапляєте на кухню. Там — старий кухар. Він готує щось дивне.</p>
+        <p>"А, новий гість!" — каже він. "Голодний? Сідай, поїси."</p>
+        <p>Але ви помічаєте — їжа виглядає дивно. М'ясо... надто червоне. Овочі... рухаються?</p>
+        <button class="choice" onclick="showScene(19)">1. З'їсти їжу</button>
+        <button class="choice" onclick="showScene(20)">2. Відмовитися і запитати про принцесу</button>
+        <button class="choice" onclick="showScene(14)">3. Втекти на кухню і шукати темницю</button>
+    </div>
+
+    <div id="scene10" class="scene">
+        <div class="status">Розділ 3: Темрява</div>
+        <p>Ви йдете в темряву. Холод стає сильнішим. Ваш смолоскип гасне.</p>
+        <p>Ви чуєте шепіт. "Допоможи нам... допоможи..."</p>
+        <p>Раптом ви бачите світло. Це двері. За ними — кімната з ліжками. На ліжках — люди. Вони сплять.</p>
+        <button class="choice" onclick="showScene(21)">1. Розбудити людей</button>
+        <button class="choice" onclick="showScene(22)">2. Дослідити кімнату</button>
+    </div>
+
+    <div id="scene11" class="scene">
+        <div class="status">Розділ 3: Вежа</div>
+        <p>Ви лізете по стіні. Каміння слизьке, але ви тримаєтесь. Ви досягаєте вікна.</p>
+        <p>Всередині — кімната. На ліжку лежить... принцеса! Вона спить.</p>
+        <p>Але поруч стоїть чорний маг. Він дивиться на вас.</p>
+        <button class="choice" onclick="showScene(23)">1. Увійти через вікно</button>
+        <button class="choice" onclick="showScene(24)">2. Спуститися і шукати інший шлях</button>
+    </div>
+
+    <div id="scene12" class="scene">
+        <div class="status">Розділ 3: Підземний хід</div>
+        <p>Ви спускаєтесь в тріщину. Це підземний хід. Він веде під замок.</p>
+        <p>Ви чуєте голоси. Хтось говорить. Ви підкрадаєтесь і підслуховуєте.</p>
+        <p>"...принцеса повинна залишатися тут. Доки не настане час..."</p>
+        <button class="choice" onclick="showScene(25)">1. Увійти і confrontation</button>
+        <button class="choice" onclick="showScene(26)">2. Продовжити підслуховувати</button>
+    </div>
+
+    <div id="scene13" class="scene">
+        <div class="status">Розділ 4: Тронна зала</div>
+        <p>Ви входите в тронну залу. Чорний маг Малахіс сидить на троні. Але принцеса стоїть поруч — вона не полонянка, вона його учениця!</p>
+        <p>"Я не викрадав її," — каже маг. "Вона втекла від насильницького шлюбу з королем. Я захищаю її."</p>
+        <p>Принцеса дивиться на вас. "Сер Артур, тату послав тебе? Скажи йому, що я не повернуся. Я люблю Малахіса."</p>
+        <button class="choice" onclick="showScene(27)">1. Прийняти правду і допомогти</button>
+        <button class="choice" onclick="showScene(28)">2. Відмовитися і спробувати врятувати силою</button>
+        <button class="choice" onclick="showScene(29)">3. Повернутися до короля з відповіддю</button>
+    </div>
+
+    <div id="scene14" class="scene">
+        <div class="status">Розділ 4: Темниця</div>
+        <p>Ви спускаєтесь в темницю. Там — в'язні. Десятки людей. Всі вони — ті, хто приходив сюди раніше.</p>
+        <p>Один з них — старий лицар. "Я прийшов тут 30 років тому," — каже він. "Рятуй принцесу, але пам'ятай — не все таке, яким здається."</p>
+        <button class="choice" onclick="showScene(30)">1. Звільнити в'язнів</button>
+        <button class="choice" onclick="showScene(13)">2. Піти до тронної зали</button>
+    </div>
+
+    <div id="scene15" class="scene">
+        <div class="status">Розділ 4: Фонтан</div>
+        <p>Ви підходите до фонтану. Вода чорна, але в ній щось блищить. Ви дістаєте руку...</p>
+        <p>Це медальйон. На ньому — портрет принцеси. І напис: "Той, хто носить це, побачить правду."</p>
+        <p>Ви одягаєте медальйон. Світ навколо змінюється. Ви бачите справжню картину замку.</p>
+        <button class="choice" onclick="showScene(31)">1. Піти до тронної зали з медальйоном</button>
+        <button class="choice" onclick="showScene(32)">2. Шукати принцесу</button>
+    </div>
+
+    <div id="scene16" class="scene">
+        <div class="status">ФІНАЛ: Бенкет привидів</div>
+        <p>Ви приєднуєтесь до бенкету. Їжа смачна, вино солодке. Ви забуваєте про місію.</p>
+        <p>Ви стаєте одним з привидів. Назавжди.</p>
+        <div class="final">ВИ ЗАБУЛИ ПРО СВОЮ МІСІЮ</div>
+        <button class="choice" onclick="showScene(1)">Спробувати ще раз</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene17" class="scene">
+        <div class="status">Розділ 4: Відмова</div>
+        <p>Ви відмовляєтеся. Привиди злі. "Тоді ти помреш тут!" — кричать вони.</p>
+        <p>Ви біжите. За вами женуться. Ви знаходите двері і виходите в коридор.</p>
+        <button class="choice" onclick="showScene(13)">1. Піти до тронної зали</button>
+        <button class="choice" onclick="showScene(14)">2. Піти до темниці</button>
+    </div>
+
+    <div id="scene18" class="scene">
+        <div class="status">Розділ 4: Запитання</div>
+        <p>Ви запитуєте про принцесу. Привиди мовчать. Потім один каже: "Вона в безпеці. Але вона не хоче, щоб її рятували."</p>
+        <p>"Чому?" — питаєте ви. "Бо король — лиходій. А маг — її захисник."</p>
+        <button class="choice" onclick="showScene(13)">1. Піти до тронної зали</button>
+        <button class="choice" onclick="showScene(29)">3. Повернутися до короля</button>
+    </div>
+
+    <div id="scene19" class="scene">
+        <div class="status">ФІНАЛ: Отруєння</div>
+        <p>Ви їсте їжу. Вона смачна. Але потім ви відчуваєте запаморочення.</p>
+        <p>Кухар сміється. "Ще один дурень. Ласкаво просимо в колекцію."</p>
+        <p>Ви засинаєте. Прокидаєтесь в'язнем.</p>
+        <div class="final">ВИ СТАЛИ В'ЯЗНЕМ</div>
+        <button class="choice" onclick="showScene(1)">Спробувати ще раз</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene20" class="scene">
+        <div class="status">Розділ 4: Кухар</div>
+        <p>Ви відмовляєтеся. Кухар злиться. "Тоді геть звідси!"</p>
+        <p>Але ви запитуєте про принцесу. Кухар м'якшає. "Вона в тронній залі. Але будь обережний — маг не такий, яким здається."</p>
+        <button class="choice" onclick="showScene(13)">1. Піти до тронної зали</button>
+    </div>
+
+    <div id="scene21" class="scene">
+        <div class="status">ФІНАЛ: Сплячі</div>
+        <p>Ви розбуджуєте людей. Вони прокидаються. Це... ваші попередники. Лицарі, які приходили сюди раніше.</p>
+        <p>Вони розповідають правду. Принцеса в безпеці. Король — лиходій.</p>
+        <div class="final">ВИ ДІЗНАЛИСЬ ПРАВДУ</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene22" class="scene">
+        <div class="status">Розділ 4: Кімната</div>
+        <p>Ви досліджуєте кімнату. Тут — щоденники. Всі вони — від лицарів, які приходили сюди.</p>
+        <p>Останній запис: "Принцеса не полонянка. Вона втекла від короля. Маг — її коханий."</p>
+        <button class="choice" onclick="showScene(13)">1. Піти до тронної зали</button>
+        <button class="choice" onclick="showScene(29)">2. Повернутися до короля</button>
+    </div>
+
+    <div id="scene23" class="scene">
+        <div class="status">ФІНАЛ: confrontation</div>
+        <p>Ви входите через вікно. Маг дивиться на вас. "Ти прийшов вбити мене?"</p>
+        <p>Принцеса прокидається. "Ні! Сер Артур, не чіпай його!"</p>
+        <p>Ви розумієте правду. Маг — не лиходій.</p>
+        <div class="final">ВИ ЗНАЙШЛИ ПРАВДУ!</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene24" class="scene">
+        <div class="status">Розділ 4: Інший шлях</div>
+        <p>Ви спускаєтесь і шукаєте інший шлях. Знаходите вхід в замок.</p>
+        <button class="choice" onclick="showScene(13)">1. Піти до тронної зали</button>
+        <button class="choice" onclick="showScene(14)">2. Піти до темниці</button>
+    </div>
+
+    <div id="scene25" class="scene">
+        <div class="status">ФІНАЛ: Бій</div>
+        <p>Ви входите і б'єтесь з магом. Але він сильніший. Ви програєте.</p>
+        <p>Вас кидають в темницю. Назавжди.</p>
+        <div class="final">ВИ ПРОГРАЛИ</div>
+        <button class="choice" onclick="showScene(1)">Спробувати ще раз</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene26" class="scene">
+        <div class="status">Розділ 4: Підслуховування</div>
+        <p>Ви продовжуєте підслуховувати. Маг говорить: "...король хоче використати її кров для ритуалу. Я не дозволю цього."</p>
+        <p>Ви розумієте — маг захищає принцесу від короля.</p>
+        <button class="choice" onclick="showScene(13)">1. Піти до тронної зали</button>
+        <button class="choice" onclick="showScene(29)">2. Повернутися до короля</button>
+    </div>
+
+    <div id="scene27" class="scene">
+        <div class="status">ФІНАЛ: Правда</div>
+        <p>Ви приймаєте правду. Допомагаєте принцесі і магу втекти. Вони починають нове життя.</p>
+        <p>Ви повертаєтесь до короля і кажете, що принцеса мертва. Король засмучений, але приймає це.</p>
+        <div class="final">ВИ ЗНАЙШЛИ ПРАВДУ І ДОПОМОГЛИ!</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene28" class="scene">
+        <div class="status">ФІНАЛ: Бій з магом</div>
+        <p>Ви намагаєтесь врятувати принцесу силою. Маг захищається. Ви б'єтесь.</p>
+        <p>Принцеса кричить: "Зупиніться!" Ви зупиняєтесь. Вона пояснює правду.</p>
+        <div class="final">ВИ ЗРОЗУМІЛИ ПРАВДУ</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene29" class="scene">
+        <div class="status">ФІНАЛ: Повернення</div>
+        <p>Ви повертаєтесь до короля. Кажете, що принцеса мертва. Король засмучений.</p>
+        <p>Але ви знаєте правду. Принцеса жива і щаслива.</p>
+        <div class="final">ВИ ЗБЕРЕГЛИ ТАЄМНИЦЮ</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene30" class="scene">
+        <div class="status">ФІНАЛ: Звільнення</div>
+        <p>Ви звільняєте в'язнів. Вони вдячні. Разом ви йдете до тронної зали.</p>
+        <p>Маг дивиться на вас. "Ти прийшов з армією?" Ви пояснюєте. Маг приймає правду.</p>
+        <div class="final">ВИ ЗВІЛЬНИЛИ НЕВИННИХ!</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene31" class="scene">
+        <div class="status">ФІНАЛ: Медальйон</div>
+        <p>З медальйоном ви бачите справжню картину. Маг — не лиходій. Король — справжній монстр.</p>
+        <p>Ви допомагаєте принцесі. Правда виходить на світло.</p>
+        <div class="final">ВИ ПОБАЧИЛИ ПРАВДУ!</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene32" class="scene">
+        <div class="status">ФІНАЛ: Пошук</div>
+        <p>Ви шукаєте принцесу. Знаходите її в саду. Вона щаслива з магом.</p>
+        <p>Ви розумієте — вона не потребує порятунку.</p>
+        <div class="final">ВИ ЗНАЙШЛИ ЇЇ ЩАСЛИВОЮ</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <script>
+        function showScene(num) {
+            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+            document.getElementById('scene' + num).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
