@@ -2,30 +2,327 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Класичні ігри для Kindle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic Games for Kindle</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        body {
+            font-family: Georgia, serif;
+            font-size: 20px;
+            color: #000;
+            background: #fff;
+            margin: 0;
+            padding: 20px 20px 200px;
+            line-height: 1.6;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        h1 { 
+            font-size: 28px; 
+            border-bottom: 2px solid #000; 
+            padding-bottom: 10px; 
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 22px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .subtitle {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .game-list {
+            margin: 20px 0;
+        }
+        .game-list a {
+            display: block;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #000;
+            text-decoration: none;
+            color: #000;
+            font-size: 18px;
+            box-shadow: 3px 3px 0px #000;
+        }
+        .game-list a:active {
+            box-shadow: 1px 1px 0px #000;
+            transform: translate(2px, 2px);
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            background: #ddd;
+            border: 2px solid #000;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 3px 3px 0px #000;
+        }
+        .back-link:active {
+            background: #bbb;
+            box-shadow: 1px 1px 0px #000;
+        }
+        .language-selector {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+        .language-selector select {
+            padding: 8px;
+            font-size: 14px;
+            border: 2px solid #000;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            font-family: Georgia, serif;
+        }
+        .project-info {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            max-width: 260px;
+            font-size: 13px;
+            color: #333;
+            background: #f9f9f9;
+            border: 2px solid #000;
+            border-radius: 8px;
+            padding: 12px;
+            box-shadow: 3px 3px 0px #000;
+            z-index: 1000;
+            text-align: left;
+        }
+        .project-info h3 {
+            margin: 0 0 8px 0;
+            font-size: 15px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 4px;
+        }
+        .project-info p {
+            margin: 5px 0;
+            font-size: 12px;
+        }
+        .project-info a {
+            color: #0066cc;
+            text-decoration: underline;
+            word-break: break-all;
+        }
+        .quote-of-day {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            max-width: 280px;
+            font-size: 13px;
+            color: #333;
+            background: #f9f9f9;
+            border: 2px solid #000;
+            border-radius: 8px;
+            padding: 12px;
+            box-shadow: 3px 3px 0px #000;
+            z-index: 1000;
+            text-align: right;
+            font-style: italic;
+        }
+        .quote-of-day h3 {
+            margin: 0 0 8px 0;
+            font-size: 15px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 4px;
+            font-style: normal;
+        }
+        .quote-of-day p {
+            margin: 5px 0;
+            font-size: 12px;
+        }
+        .made-by {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 13px;
+            color: #333;
+            background: #f9f9f9;
+            border: 2px solid #000;
+            border-radius: 8px;
+            padding: 10px 18px;
+            box-shadow: 3px 3px 0px #000;
+            z-index: 1000;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Класичні ігри</h1>
-    <p>Оптимізовано для Kindle з кнопками</p>
-
-    <h2>Текстові квести</h2>
-    <div class="game-list">
-        <a href="lighthouse.html">Таємниця маяка - текстовий квест</a>
-        <a href="spacestation.html">Космічна станція - sci-fi квест</a>
-        <a href="castle.html">Замок Тіней - фентезі квест</a>
-        <a href="detective.html">Справа №47 - детектив</a>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <select onchange="changeLanguage(this.value)">
+            <option value="en" id="lang-en" selected>English</option>
+            <option value="uk" id="lang-uk">Українська</option>
+            <option value="de" id="lang-de">Deutsch</option>
+            <option value="pl" id="lang-pl">Polski</option>
+        </select>
     </div>
 
-    <h2>Інші ігри</h2>
+    <!-- Main Content -->
+    <h1 id="title">Класичні ігри</h1>
+    <p class="subtitle" id="subtitle">Оптимізовано для Kindle з кнопками</p>
+
+    <h2 id="quests-title">Текстові квести</h2>
     <div class="game-list">
-        <a href="capitals/index.html">Столиці світу - вікторина</a>
-        <a href="maze/index.html">Лабіринт - пригодницька гра</a>
-        <a href="riddles/index.html">Книга загадок - головоломки</a>
+        <a href="lighthouse.html" id="quest1">Таємниця маяка - текстовий квест</a>
+        <a href="spacestation.html" id="quest2">Космічна станція - sci-fi квест</a>
+        <a href="castle.html" id="quest3">Замок Тіней - фентезі квест</a>
+        <a href="detective.html" id="quest4">Справа №47 - детектив</a>
     </div>
 
-    <a href="../index.html" class="back-link">На головну</a>
+    <h2 id="other-title">Інші ігри</h2>
+    <div class="game-list">
+        <a href="capitals/index.html" id="game1">Столиці світу - вікторина</a>
+        <a href="maze/index.html" id="game2">Лабіринт - пригодницька гра</a>
+        <a href="riddles/index.html" id="game3">Книга загадок - головоломки</a>
+    </div>
 
+    <a href="../index.html" class="back-link" id="back-btn">На головну</a>
+
+    <!-- Project Info (Left Bottom) -->
+    <div class="project-info">
+        <h3 id="project-title">Project Info:</h3>
+        <p id="project-desc">This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.</p>
+        <p id="project-contact">Found a bug or have suggestions? Email: <a href="mailto:workingnothing12.github@gmail.com">workingnothing12.github@gmail.com</a></p>
+    </div>
+
+    <!-- Quote of the Day (Right Bottom) -->
+    <div class="quote-of-day">
+        <h3 id="quote-title">Quote of the Day:</h3>
+        <p id="quote-text">"Java is to JavaScript what car is to Carpet." - Chris Heilmann</p>
+    </div>
+
+    <!-- Made By (Center Bottom) -->
+    <div class="made-by" id="made-by">
+        Made with ❤️ for Kindle lovers
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                title: "Classic Games",
+                subtitle: "Optimized for Kindle with buttons",
+                questsTitle: "Text Quests",
+                otherTitle: "Other Games",
+                back: "Back to Home",
+                quest1: "Lighthouse Mystery - text quest",
+                quest2: "Space Station - sci-fi quest",
+                quest3: "Castle of Shadows - fantasy quest",
+                quest4: "Detective Case #47 - detective",
+                game1: "World Capitals - quiz",
+                game2: "Maze - adventure game",
+                game3: "Book of Riddles - puzzles",
+                projectTitle: "Project Info:",
+                projectDesc: "This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.",
+                projectContact: "Found a bug or have suggestions? Email:",
+                madeBy: "Made with ❤️ for Kindle lovers"
+            },
+            uk: {
+                title: "Класичні ігри",
+                subtitle: "Оптимізовано для Kindle з кнопками",
+                questsTitle: "Текстові квести",
+                otherTitle: "Інші ігри",
+                back: "На головну",
+                quest1: "Таємниця маяка - текстовий квест",
+                quest2: "Космічна станція - sci-fi квест",
+                quest3: "Замок Тіней - фентезі квест",
+                quest4: "Справа №47 - детектив",
+                game1: "Столиці світу - вікторина",
+                game2: "Лабіринт - пригодницька гра",
+                game3: "Книга загадок - головоломки",
+                projectTitle: "Про проект:",
+                projectDesc: "Цей проект створено для любителів Kindle. Ігри оптимізовані для E-Ink дисплеїв.",
+                projectContact: "Знайшли помилку або маєте пропозиції? Пишіть:",
+                madeBy: "Створено з ❤️ для любителів Kindle"
+            },
+            de: {
+                title: "Klassische Spiele",
+                subtitle: "Optimiert für Kindle mit Tasten",
+                questsTitle: "Text-Quests",
+                otherTitle: "Andere Spiele",
+                back: "Zurück",
+                quest1: "Leuchtturm-Mystery - Textquest",
+                quest2: "Raumstation - Sci-Fi-Quest",
+                quest3: "Schloss der Schatten - Fantasy-Quest",
+                quest4: "Detektivfall #47 - Detektiv",
+                game1: "Hauptstädte der Welt - Quiz",
+                game2: "Labyrinth - Abenteuerspiel",
+                game3: "Rätselbuch - Puzzles",
+                projectTitle: "Projekt Info:",
+                projectDesc: "Dieses Projekt wurde für Kindle-Liebhaber erstellt. Spiele optimiert für E-Ink-Displays.",
+                projectContact: "Fehler gefunden oder Vorschläge? Email:",
+                madeBy: "Gemacht mit ❤️ für Kindle-Liebhaber"
+            },
+            pl: {
+                title: "Gry klasyczne",
+                subtitle: "Zoptymalizowane dla Kindle z przyciskami",
+                questsTitle: "Questy tekstowe",
+                otherTitle: "Inne gry",
+                back: "Powrót",
+                quest1: "Tajemnica latarni - quest tekstowy",
+                quest2: "Stacja kosmiczna - quest sci-fi",
+                quest3: "Zamek Cieni - quest fantasy",
+                quest4: "Sprawa #47 - detektyw",
+                game1: "Stolice świata - quiz",
+                game2: "Labirynt - gra przygodowa",
+                game3: "Księga zagadek - puzzle",
+                projectTitle: "Info o projekcie:",
+                projectDesc: "Ten projekt został stworzony dla miłośników Kindle. Gry zoptymalizowane dla wyświetlaczy E-Ink.",
+                projectContact: "Znalazłeś błąd lub masz sugestie? Email:",
+                madeBy: "Stworzone z ❤️ dla miłośników Kindle"
+            }
+        };
+
+        const quotes = [
+            { en: '"Java is to JavaScript what car is to Carpet." - Chris Heilmann', uk: '"Java відноситься до JavaScript як килим до автомобіля." - Chris Heilmann', de: '"Java ist zu JavaScript, was Teppich zu Auto ist." - Chris Heilmann', pl: '"Java ma się do JavaScript jak dywan do samochodu." - Chris Heilmann' },
+            { en: '"The only way to do great work is to love what you do." - Steve Jobs', uk: '"Єдиний спосіб робити великі справи - любити те, що робиш." - Steve Jobs', de: '"Der einzige Weg, großartige Arbeit zu leisten, ist zu lieben, was man tut." - Steve Jobs', pl: '"Jedyny sposób na wykonanie wielkiej pracy to kochać to, co się robi." - Steve Jobs' },
+            { en: '"Code is like humor. When you have to explain it, it\'s bad." - Cory House', uk: '"Код як гумор. Якщо треба пояснювати - він поганий." - Cory House', de: '"Code ist wie Humor. Wenn man ihn erklären muss, ist er schlecht." - Cory House', pl: '"Kod jest jak humor. Kiedy trzeba go wyjaśniać, jest zły." - Cory House' },
+            { en: '"Simplicity is the ultimate sophistication." - Leonardo da Vinci', uk: '"Простота - це вища форма досконалості." - Leonardo da Vinci', de: '"Einfachheit ist die höchste Form der Raffinesse." - Leonardo da Vinci', pl: '"Prostota to najwyższa forma wyrafinowania." - Leonardo da Vinci' },
+            { en: '"Make it work, make it right, make it fast." - Kent Beck', uk: '"Зроби щоб працювало, зроби правильно, зроби швидко." - Kent Beck', de: '"Lass es funktionieren, mach es richtig, mach es schnell." - Kent Beck', pl: '"Spraw, by działało, spraw, by było dobrze, spraw, by było szybko." - Kent Beck' }
+        ];
+
+        function changeLanguage(lang) {
+            document.getElementById('title').textContent = translations[lang].title;
+            document.getElementById('subtitle').textContent = translations[lang].subtitle;
+            document.getElementById('quests-title').textContent = translations[lang].questsTitle;
+            document.getElementById('other-title').textContent = translations[lang].otherTitle;
+            document.getElementById('back-btn').textContent = translations[lang].back;
+            document.getElementById('quest1').textContent = translations[lang].quest1;
+            document.getElementById('quest2').textContent = translations[lang].quest2;
+            document.getElementById('quest3').textContent = translations[lang].quest3;
+            document.getElementById('quest4').textContent = translations[lang].quest4;
+            document.getElementById('game1').textContent = translations[lang].game1;
+            document.getElementById('game2').textContent = translations[lang].game2;
+            document.getElementById('game3').textContent = translations[lang].game3;
+            document.getElementById('project-title').textContent = translations[lang].projectTitle;
+            document.getElementById('project-desc').textContent = translations[lang].projectDesc;
+            document.getElementById('made-by').textContent = translations[lang].madeBy;
+            
+            const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
+            document.getElementById('quote-text').textContent = quotes[dayIndex][lang];
+            
+            document.getElementById('lang-en').selected = (lang === 'en');
+            document.getElementById('lang-uk').selected = (lang === 'uk');
+            document.getElementById('lang-de').selected = (lang === 'de');
+            document.getElementById('lang-pl').selected = (lang === 'pl');
+            
+            localStorage.setItem('language', lang);
+        }
+
+        window.onload = function() {
+            const savedLang = localStorage.getItem('language') || 'en';
+            changeLanguage(savedLang);
+            const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
+            document.getElementById('quote-text').textContent = quotes[dayIndex][savedLang];
+        };
+    </script>
 </body>
 </html>
