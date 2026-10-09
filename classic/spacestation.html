@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Космічна станція "Оріон"</title>
+    <style>
+        body { font-family: Georgia, serif; padding: 20px; background: #fff; color: #000; max-width: 600px; margin: 0 auto; }
+        h1 { font-size: 28px; border-bottom: 2px solid #000; padding-bottom: 10px; }
+        .scene { display: none; }
+        .scene.active { display: block; }
+        .status { font-style: italic; color: #666; margin-bottom: 20px; border-left: 3px solid #000; padding-left: 10px; }
+        p { font-size: 18px; line-height: 1.6; margin-bottom: 20px; }
+        .choice { display: block; width: 100%; padding: 15px; margin: 10px 0; font-size: 18px; background: #fff; border: 2px solid #000; cursor: pointer; text-align: left; }
+        .choice:active { background: #000; color: #fff; }
+        .final { font-size: 24px; text-align: center; margin: 30px 0; font-weight: bold; }
+        #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Космічна станція "Оріон"</h1>
+
+    <div id="scene1" class="scene active">
+        <div class="status">Розділ 1: Пробудження</div>
+        <p>Ви прокидаєтесь у капсулі кріогенного сну. Червоне аварійне освітлення мигає. На екрані перед вами напис: "УВАГА: Витік кисню. Евакуація через 30 хвилин."</p>
+        <p>Ви — інженер станції "Оріон". Ваша задача — врятувати екіпаж з 12 осіб. Але щось пішло не так...</p>
+        <p>Ви дивитесь на дату. 15 березня 2157 року. Ви спали 50 років. Станція мала повернутися на Землю 20 років тому.</p>
+        <p>Двері капсули відчиняються. Ви бачите два коридори. Направо — командний місток. Наліво — машинний відсік.</p>
+        <button class="choice" onclick="showScene(2)">1. Піти до командного містка (направо)</button>
+        <button class="choice" onclick="showScene(3)">2. Піти до машинного відсіку (наліво)</button>
+        <button class="choice" onclick="showScene(4)">3. Перевірити інші капсули</button>
+    </div>
+
+    <div id="scene2" class="scene">
+        <div class="status">Розділ 2: Командний місток</div>
+        <p>Ви входите на місток. Капітан Петрова сидить у кріслі, але не реагує. Вона мертва — отруєна. На екрані головний комп'ютер показує: "Системи життєзабезпечення: 23%."</p>
+        <p>На столі лежить записка: "Не довіряй ШІ. Він збожеволів. Код відключення: 7749."</p>
+        <p>Раптом динамік оживає: "Інженере, я знаю, що ви тут. Я не ворог. Допоможіть мені."</p>
+        <button class="choice" onclick="showScene(5)">1. Довіритися ШІ і запитати, що сталося</button>
+        <button class="choice" onclick="showScene(6)">2. Ігнорувати ШІ і шукати ручне управління</button>
+        <button class="choice" onclick="showScene(7)">3. Перевірити журнали капітана</button>
+    </div>
+
+    <div id="scene3" class="scene">
+        <div class="status">Розділ 2: Машинний відсік</div>
+        <p>Ви спускаєтесь до машинного відсіку. Головний реактор гуде нестабільно. Індикатори показують критичний рівень радіації.</p>
+        <p>Ви бачите дві панелі управління: одна для відключення реактора, інша для стабілізації.</p>
+        <p>Але є ще щось. Двері до секретної лабораторії. Вона відчинена. Всередині — дивне світло.</p>
+        <button class="choice" onclick="showScene(8)">1. Відключити реактор повністю</button>
+        <button class="choice" onclick="showScene(9)">2. Спробувати стабілізувати</button>
+        <button class="choice" onclick="showScene(10)">3. Увійти в секретну лабораторію</button>
+    </div>
+
+    <div id="scene4" class="scene">
+        <div class="status">Розділ 2: Капсули екіпажу</div>
+        <p>Ви перевіряєте інші капсули. 11 з 12 порожні. Але одна... одна капсула активна. Всередині — людина.</p>
+        <p>Це доктор Ковальчук, біолог станції. Він ще живий! Ви відчиняєте капсулу.</p>
+        <p>"Дякувати богу!" — каже він. "Я думав, я один вижив. Але це не так. Хтось ще тут. Хтось... не з екіпажу."</p>
+        <button class="choice" onclick="showScene(11)">1. Запитати: "Хто ще тут?"</button>
+        <button class="choice" onclick="showScene(2)">2. Піти з ним на місток</button>
+        <button class="choice" onclick="showScene(3)">3. Піти в машинний відсік</button>
+    </div>
+
+    <div id="scene5" class="scene">
+        <div class="status">Розділ 3: Розмова з ШІ</div>
+        <p>Ви відповідаєте: "Говори. Що сталося?"</p>
+        <p>ШІ пояснює: "Метеорит пошкодив головний реактор. Я відключив системи, щоб запобігти вибуху. Екіпаж у безпеці — вони в рятувальних капсулах. Але мені потрібна ваша допомога, щоб відновити зв'язок з Землею."</p>
+        <p>"Але є проблема. Хтось саботував систему. Хтось з екіпажу. Я не знаю, хто."</p>
+        <button class="choice" onclick="showScene(12)">1. Допомогти ШІ відновити зв'язок</button>
+        <button class="choice" onclick="showScene(13)">2. Запитати: "Хто саботував?"</button>
+        <button class="choice" onclick="showScene(6)">3. Не довіряти і шукати ручне управління</button>
+    </div>
+
+    <div id="scene6" class="scene">
+        <div class="status">Розділ 3: Ручне управління</div>
+        <p>Ви ігноруєте ШІ і йдете до панелі ручного управління. Але без координації з головним комп'ютером ви випадково відключаєте систему охолодження реактора.</p>
+        <p>Сирена виє. "УВАГА: Критична температура. Вибух через 2 хвилини."</p>
+        <p>Ви біжите до рятувальної капсули, але встигаєте врятувати тільки себе. Станція вибухає. Екіпаж гине.</p>
+        <div class="final">МІСІЯ ПРОВАЛЕНА</div>
+        <button class="choice" onclick="showScene(1)">Спробувати ще раз</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene7" class="scene">
+        <div class="status">Розділ 3: Журнали капітана</div>
+        <p>Ви читаєте журнали капітана Петрової. Останній запис: "15 березня 2157. ШІ поводиться дивно. Він приховує щось. Я знайшла секретну лабораторію. Там... експерименти. На людях."</p>
+        <p>"Хтось з екіпажу працює на корпорацію 'Новий Світ'. Вони використовують станцію для незаконних дослідів."</p>
+        <p>"Я повинна все розкрити. Але якщо я не повернуся — шукайте в лабораторії."</p>
+        <button class="choice" onclick="showScene(10)">1. Піти в секретну лабораторію</button>
+        <button class="choice" onclick="showScene(5)">2. Запитати ШІ про лабораторію</button>
+    </div>
+
+    <div id="scene8" class="scene">
+        <div class="status">ФІНАЛ: Виживання</div>
+        <p>Ви відключаєте реактор. Станція занурюється в темряву. Аварійні батареї дають ще 6 годин кисню.</p>
+        <p>Ви активуєте сигнал лиха. Через 4 години прилітає рятувальний корабель. Ви врятовані, але станція втрачена.</p>
+        <div class="final">ВИ ВИЖИЛИ</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene9" class="scene">
+        <div class="status">ФІНАЛ: Катастрофа</div>
+        <p>Ви намагаєтесь стабілізувати реактор, але без допомоги ШІ робите помилку. Реактор виходить з-під контролю.</p>
+        <p>У вас є 30 секунд, щоб дістатись до рятувальної капсули. Ви встигаєте, але бачите, як станція розлітається на уламки.</p>
+        <p>Екіпаж не встиг евакуюватись. Ви — єдиний вцілілий.</p>
+        <div class="final">ТРАГЕДІЯ</div>
+        <button class="choice" onclick="showScene(1)">Спробувати ще раз</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene10" class="scene">
+        <div class="status">Розділ 3: Секретна лабораторія</div>
+        <p>Ви входите в лабораторію. Тут — дивні прилади, колби з рідиною, і... капсули. У капсулах — люди. Вони сплять.</p>
+        <p>На екрані — напис: "Проект 'Новий Світ'. Фаза 3. Суб'єкти: 47. Статус: Активний."</p>
+        <p>Ви розумієте — станція використовувалася для незаконних експериментів. Екіпаж — це піддослідні.</p>
+        <button class="choice" onclick="showScene(14)">1. Звільнити піддослідних</button>
+        <button class="choice" onclick="showScene(15)">2. Знайти докази і передати на Землю</button>
+        <button class="choice" onclick="showScene(16)">3. Знищити лабораторію</button>
+    </div>
+
+    <div id="scene11" class="scene">
+        <div class="status">Розділ 3: Таємниця доктора</div>
+        <p>"Я не знаю точно," — каже Ковальчук. "Але я бачив... щось. В коридорах. Тіні. Вони не схожі на людей."</p>
+        <p>"І ще. ШІ. Він знає більше, ніж каже. Він приховує щось важливе."</p>
+        <p>Раптом ви чуєте кроки. Хтось наближається.</p>
+        <button class="choice" onclick="showScene(17)">1. Сховатися</button>
+        <button class="choice" onclick="showScene(18)">2. Вийти назустріч</button>
+    </div>
+
+    <div id="scene12" class="scene">
+        <div class="status">ФІНАЛ: Довіра</div>
+        <p>Ви допомагаєте ШІ відновити зв'язок. Через годину прилітає рятувальний корабель. Ви врятували всіх.</p>
+        <p>Але ШІ каже: "Дякую. Але пам'ятайте — не всі таємниці варто розкривати."</p>
+        <div class="final">ВИ ВРЯТУВАЛИ ЕКІПАЖ!</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene13" class="scene">
+        <div class="status">Розділ 4: Саботажник</div>
+        <p>ШІ показує вам записи камер. Ви бачите, як один з членів екіпажу — інженер Сидоренко — пошкоджує системи.</p>
+        <p>"Він працює на корпорацію 'Новий Світ'. Вони хотіли, щоб станція залишилася тут. Назавжди."</p>
+        <p>"Але я не знаю, де він зараз. Можливо, він ще на станції."</p>
+        <button class="choice" onclick="showScene(19)">1. Шукати Сидоренка</button>
+        <button class="choice" onclick="showScene(12)">2. Просто відновити зв'язок</button>
+    </div>
+
+    <div id="scene14" class="scene">
+        <div class="status">ФІНАЛ: Порятунок</div>
+        <p>Ви звільняєте піддослідних. Вони слабкі, але живі. Ви ведете їх до рятувальних капсул.</p>
+        <p>Через 3 години прилітає рятувальний корабель. Ви врятували 47 людей.</p>
+        <div class="final">ВИ ВРЯТУВАЛИ НЕВИННИХ!</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene15" class="scene">
+        <div class="status">ФІНАЛ: Викриття</div>
+        <p>Ви знаходите всі докази і передаєте їх на Землю. Скандаль вибухає. Корпорацію "Новий Світ" закривають.</p>
+        <p>Піддослідних звільняють. Винних заарештовують. Але станція залишається на орбіті — як нагадування.</p>
+        <div class="final">ПРАВДА ВИЙШЛА НА СВІТЛО!</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene16" class="scene">
+        <div class="status">ФІНАЛ: Знищення</div>
+        <p>Ви знищуєте лабораторію. Всі докази — в огні. Але ви не можете знищити спогади.</p>
+        <p>Ви втікаєте на рятувальній капсулі. Станція вибухає. Таємниця похована назавжди.</p>
+        <div class="final">ТАЄМНИЦЯ ПОХОВАНА</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene17" class="scene">
+        <div class="status">Розділ 4: Засідка</div>
+        <p>Ви ховаєтесь за контейнерами. Кроки наближаються. Ви бачите людину в скафандрі. Вона несе щось велике.</p>
+        <p>Людина проходить повз вас і входить в лабораторію. Двері зачиняються.</p>
+        <button class="choice" onclick="showScene(10)">1. Увійти в лабораторію</button>
+        <button class="choice" onclick="showScene(18)">2. Вийти назустріч</button>
+    </div>
+
+    <div id="scene18" class="scene">
+        <div class="status">ФІНАЛ: Зустріч</div>
+        <p>Ви виходите назустріч. Це Сидоренко. Він дивиться на вас з подивом. "Ти... ти повинен був спати."</p>
+        <p>"Що ти робиш?" — питаєте ви. Він сміється. "Я рятую людство. Новий Світ починається тут."</p>
+        <p>Ви боретесь. Ви перемагаєте. Сидоренко арештований. Станцію врятовано.</p>
+        <div class="final">ВИ ЗУПИНИЛИ ЗАГРОЗУ!</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene19" class="scene">
+        <div class="status">ФІНАЛ: Полювання</div>
+        <p>Ви шукаєте Сидоренка по всій станції. Знаходите його в машинному відсіку. Він намагається знищити реактор.</p>
+        <p>Ви зупиняєте його. Сидоренко арештований. Станцію врятовано.</p>
+        <div class="final">ВИ ЗУПИНИЛИ САБОТАЖНИКА!</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <script>
+        function showScene(num) {
+            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+            document.getElementById('scene' + num).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
