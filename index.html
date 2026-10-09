@@ -7,30 +7,27 @@
     <style>
         body {
             font-family: Georgia, serif;
-            font-size: 20px;
+            font-size: 24px;
+            line-height: 1.5;
             color: #000;
             background: #fff;
             margin: 0;
-            padding: 40px 20px;
+            padding: 30px 20px;
             text-align: center;
-            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        h1 {
-            font-size: 36px;
-            margin-bottom: 30px;
-        }
-        .subtitle {
-            font-size: 20px;
-            color: #666;
-            margin-bottom: 50px;
-        }
+        h1 { font-size: 32px; margin-bottom: 10px; }
+        p { margin-bottom: 40px; color: #333; }
+        
         .version-btn {
             display: block;
             width: 100%;
-            max-width: 450px;
+            max-width: 400px;
             margin: 20px auto;
-            padding: 30px;
-            font-size: 24px;
+            padding: 25px;
+            font-size: 26px;
             font-weight: bold;
             color: #000;
             background: #fff;
@@ -38,149 +35,102 @@
             text-decoration: none;
             text-align: center;
             box-shadow: 4px 4px 0px #000;
-            transition: transform 0.1s;
         }
-        .version-btn:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0px #000;
-        }
-        .version-btn:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px #000;
-        }
-        .version-btn.old {
-            background: #fff;
-        }
-        .version-btn.new {
+        .version-btn:focus, .version-btn:hover {
             background: #000;
             color: #fff;
         }
-        .version-btn .desc {
+        .hint {
             font-size: 16px;
-            font-weight: normal;
-            margin-top: 10px;
-            color: #666;
-        }
-        .version-btn.new .desc {
-            color: #ccc;
-        }
-        .tip {
-            font-size: 14px;
-            color: #666;
+            color: #555;
             margin-top: 50px;
-            padding-top: 20px;
             border-top: 1px solid #ccc;
+            padding-top: 20px;
         }
-        
-        /* Language Selector */
         .language-selector {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 10px;
+            right: 10px;
             z-index: 1000;
         }
         .language-selector select {
-            padding: 10px 15px;
-            font-size: 16px;
+            padding: 8px;
+            font-size: 14px;
             border: 2px solid #000;
-            border-radius: 5px;
+            border-radius: 4px;
             background: #fff;
             cursor: pointer;
             font-family: Georgia, serif;
         }
-        
-        /* Project Info Box (Left Bottom) */
         .project-info {
             position: fixed;
             bottom: 20px;
             left: 20px;
             max-width: 280px;
-            padding: 15px;
+            font-size: 14px;
+            color: #333;
             background: #f9f9f9;
             border: 2px solid #000;
             border-radius: 8px;
-            font-size: 13px;
-            color: #333;
+            padding: 15px;
+            box-shadow: 3px 3px 0px #000;
             z-index: 1000;
             text-align: left;
-            box-shadow: 3px 3px 0px #ddd;
         }
-        .project-info strong {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
+        .project-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
             border-bottom: 1px solid #000;
             padding-bottom: 5px;
+        }
+        .project-info p {
+            margin: 5px 0;
+            font-size: 13px;
         }
         .project-info a {
             color: #0066cc;
             text-decoration: underline;
         }
-        
-        /* Quote of the Day (Right Bottom) */
         .quote-of-day {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            max-width: 350px;
-            padding: 15px;
+            max-width: 300px;
+            font-size: 14px;
+            color: #333;
             background: #f9f9f9;
             border: 2px solid #000;
             border-radius: 8px;
-            font-size: 13px;
-            color: #333;
-            font-style: italic;
+            padding: 15px;
+            box-shadow: 3px 3px 0px #000;
             z-index: 1000;
             text-align: right;
-            box-shadow: 3px 3px 0px #ddd;
+            font-style: italic;
         }
-        .quote-of-day strong {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
+        .quote-of-day h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
             border-bottom: 1px solid #000;
             padding-bottom: 5px;
             font-style: normal;
         }
-        
-        /* Made By (Center Bottom) */
+        .quote-of-day p {
+            margin: 5px 0;
+            font-size: 13px;
+        }
         .made-by {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 10px 20px;
+            font-size: 14px;
+            color: #333;
             background: #f9f9f9;
             border: 2px solid #000;
             border-radius: 8px;
-            font-size: 13px;
-            color: #333;
+            padding: 10px 20px;
+            box-shadow: 3px 3px 0px #000;
             z-index: 1000;
-            white-space: nowrap;
-            box-shadow: 3px 3px 0px #ddd;
-        }
-        .made-by .heart {
-            color: #e91e63;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .project-info,
-            .quote-of-day,
-            .made-by {
-                position: static;
-                max-width: 100%;
-                margin: 10px auto;
-                transform: none;
-                text-align: center;
-            }
-            .language-selector {
-                position: static;
-                margin-bottom: 20px;
-            }
-            body {
-                padding-bottom: 20px;
-            }
         }
     </style>
 </head>
@@ -188,7 +138,7 @@
 
     <!-- Language Selector -->
     <div class="language-selector">
-        <select onchange="changeLanguage(this.value)" id="lang-select">
+        <select onchange="changeLanguage(this.value)">
             <option value="en" id="lang-en" selected>English</option>
             <option value="uk" id="lang-uk">Українська</option>
             <option value="de" id="lang-de">Deutsch</option>
@@ -196,42 +146,40 @@
         </select>
     </div>
 
-    <!-- Main Title -->
+    <!-- Main Content -->
     <h1 id="title">Kindle Games</h1>
-    <p class="subtitle" id="subtitle">Choose your device version:</p>
+    <p id="subtitle">Choose your device version:</p>
 
-    <!-- Version Buttons -->
-    <a href="classic/index.html" class="version-btn old">
-        <span id="old-kindle">Old Kindle</span>
-        <div class="desc" id="old-desc">(with buttons, no JavaScript)</div>
+    <a href="classic/index.html" class="version-btn">
+        <span id="old-kindle">Old Kindle</span><br>
+        <span style="font-size: 18px; font-weight: normal;" id="old-kindle-desc">(with buttons, no JavaScript)</span>
     </a>
 
-    <a href="modern/index.html" class="version-btn new">
-        <span id="new-kindle">New Kindle</span>
-        <div class="desc" id="new-desc">(touchscreen, with JavaScript)</div>
+    <a href="modern/index.html" class="version-btn">
+        <span id="new-kindle">New Kindle</span><br>
+        <span style="font-size: 18px; font-weight: normal;" id="new-kindle-desc">(touchscreen, with JavaScript)</span>
     </a>
 
-    <!-- Tip -->
-    <p class="tip" id="tip">
+    <div class="hint" id="tip">
         Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript).
-    </p>
+    </div>
 
     <!-- Project Info (Left Bottom) -->
-    <div class="project-info" id="project-info">
-        <strong>Project Info:</strong>
-        This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.<br><br>
-        Found a bug or have suggestions? Email: <a href="mailto:workingnothing12.github@gmail.com">workingnothing12.github@gmail.com</a>
+    <div class="project-info">
+        <h3 id="project-title">Project Info:</h3>
+        <p id="project-desc">This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.</p>
+        <p id="project-contact">Found a bug or have suggestions? Email: <a href="mailto:workingnothing12.github@gmail.com">workingnothing12.github@gmail.com</a></p>
     </div>
 
     <!-- Quote of the Day (Right Bottom) -->
-    <div class="quote-of-day" id="quote-box">
-        <strong>Quote of the Day:</strong>
-        <span id="quote-text">"The only way to do great work is to love what you do." - Steve Jobs</span>
+    <div class="quote-of-day">
+        <h3 id="quote-title">Quote of the Day:</h3>
+        <p id="quote-text">"Java is to JavaScript what car is to Carpet." - Chris Heilmann</p>
     </div>
 
     <!-- Made By (Center Bottom) -->
     <div class="made-by" id="made-by">
-        Made with <span class="heart">❤️</span> for Kindle lovers
+        Made with ❤️ for Kindle lovers
     </div>
 
     <script>
@@ -241,123 +189,100 @@
                 title: "Kindle Games",
                 subtitle: "Choose your device version:",
                 oldKindle: "Old Kindle",
-                oldDesc: "(with buttons, no JavaScript)",
+                oldKindleDesc: "(with buttons, no JavaScript)",
                 newKindle: "New Kindle",
-                newDesc: "(touchscreen, with JavaScript)",
+                newKindleDesc: "(touchscreen, with JavaScript)",
                 tip: "Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript).",
-                projectInfo: "<strong>Project Info:</strong>This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.<br><br>Found a bug or have suggestions? Email: <a href='mailto:workingnothing12.github@gmail.com'>workingnothing12.github@gmail.com</a>",
+                projectTitle: "Project Info:",
+                projectDesc: "This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.",
+                projectContact: "Found a bug or have suggestions? Email:",
                 madeBy: "Made with ❤️ for Kindle lovers"
             },
             uk: {
                 title: "Ігри для Kindle",
                 subtitle: "Оберіть версію пристрою:",
                 oldKindle: "Старий Kindle",
-                oldDesc: "(з кнопками, без JavaScript)",
+                oldKindleDesc: "(з кнопками, без JavaScript)",
                 newKindle: "Новий Kindle",
-                newDesc: "(сенсорний, з JavaScript)",
+                newKindleDesc: "(сенсорний, з JavaScript)",
                 tip: "Порада: Якщо ігри не працюють, увімкніть JavaScript у налаштуваннях браузера Kindle (Menu → Settings → Advanced → Enable JavaScript).",
-                projectInfo: "<strong>Про проект:</strong>Цей проект створено для любителів Kindle. Ігри оптимізовані для E-Ink дисплеїв.<br><br>Знайшли помилку або маєте пропозиції? Пишіть: <a href='mailto:workingnothing12.github@gmail.com'>workingnothing12.github@gmail.com</a>",
+                projectTitle: "Про проект:",
+                projectDesc: "Цей проект створено для любителів Kindle. Ігри оптимізовані для E-Ink дисплеїв.",
+                projectContact: "Знайшли помилку або маєте пропозиції? Пишіть:",
                 madeBy: "Створено з ❤️ для любителів Kindle"
             },
             de: {
                 title: "Kindle Spiele",
                 subtitle: "Wählen Sie Ihre Geräteversion:",
                 oldKindle: "Alter Kindle",
-                oldDesc: "(mit Tasten, kein JavaScript)",
+                oldKindleDesc: "(mit Tasten, kein JavaScript)",
                 newKindle: "Neuer Kindle",
-                newDesc: "(Touchscreen, mit JavaScript)",
+                newKindleDesc: "(Touchscreen, mit JavaScript)",
                 tip: "Tipp: Wenn Spiele nicht funktionieren, aktivieren Sie JavaScript in den Kindle-Browsereinstellungen (Menü → Einstellungen → Erweitert → JavaScript aktivieren).",
-                projectInfo: "<strong>Projekt Info:</strong>Dieses Projekt wurde für Kindle-Liebhaber erstellt. Spiele optimiert für E-Ink-Displays.<br><br>Fehler gefunden oder Vorschläge? Email: <a href='mailto:workingnothing12.github@gmail.com'>workingnothing12.github@gmail.com</a>",
+                projectTitle: "Projekt Info:",
+                projectDesc: "Dieses Projekt wurde für Kindle-Liebhaber erstellt. Spiele optimiert für E-Ink-Displays.",
+                projectContact: "Fehler gefunden oder Vorschläge? Email:",
                 madeBy: "Gemacht mit ❤️ für Kindle-Liebhaber"
             },
             pl: {
                 title: "Gry Kindle",
                 subtitle: "Wybierz wersję urządzenia:",
                 oldKindle: "Stary Kindle",
-                oldDesc: "(z przyciskami, bez JavaScript)",
+                oldKindleDesc: "(z przyciskami, bez JavaScript)",
                 newKindle: "Nowy Kindle",
-                newDesc: "(dotykowy, z JavaScript)",
+                newKindleDesc: "(dotykowy, z JavaScript)",
                 tip: "Wskazówka: Jeśli gry nie działają, włącz JavaScript w ustawieniach przeglądarki Kindle (Menu → Ustawienia → Zaawansowane → Włącz JavaScript).",
-                projectInfo: "<strong>Info o projekcie:</strong>Ten projekt został stworzony dla miłośników Kindle. Gry zoptymalizowane dla wyświetlaczy E-Ink.<br><br>Znalazłeś błąd lub masz sugestie? Email: <a href='mailto:workingnothing12.github@gmail.com'>workingnothing12.github@gmail.com</a>",
+                projectTitle: "Info o projekcie:",
+                projectDesc: "Ten projekt został stworzony dla miłośników Kindle. Gry zoptymalizowane dla wyświetlaczy E-Ink.",
+                projectContact: "Znalazłeś błąd lub masz sugestie? Email:",
                 madeBy: "Stworzone z ❤️ dla miłośników Kindle"
             }
         };
 
         // Quotes of the day (rotate daily)
-        const quotes = {
-            en: [
-                "The only way to do great work is to love what you do. - Steve Jobs",
-                "Code is like humor. When you have to explain it, it's bad. - Cory House",
-                "Simplicity is the ultimate sophistication. - Leonardo da Vinci",
-                "Make it work, make it right, make it fast. - Kent Beck",
-                "First, solve the problem. Then, write the code. - John Johnson",
-                "Experience is the name everyone gives to their mistakes. - Oscar Wilde",
-                "In order to be irreplaceable, one must always be different. - Coco Chanel",
-                "Java is to JavaScript what car is to Carpet. - Chris Heilmann"
-            ],
-            uk: [
-                "Єдиний спосіб робити великі справи - любити те, що робиш. - Стів Джобс",
-                "Код як гумор. Якщо треба пояснювати - він поганий. - Корі Хаус",
-                "Простота - це вища форма досконалості. - Леонардо да Вінчі",
-                "Зроби щоб працювало, зроби правильно, зроби швидко. - Кент Бек",
-                "Спочатку розв'яжи проблему, потім пиши код. - Джон Джонсон",
-                "Досвід - це ім'я, яке всі дають своїм помилкам. - Оскар Вайлд",
-                "Щоб бути незамінним, треба завжди бути іншим. - Коко Шанель",
-                "Java відноситься до JavaScript як килим до автомобіля. - Кріс Хейльман"
-            ],
-            de: [
-                "Der einzige Weg, großartige Arbeit zu leisten, ist zu lieben, was man tut. - Steve Jobs",
-                "Code ist wie Humor. Wenn man ihn erklären muss, ist er schlecht. - Cory House",
-                "Einfachheit ist die höchste Form der Raffinesse. - Leonardo da Vinci",
-                "Lass es funktionieren, mach es richtig, mach es schnell. - Kent Beck",
-                "Löse zuerst das Problem, dann schreibe den Code. - John Johnson",
-                "Erfahrung ist der Name, den jeder seinen Fehlern gibt. - Oscar Wilde",
-                "Um unersetzlich zu sein, muss man immer anders sein. - Coco Chanel",
-                "Java ist zu JavaScript was Teppich zu Auto ist. - Chris Heilmann"
-            ],
-            pl: [
-                "Jedyny sposób na wykonanie wielkiej pracy to kochać to, co się robi. - Steve Jobs",
-                "Kod jest jak humor. Kiedy trzeba go wyjaśniać, jest zły. - Cory House",
-                "Prostota to najwyższa forma wyrafinowania. - Leonardo da Vinci",
-                "Spraw, by działało, spraw, by było dobrze, spraw, by było szybko. - Kent Beck",
-                "Najpierw rozwiąż problem, potem pisz kod. - John Johnson",
-                "Doświadczenie to imię, które każdy nadaje swoim błędom. - Oscar Wilde",
-                "Aby być niezastąpionym, trzeba zawsze być innym. - Coco Chanel",
-                "Java ma się do JavaScript jak dywan do samochodu. - Chris Heilmann"
-            ]
-        };
+        const quotes = [
+            { en: '"Java is to JavaScript what car is to Carpet." - Chris Heilmann', uk: '"Java відноситься до JavaScript як килим до автомобіля." - Кріс Хайльман', de: '"Java ist zu JavaScript, was Teppich zu Auto ist." - Chris Heilmann', pl: '"Java ma się do JavaScript jak dywan do samochodu." - Chris Heilmann' },
+            { en: '"The only way to do great work is to love what you do." - Steve Jobs', uk: '"Єдиний спосіб робити великі справи - любити те, що робиш." - Стів Джобс', de: '"Der einzige Weg, großartige Arbeit zu leisten, ist zu lieben, was man tut." - Steve Jobs', pl: '"Jedyny sposób na wykonanie wielkiej pracy to kochać to, co się robi." - Steve Jobs' },
+            { en: '"Code is like humor. When you have to explain it, it\'s bad." - Cory House', uk: '"Код як гумор. Якщо треба пояснювати - він поганий." - Корі Хаус', de: '"Code ist wie Humor. Wenn man ihn erklären muss, ist er schlecht." - Cory House', pl: '"Kod jest jak humor. Kiedy trzeba go wyjaśniać, jest zły." - Cory House' },
+            { en: '"Simplicity is the ultimate sophistication." - Leonardo da Vinci', uk: '"Простота - це вища форма досконалості." - Леонардо да Вінчі', de: '"Einfachheit ist die höchste Form der Raffinesse." - Leonardo da Vinci', pl: '"Prostota to najwyższa forma wyrafinowania." - Leonardo da Vinci' },
+            { en: '"Make it work, make it right, make it fast." - Kent Beck', uk: '"Зроби щоб працювало, зроби правильно, зроби швидко." - Кент Бек', de: '"Lass es funktionieren, mach es richtig, mach es schnell." - Kent Beck', pl: '"Spraw, by działało, spraw, by było dobrze, spraw, by było szybko." - Kent Beck' }
+        ];
 
         function changeLanguage(lang) {
             // Update all elements
             document.getElementById('title').textContent = translations[lang].title;
             document.getElementById('subtitle').textContent = translations[lang].subtitle;
             document.getElementById('old-kindle').textContent = translations[lang].oldKindle;
-            document.getElementById('old-desc').textContent = translations[lang].oldDesc;
+            document.getElementById('old-kindle-desc').textContent = translations[lang].oldKindleDesc;
             document.getElementById('new-kindle').textContent = translations[lang].newKindle;
-            document.getElementById('new-desc').textContent = translations[lang].newDesc;
+            document.getElementById('new-kindle-desc').textContent = translations[lang].newKindleDesc;
             document.getElementById('tip').textContent = translations[lang].tip;
-            document.getElementById('project-info').innerHTML = translations[lang].projectInfo;
-            document.getElementById('made-by').innerHTML = translations[lang].madeBy;
+            document.getElementById('project-title').textContent = translations[lang].projectTitle;
+            document.getElementById('project-desc').textContent = translations[lang].projectDesc;
+            document.getElementById('made-by').textContent = translations[lang].madeBy;
             
             // Update quote
-            updateQuote(lang);
+            const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
+            document.getElementById('quote-text').textContent = quotes[dayIndex][lang];
             
             // Update language selector
-            document.getElementById('lang-select').value = lang;
+            document.getElementById('lang-en').selected = (lang === 'en');
+            document.getElementById('lang-uk').selected = (lang === 'uk');
+            document.getElementById('lang-de').selected = (lang === 'de');
+            document.getElementById('lang-pl').selected = (lang === 'pl');
             
             // Save preference
             localStorage.setItem('language', lang);
-        }
-
-        function updateQuote(lang) {
-            const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes[lang].length;
-            document.getElementById('quote-text').textContent = quotes[lang][dayIndex];
         }
 
         // Initialize
         window.onload = function() {
             const savedLang = localStorage.getItem('language') || 'en';
             changeLanguage(savedLang);
+            
+            // Set quote
+            const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
+            document.getElementById('quote-text').textContent = quotes[dayIndex][savedLang];
         };
     </script>
 </body>
