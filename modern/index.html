@@ -1,116 +1,408 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modern Games for Kindle</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Georgia, serif;
+            font-size: 20px;
+            color: #000;
+            background: #fff;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 { font-size: 28px; text-align: center; margin-bottom: 10px; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; font-style: italic; }
+        .section { margin: 40px 0; }
+        .section h2 { 
+            font-size: 24px; 
+            border-bottom: 2px solid #000; 
+            padding-bottom: 10px; 
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .game-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .game-card {
+            display: block;
+            background: #fff;
+            border: 2px solid #000;
+            border-radius: 8px;
+            padding: 20px;
+            text-decoration: none;
+            color: #000;
+            box-shadow: 3px 3px 0px #000;
+            transition: transform 0.1s;
+        }
+        .game-card:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #000;
+        }
+        .game-card .title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .game-card .desc {
+            font-size: 16px;
+            color: #666;
+        }
+        .back-btn {
+            display: block;
+            text-align: center;
+            padding: 15px;
+            background: #ddd;
+            border: 2px solid #000;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 40px auto;
+            max-width: 500px;
+        }
+        .back-btn:active {
+            background: #bbb;
+        }
+        .language-selector {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+        .language-selector select {
+            padding: 8px;
+            font-size: 14px;
+            border: 2px solid #000;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+        }
+        .project-info {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            max-width: 250px;
+            font-size: 12px;
+            color: #666;
+            z-index: 1000;
+        }
+        .quote-of-day {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            max-width: 300px;
+            font-size: 12px;
+            color: #666;
+            font-style: italic;
+            z-index: 1000;
+            text-align: right;
+        }
+        .made-by {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #666;
+            z-index: 1000;
+        }
+    </style>
 </head>
 <body>
 
-    <h1 data-i18n="title">Modern Games</h1>
-    <p data-i18n="subtitle">Optimized for touchscreen Kindle</p>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <select onchange="changeLanguage(this.value)">
+            <option value="en" id="lang-en" selected>English</option>
+            <option value="uk" id="lang-uk">Українська</option>
+            <option value="de" id="lang-de">Deutsch</option>
+            <option value="pl" id="lang-pl">Polski</option>
+        </select>
+    </div>
+
+    <!-- Project Info (Left Bottom) -->
+    <div class="project-info" id="project-info">
+        <strong>Project Info:</strong><br>
+        This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.<br><br>
+        Found a bug or have suggestions? Email: <a href="mailto:workingnothing12.github@gmail.com">workingnothing12.github@gmail.com</a>
+    </div>
+
+    <!-- Quote of the Day (Right Bottom) -->
+    <div class="quote-of-day" id="quote">
+        "The only way to do great work is to love what you do." - Steve Jobs
+    </div>
+
+    <!-- Made By (Center Bottom) -->
+    <div class="made-by" id="made-by">
+        Made with ❤️ for Kindle lovers
+    </div>
+
+    <!-- Main Content -->
+    <h1 id="title">Modern Games</h1>
+    <p class="subtitle" id="subtitle">Optimized for touchscreen Kindle</p>
 
     <div class="section">
-        <h2 data-i18n="sections.puzzles">Puzzles & Logic</h2>
+        <h2 id="puzzles">Puzzles & Logic</h2>
         <div class="game-grid">
             <a href="sudoku.html" class="game-card">
-                <div class="title" data-i18n="games.sudoku.name">Sudoku</div>
-                <div class="desc" data-i18n="games.sudoku.desc">Classic logic puzzle</div>
+                <div class="title" id="sudoku-title">Sudoku</div>
+                <div class="desc" id="sudoku-desc">Classic logic puzzle</div>
             </a>
             <a href="minesweeper.html" class="game-card">
-                <div class="title" data-i18n="games.minesweeper.name">Minesweeper</div>
-                <div class="desc" data-i18n="games.minesweeper.desc">Find all mines</div>
+                <div class="title" id="minesweeper-title">Minesweeper</div>
+                <div class="desc" id="minesweeper-desc">Find all mines</div>
             </a>
             <a href="puzzle15.html" class="game-card">
-                <div class="title" data-i18n="games.puzzle15.name">Puzzle 15</div>
-                <div class="desc" data-i18n="games.puzzle15.desc">Arrange numbers</div>
+                <div class="title" id="puzzle15-title">Puzzle 15</div>
+                <div class="desc" id="puzzle15-desc">Arrange numbers</div>
             </a>
             <a href="game2048.html" class="game-card">
-                <div class="title" data-i18n="games.game2048.name">2048</div>
-                <div class="desc" data-i18n="games.game2048.desc">Combine numbers</div>
+                <div class="title" id="game2048-title">2048</div>
+                <div class="desc" id="game2048-desc">Combine numbers</div>
             </a>
             <a href="tetris.html" class="game-card">
-                <div class="title" data-i18n="games.tetris.name">Tetris</div>
-                <div class="desc" data-i18n="games.tetris.desc">Block-stacking game</div>
+                <div class="title" id="tetris-title">Tetris</div>
+                <div class="desc" id="tetris-desc">Block-stacking game</div>
             </a>
         </div>
     </div>
 
     <div class="section">
-        <h2 data-i18n="sections.arcade">Arcade Games</h2>
+        <h2 id="arcade">Arcade Games</h2>
         <div class="game-grid">
             <a href="snake.html" class="game-card">
-                <div class="title" data-i18n="games.snake.name">Snake</div>
-                <div class="desc" data-i18n="games.snake.desc">Classic arcade</div>
+                <div class="title" id="snake-title">Snake</div>
+                <div class="desc" id="snake-desc">Classic arcade</div>
             </a>
             <a href="reaction.html" class="game-card">
-                <div class="title" data-i18n="games.reaction.name">Reaction Test</div>
-                <div class="desc" data-i18n="games.reaction.desc">Test your speed</div>
+                <div class="title" id="reaction-title">Reaction Test</div>
+                <div class="desc" id="reaction-desc">Test your speed</div>
             </a>
             <a href="tictactoe.html" class="game-card">
-                <div class="title" data-i18n="games.tictactoe.name">Tic-Tac-Toe</div>
-                <div class="desc" data-i18n="games.tictactoe.desc">Play vs computer</div>
+                <div class="title" id="tictactoe-title">Tic-Tac-Toe</div>
+                <div class="desc" id="tictactoe-desc">Play vs computer</div>
             </a>
             <a href="memory.html" class="game-card">
-                <div class="title" data-i18n="games.memory.name">Memory</div>
-                <div class="desc" data-i18n="games.memory.desc">Find matching pairs</div>
+                <div class="title" id="memory-title">Memory</div>
+                <div class="desc" id="memory-desc">Find matching pairs</div>
             </a>
         </div>
     </div>
 
     <div class="section">
-        <h2 data-i18n="sections.word">Word Games</h2>
+        <h2 id="word">Word Games</h2>
         <div class="game-grid">
             <a href="hangman.html" class="game-card">
-                <div class="title" data-i18n="games.hangman.name">Hangman</div>
-                <div class="desc" data-i18n="games.hangman.desc">Guess the word</div>
+                <div class="title" id="hangman-title">Hangman</div>
+                <div class="desc" id="hangman-desc">Guess the word</div>
             </a>
             <a href="wordle.html" class="game-card">
-                <div class="title" data-i18n="games.wordle.name">Word Guess</div>
-                <div class="desc" data-i18n="games.wordle.desc">5-letter word game</div>
+                <div class="title" id="wordle-title">Word Guess</div>
+                <div class="desc" id="wordle-desc">5-letter word game</div>
             </a>
             <a href="quiz.html" class="game-card">
-                <div class="title" data-i18n="games.quiz.name">Quiz</div>
-                <div class="desc" data-i18n="games.quiz.desc">10 questions</div>
+                <div class="title" id="quiz-title">Quiz</div>
+                <div class="desc" id="quiz-desc">10 questions</div>
             </a>
         </div>
     </div>
 
     <div class="section">
-        <h2 data-i18n="sections.board">Board Games</h2>
+        <h2 id="board">Board Games</h2>
         <div class="game-grid">
             <a href="chess.html" class="game-card">
-                <div class="title" data-i18n="games.chess.name">Chess</div>
-                <div class="desc" data-i18n="games.chess.desc">Classic 8x8 board</div>
+                <div class="title" id="chess-title">Chess</div>
+                <div class="desc" id="chess-desc">Classic 8x8 board</div>
             </a>
         </div>
     </div>
 
-    <div class="section">
-        <h2 data-i18n="sections.quests">Text Quests</h2>
-        <div class="game-grid">
-            <a href="quests/lighthouse.html" class="game-card">
-                <div class="title" data-i18n="quests.lighthouse.name">Lighthouse Mystery</div>
-                <div class="desc" data-i18n="quests.lighthouse.desc">Discover the truth</div>
-            </a>
-            <a href="quests/spacestation.html" class="game-card">
-                <div class="title" data-i18n="quests.spacestation.name">Space Station</div>
-                <div class="desc" data-i18n="quests.spacestation.desc">Sci-fi survival</div>
-            </a>
-            <a href="quests/castle.html" class="game-card">
-                <div class="title" data-i18n="quests.castle.name">Castle of Shadows</div>
-                <div class="desc" data-i18n="quests.castle.desc">Fantasy adventure</div>
-            </a>
-            <a href="quests/detective.html" class="game-card">
-                <div class="title" data-i18n="quests.detective.name">Detective Case #47</div>
-                <div class="desc" data-i18n="quests.detective.desc">Solve the mystery</div>
-            </a>
-        </div>
-    </div>
+    <a href="../index.html" class="back-btn" id="back-btn">Back to Home</a>
 
-    <a href="../index.html" class="back-btn" data-i18n="backToHome">Back to Home</a>
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                title: "Modern Games",
+                subtitle: "Optimized for touchscreen Kindle",
+                puzzles: "Puzzles & Logic",
+                arcade: "Arcade Games",
+                word: "Word Games",
+                board: "Board Games",
+                back: "Back to Home",
+                sudoku: { title: "Sudoku", desc: "Classic logic puzzle" },
+                minesweeper: { title: "Minesweeper", desc: "Find all mines" },
+                puzzle15: { title: "Puzzle 15", desc: "Arrange numbers" },
+                game2048: { title: "2048", desc: "Combine numbers" },
+                tetris: { title: "Tetris", desc: "Block-stacking game" },
+                snake: { title: "Snake", desc: "Classic arcade" },
+                reaction: { title: "Reaction Test", desc: "Test your speed" },
+                tictactoe: { title: "Tic-Tac-Toe", desc: "Play vs computer" },
+                memory: { title: "Memory", desc: "Find matching pairs" },
+                hangman: { title: "Hangman", desc: "Guess the word" },
+                wordle: { title: "Word Guess", desc: "5-letter word game" },
+                quiz: { title: "Quiz", desc: "10 questions" },
+                chess: { title: "Chess", desc: "Classic 8x8 board" },
+                projectInfo: "<strong>Project Info:</strong><br>This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.<br><br>Found a bug or have suggestions? Email: <a href='mailto:workingnothing12.github@gmail.com'>workingnothing12.github@gmail.com</a>",
+                madeBy: "Made with ❤️ for Kindle lovers"
+            },
+            uk: {
+                title: "Сучасні ігри",
+                subtitle: "Оптимізовано для сенсорного Kindle",
+                puzzles: "Головоломки",
+                arcade: "Аркади",
+                word: "Словесні ігри",
+                board: "Настільні ігри",
+                back: "На головну",
+                sudoku: { title: "Судоку", desc: "Класична логічна гра" },
+                minesweeper: { title: "Сапер", desc: "Знайди всі міни" },
+                puzzle15: { title: "П'ятнашки", desc: "Розташуй числа" },
+                game2048: { title: "2048", desc: "З'єднуй числа" },
+                tetris: { title: "Тетріс", desc: "Гра з блоками" },
+                snake: { title: "Змійка", desc: "Класична аркада" },
+                reaction: { title: "Тест на реакцію", desc: "Перевір швидкість" },
+                tictactoe: { title: "Хрестики-нулики", desc: "Гра проти комп'ютера" },
+                memory: { title: "Меморі", desc: "Знайди пари карток" },
+                hangman: { title: "Шибениця", desc: "Вгадай слово" },
+                wordle: { title: "Вгадай слово", desc: "Слово з 5 літер" },
+                quiz: { title: "Вікторина", desc: "10 питань" },
+                chess: { title: "Шахи", desc: "Класична гра" },
+                projectInfo: "<strong>Про проект:</strong><br>Цей проект створено для любителів Kindle. Ігри оптимізовані для E-Ink дисплеїв.<br><br>Знайшли помилку або маєте пропозиції? Пишіть: <a href='mailto:workingnothing12.github@gmail.com'>workingnothing12.github@gmail.com</a>",
+                madeBy: "Створено з ❤️ для любителів Kindle"
+            },
+            de: {
+                title: "Moderne Spiele",
+                subtitle: "Optimiert für Touchscreen Kindle",
+                puzzles: "Puzzles",
+                arcade: "Arcade",
+                word: "Wortspiele",
+                board: "Brettspiele",
+                back: "Zurück",
+                sudoku: { title: "Sudoku", desc: "Logikrätsel" },
+                minesweeper: { title: "Minesweeper", desc: "Minen finden" },
+                puzzle15: { title: "Puzzle 15", desc: "Zahlen ordnen" },
+                game2048: { title: "2048", desc: "Zahlen kombinieren" },
+                tetris: { title: "Tetris", desc: "Block-Spiel" },
+                snake: { title: "Snake", desc: "Arcade-Spiel" },
+                reaction: { title: "Reaktionstest", desc: "Geschwindigkeit testen" },
+                tictactoe: { title: "Tic-Tac-Toe", desc: "Gegen Computer" },
+                memory: { title: "Memory", desc: "Paare finden" },
+                hangman: { title: "Galgenmännchen", desc: "Wort erraten" },
+                wordle: { title: "Wort-Raten", desc: "5-Buchstaben-Wort" },
+                quiz: { title: "Quiz", desc: "10 Fragen" },
+                chess: { title: "Schach", desc: "Brettspiel" },
+                projectInfo: "<strong>Projekt Info:</strong><br>Dieses Projekt wurde für Kindle-Liebhaber erstellt. Spiele optimiert für E-Ink-Displays.<br><br>Fehler gefunden oder Vorschläge? Email: <a href='mailto:workingnothing12.github@gmail.com'>workingnothing12.github@gmail.com</a>",
+                madeBy: "Gemacht mit ❤️ für Kindle-Liebhaber"
+            },
+            pl: {
+                title: "Nowoczesne gry",
+                subtitle: "Zoptymalizowane dla dotykowego Kindle",
+                puzzles: "Puzzle",
+                arcade: "Arcade",
+                word: "Gry słowne",
+                board: "Gry planszowe",
+                back: "Powrót",
+                sudoku: { title: "Sudoku", desc: "Łamigłówka logiczna" },
+                minesweeper: { title: "Saper", desc: "Znajdź miny" },
+                puzzle15: { title: "Puzzle 15", desc: "Ułóż liczby" },
+                game2048: { title: "2048", desc: "Łącz liczby" },
+                tetris: { title: "Tetris", desc: "Gra w bloki" },
+                snake: { title: "Wąż", desc: "Gra arkadowa" },
+                reaction: { title: "Test reakcji", desc: "Sprawdź szybkość" },
+                tictactoe: { title: "Kółko i krzyżyk", desc: "Przeciw komputerowi" },
+                memory: { title: "Memory", desc: "Znajdź pary" },
+                hangman: { title: "Wisielec", desc: "Zgadnij słowo" },
+                wordle: { title: "Zgadnij słowo", desc: "5-literowe słowo" },
+                quiz: { title: "Quiz", desc: "10 pytań" },
+                chess: { title: "Szachy", desc: "Gra planszowa" },
+                projectInfo: "<strong>Info o projekcie:</strong><br>Ten projekt został stworzony dla miłośników Kindle. Gry zoptymalizowane dla wyświetlaczy E-Ink.<br><br>Znalazłeś błąd lub masz sugestie? Email: <a href='mailto:workingnothing12.github@gmail.com'>workingnothing12.github@gmail.com</a>",
+                madeBy: "Stworzone z ❤️ dla miłośników Kindle"
+            }
+        };
 
-    <script src="i18n.js"></script>
+        // Quotes of the day (rotate daily)
+        const quotes = [
+            { en: "The only way to do great work is to love what you do. - Steve Jobs", uk: "Єдиний спосіб робити великі справи - любити те, що робиш. - Стів Джобс", de: "Der einzige Weg, großartige Arbeit zu leisten, ist zu lieben, was man tut. - Steve Jobs", pl: "Jedyny sposób na wykonanie wielkiej pracy to kochać to, co się robi. - Steve Jobs" },
+            { en: "Code is like humor. When you have to explain it, it's bad. - Cory House", uk: "Код як гумор. Якщо треба пояснювати - він поганий. - Корі Хаус", de: "Code ist wie Humor. Wenn man ihn erklären muss, ist er schlecht. - Cory House", pl: "Kod jest jak humor. Kiedy trzeba go wyjaśniać, jest zły. - Cory House" },
+            { en: "Simplicity is the ultimate sophistication. - Leonardo da Vinci", uk: "Простота - це вища форма досконалості. - Леонардо да Вінчі", de: "Einfachheit ist die höchste Form der Raffinesse. - Leonardo da Vinci", pl: "Prostota to najwyższa forma wyrafinowania. - Leonardo da Vinci" },
+            { en: "Make it work, make it right, make it fast. - Kent Beck", uk: "Зроби щоб працювало, зроби правильно, зроби швидко. - Кент Бек", de: "Lass es funktionieren, mach es richtig, mach es schnell. - Kent Beck", pl: "Spraw, by działało, spraw, by było dobrze, spraw, by było szybko. - Kent Beck" }
+        ];
+
+        function changeLanguage(lang) {
+            // Update all elements
+            document.getElementById('title').textContent = translations[lang].title;
+            document.getElementById('subtitle').textContent = translations[lang].subtitle;
+            document.getElementById('puzzles').textContent = translations[lang].puzzles;
+            document.getElementById('arcade').textContent = translations[lang].arcade;
+            document.getElementById('word').textContent = translations[lang].word;
+            document.getElementById('board').textContent = translations[lang].board;
+            document.getElementById('back-btn').textContent = translations[lang].back;
+            
+            // Update game cards
+            document.getElementById('sudoku-title').textContent = translations[lang].sudoku.title;
+            document.getElementById('sudoku-desc').textContent = translations[lang].sudoku.desc;
+            document.getElementById('minesweeper-title').textContent = translations[lang].minesweeper.title;
+            document.getElementById('minesweeper-desc').textContent = translations[lang].minesweeper.desc;
+            document.getElementById('puzzle15-title').textContent = translations[lang].puzzle15.title;
+            document.getElementById('puzzle15-desc').textContent = translations[lang].puzzle15.desc;
+            document.getElementById('game2048-title').textContent = translations[lang].game2048.title;
+            document.getElementById('game2048-desc').textContent = translations[lang].game2048.desc;
+            document.getElementById('tetris-title').textContent = translations[lang].tetris.title;
+            document.getElementById('tetris-desc').textContent = translations[lang].tetris.desc;
+            document.getElementById('snake-title').textContent = translations[lang].snake.title;
+            document.getElementById('snake-desc').textContent = translations[lang].snake.desc;
+            document.getElementById('reaction-title').textContent = translations[lang].reaction.title;
+            document.getElementById('reaction-desc').textContent = translations[lang].reaction.desc;
+            document.getElementById('tictactoe-title').textContent = translations[lang].tictactoe.title;
+            document.getElementById('tictactoe-desc').textContent = translations[lang].tictactoe.desc;
+            document.getElementById('memory-title').textContent = translations[lang].memory.title;
+            document.getElementById('memory-desc').textContent = translations[lang].memory.desc;
+            document.getElementById('hangman-title').textContent = translations[lang].hangman.title;
+            document.getElementById('hangman-desc').textContent = translations[lang].hangman.desc;
+            document.getElementById('wordle-title').textContent = translations[lang].wordle.title;
+            document.getElementById('wordle-desc').textContent = translations[lang].wordle.desc;
+            document.getElementById('quiz-title').textContent = translations[lang].quiz.title;
+            document.getElementById('quiz-desc').textContent = translations[lang].quiz.desc;
+            document.getElementById('chess-title').textContent = translations[lang].chess.title;
+            document.getElementById('chess-desc').textContent = translations[lang].chess.desc;
+            
+            // Update footer elements
+            document.getElementById('project-info').innerHTML = translations[lang].projectInfo;
+            document.getElementById('made-by').textContent = translations[lang].madeBy;
+            
+            // Update quote
+            const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
+            document.getElementById('quote').textContent = '"' + quotes[dayIndex][lang] + '"';
+            
+            // Update language selector
+            document.getElementById('lang-en').selected = (lang === 'en');
+            document.getElementById('lang-uk').selected = (lang === 'uk');
+            document.getElementById('lang-de').selected = (lang === 'de');
+            document.getElementById('lang-pl').selected = (lang === 'pl');
+            
+            // Save preference
+            localStorage.setItem('language', lang);
+        }
+
+        // Initialize
+        window.onload = function() {
+            const savedLang = localStorage.getItem('language') || 'en';
+            changeLanguage(savedLang);
+            
+            // Set quote
+            const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
+            document.getElementById('quote').textContent = '"' + quotes[dayIndex][savedLang] + '"';
+        };
+    </script>
 </body>
 </html>
