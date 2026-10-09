@@ -13,10 +13,16 @@
         .letter.correct { background: #90EE90; }
         .letter.present { background: #FFD700; }
         .letter.absent { background: #ddd; }
-        #input { margin: 20px 0; }
-        #word-input { padding: 10px; font-size: 24px; width: 200px; text-align: center; text-transform: uppercase; border: 2px solid #000; }
-        #submit { padding: 10px 20px; font-size: 20px; background: #fff; border: 2px solid #000; cursor: pointer; margin-left: 10px; }
         #message { font-size: 20px; margin: 20px 0; min-height: 30px; }
+        .keyboard { display: grid; gap: 5px; max-width: 400px; margin: 20px auto; }
+        .keyboard-row { display: flex; gap: 5px; justify-content: center; }
+        .key { padding: 12px 8px; font-size: 18px; font-weight: bold; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; min-width: 35px; }
+        .key:active { background: #000; color: #fff; }
+        .key.correct { background: #90EE90; }
+        .key.present { background: #FFD700; }
+        .key.absent { background: #ddd; color: #999; }
+        .key.enter { background: #4CAF50; color: #fff; min-width: 60px; }
+        .key.delete { background: #f44336; color: #fff; min-width: 60px; }
         #new-game { padding: 15px 30px; font-size: 20px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; margin: 10px; }
         #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; border-radius: 5px; }
     </style>
@@ -28,26 +34,52 @@
     <div id="guesses"></div>
     <div id="message"></div>
     
-    <div id="input">
-        <input type="text" id="word-input" maxlength="5" placeholder="Введіть слово">
-        <button id="submit" onclick="submitGuess()">OK</button>
-    </div>
+    <div class="keyboard" id="keyboard"></div>
     
     <button id="new-game" onclick="initGame()">Нова гра</button>
     <br>
     <a href="index.html" id="back-btn">До меню</a>
 
     <script>
-        const words = ['КНИГА', 'ЕКРАН', 'СЛОВО', 'ТЕКСТ', 'АВТОР', 'ГЛАВА', 'СЦЕНА', 'ФІЛЬМ', 'МУЗИКА', 'ПІСНЯ'];
-        let target, guesses, gameOver;
+        const words = {
+            uk: ['КНИГА', 'ЕКРАН', 'СЛОВО', 'ТЕКСТ', 'АВТОР', 'ГЛАВА', 'СЦЕНА', 'ФІЛЬМ', 'МУЗИКА', 'ПІСНЯ', 'СВІТЛО', 'ВІТЕР', 'ВОДА', 'ЗЕМЛЯ', 'НЕБО', 'СОНЦЕ', 'МІСЯЦЬ', 'ЗІРКА', 'ДЕРЕВО', 'КВІТКА'],
+            en: ['HOUSE', 'WATER', 'EARTH', 'MUSIC', 'LIGHT', 'DREAM', 'HEART', 'SMILE', 'DANCE', 'OCEAN', 'RIVER', 'FOREST', 'MOUNTAIN', 'CLOUD', 'STORM']
+        };
+        
+        const keyboardLayout = {
+            uk: [
+                ['Й','Ц','У','К','Е','Н','Г','Ш','Щ','З','Х','Ї'],
+                ['Ф','І','В','А','П','Р','О','Л','Д','Ж','Є'],
+                ['Я','Ч','С','М','И','Т','Ь','Б','Ю','⌫','ВВІД']
+            ],
+            en: [
+                ['Q','W','E','R','T','Y','U','I','O','P'],
+                ['A','S','D','F','G','H','J','K','L'],
+                ['⌫','Z','X','C','V','B','N','M','ВВІД']
+            ]
+        };
+
+        let target, guesses, gameOver, currentGuess, currentLang;
+
+        function getLanguage() {
+            try {
+                const saved = localStorage.getItem('language');
+                if (saved && ['en','uk','de','pl'].includes(saved)) return saved;
+            } catch(e) {}
+            return 'uk';
+        }
 
         function initGame() {
-            target = words[Math.floor(Math.random() * words.length)];
+            currentLang = getLanguage();
+            const wordList = words[currentLang] || words.uk;
+            target = wordList[Math.floor(Math.random() * wordList.length)];
             guesses = [];
             gameOver = false;
+            currentGuess = '';
             document.getElementById('message').textContent = '';
-            document.getElementById('word-input').value = '';
             renderGuesses();
+            createKeyboard();
+            saveGame();
         }
 
         function renderGuesses() {
@@ -76,22 +108,70 @@
             }
         }
 
+        function createKeyboard() {
+            const keyboardEl = document.getElementById('keyboard');
+            keyboardEl.innerHTML = '';
+            const layout = keyboardLayout[currentLang] || keyboardLayout.uk;
+            
+            layout.forEach(row => {
+                const rowEl = document.createElement('div');
+                rowEl.className = 'keyboard-row';
+                
+                row.forEach(key => {
+                    const btn = document.createElement('button');
+                    btn.className = 'key';
+                    btn.textContent = key;
+                    
+                    if (key === 'ВВІД') {
+                        btn.classList.add('enter');
+                        btn.onclick = submitGuess;
+                    } else if (key === '') {
+                        btn.classList.add('delete');
+                        btn.onclick = deleteLetter;
+                    } else {
+                        btn.onclick = () => addLetter(key);
+                    }
+                    
+                    rowEl.appendChild(btn);
+                });
+                
+                keyboardEl.appendChild(rowEl);
+            });
+        }
+
+        function addLetter(letter) {
+            if (gameOver || currentGuess.length >= 5) return;
+            currentGuess += letter;
+            updateCurrentRow();
+        }
+
+        function deleteLetter() {
+            if (gameOver || currentGuess.length === 0) return;
+            currentGuess = currentGuess.slice(0, -1);
+            updateCurrentRow();
+        }
+
+        function updateCurrentRow() {
+            const rows = document.querySelectorAll('.row');
+            const currentRow = rows[guesses.length];
+            if (!currentRow) return;
+            
+            const cells = currentRow.querySelectorAll('.letter');
+            for (let i = 0; i < 5; i++) {
+                cells[i].textContent = currentGuess[i] || '';
+            }
+        }
+
         function submitGuess() {
-            if (gameOver) return;
-            
-            const input = document.getElementById('word-input');
-            const guess = input.value.toUpperCase();
-            
-            if (guess.length !== 5) {
-                document.getElementById('message').textContent = 'Введіть слово з 5 літер!';
+            if (gameOver || currentGuess.length !== 5) {
+                document.getElementById('message').textContent = 'Введіть 5 літер!';
                 return;
             }
             
             const result = Array(5).fill('absent');
             const targetLetters = target.split('');
-            const guessLetters = guess.split('');
+            const guessLetters = currentGuess.split('');
             
-            // Спочатку перевіряємо правильні позиції
             for (let i = 0; i < 5; i++) {
                 if (guessLetters[i] === targetLetters[i]) {
                     result[i] = 'correct';
@@ -100,7 +180,6 @@
                 }
             }
             
-            // Потім перевіряємо наявність літер
             for (let i = 0; i < 5; i++) {
                 if (guessLetters[i] && targetLetters.includes(guessLetters[i])) {
                     result[i] = 'present';
@@ -108,24 +187,82 @@
                 }
             }
             
-            guesses.push({ word: guess, result });
-            input.value = '';
+            guesses.push({ word: currentGuess, result });
+            currentGuess = '';
             renderGuesses();
+            updateKeyboard();
+            saveGame();
             
-            if (guess === target) {
+            if (guesses[guesses.length - 1].word === target) {
                 document.getElementById('message').textContent = 'Ви виграли!';
                 gameOver = true;
+                localStorage.removeItem('wordle_save');
             } else if (guesses.length === 6) {
                 document.getElementById('message').textContent = 'Ви програли! Слово було: ' + target;
                 gameOver = true;
+                localStorage.removeItem('wordle_save');
             }
         }
 
-        document.getElementById('word-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') submitGuess();
-        });
+        function updateKeyboard() {
+            const keys = document.querySelectorAll('.key');
+            keys.forEach(key => {
+                const letter = key.textContent;
+                if (letter === 'ВВІД' || letter === '⌫') return;
+                
+                let status = '';
+                guesses.forEach(g => {
+                    for (let i = 0; i < 5; i++) {
+                        if (g.word[i] === letter) {
+                            if (g.result[i] === 'correct') status = 'correct';
+                            else if (g.result[i] === 'present' && status !== 'correct') status = 'present';
+                            else if (!status) status = 'absent';
+                        }
+                    }
+                });
+                
+                key.className = 'key ' + status;
+            });
+        }
 
-        initGame();
+        function saveGame() {
+            try {
+                localStorage.setItem('wordle_save', JSON.stringify({
+                    target, guesses, gameOver, currentGuess, currentLang
+                }));
+            } catch(e) {}
+        }
+
+        function loadGame() {
+            try {
+                const saved = localStorage.getItem('wordle_save');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    target = data.target;
+                    guesses = data.guesses;
+                    gameOver = data.gameOver;
+                    currentGuess = data.currentGuess || '';
+                    currentLang = data.currentLang || 'uk';
+                    renderGuesses();
+                    createKeyboard();
+                    updateCurrentRow();
+                    updateKeyboard();
+                    if (gameOver) {
+                        if (guesses[guesses.length - 1].word === target) {
+                            document.getElementById('message').textContent = 'Ви виграли!';
+                        } else {
+                            document.getElementById('message').textContent = 'Ви програли! Слово було: ' + target;
+                        }
+                    }
+                    return true;
+                }
+            } catch(e) {}
+            return false;
+        }
+
+        if (!loadGame()) {
+            initGame();
+        }
     </script>
 </body>
 </html>
