@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Справа №47</title>
+    <style>
+        body { font-family: Georgia, serif; padding: 20px; background: #fff; color: #000; max-width: 600px; margin: 0 auto; }
+        h1 { font-size: 28px; border-bottom: 2px solid #000; padding-bottom: 10px; }
+        .scene { display: none; }
+        .scene.active { display: block; }
+        .status { font-style: italic; color: #666; margin-bottom: 20px; border-left: 3px solid #000; padding-left: 10px; }
+        p { font-size: 18px; line-height: 1.6; margin-bottom: 20px; }
+        .choice { display: block; width: 100%; padding: 15px; margin: 10px 0; font-size: 18px; background: #fff; border: 2px solid #000; cursor: pointer; text-align: left; }
+        .choice:active { background: #000; color: #fff; }
+        .final { font-size: 24px; text-align: center; margin: 30px 0; font-weight: bold; }
+        #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Справа №47: Крадіжка діаманту</h1>
+
+    <div id="scene1" class="scene active">
+        <div class="status">Розділ 1: Місце злочину</div>
+        <p>Ви — детектив поліції. Учора вночі з музею викрали діамант "Сльози океану" вартістю 2 мільйони доларів.</p>
+        <p>Ви приїжджаєте на місце злочину. Вітрина розбита, але сигналізація не спрацювала. Це означає, що злочинець мав код.</p>
+        <p>Троє підозрюваних: охоронець Іван Петренко, куратор Олена Коваль та прибиральниця Марія Шевченко.</p>
+        <p>На місці злочину ви знаходите дивну річ — стару монету 1943 року. Вона не належить музею.</p>
+        <button class="choice" onclick="showScene(2)">1. Допитати охоронця</button>
+        <button class="choice" onclick="showScene(3)">2. Допитати куратора</button>
+        <button class="choice" onclick="showScene(4)">3. Допитати прибиральницю</button>
+        <button class="choice" onclick="showScene(5)">4. Дослідити монету</button>
+    </div>
+
+    <div id="scene2" class="scene">
+        <div class="status">Розділ 2: Охоронець</div>
+        <p>Охоронець Іван Петренко нервово курить. "Я нічого не бачив. Моя зміна була з 22:00 до 06:00. О 03:00 я обходив периметр, все було спокійно."</p>
+        <p>Ви перевіряєте журнали. О 03:15 камера біля вітрини зафіксувала рух, але охоронець каже, що в цей час був на іншому кінці будівлі.</p>
+        <p>Але ви помічаєте щось дивне — на його черевиках бруд. Такий самий, як на місці злочину.</p>
+        <button class="choice" onclick="showScene(6)">1. Запитати про бруд на черевиках</button>
+        <button class="choice" onclick="showScene(3)">2. Перевірити алібі куратора</button>
+        <button class="choice" onclick="showScene(4)">3. Перевірити алібі прибиральниці</button>
+        <button class="choice" onclick="showScene(7)">4. Звинуватити охоронця</button>
+    </div>
+
+    <div id="scene3" class="scene">
+        <div class="status">Розділ 2: Куратор</div>
+        <p>Куратор Олена Коваль спокійна. "Я була вдома. Мій чоловік може підтвердити. До речі, я знаю, хто це зробив — прибиральниця Марія. Вона мала доступ до ключів."</p>
+        <p>Ви перевіряєте записи камер. Куратор виходила з музею о 20:00, але поверталась о 23:30 — через годину після закриття.</p>
+        <p>Чому вона поверталась? Вона каже — забула телефон. Але телефон знайшли в її кабінеті.</p>
+        <button class="choice" onclick="showScene(8)">1. Запитати про повернення</button>
+        <button class="choice" onclick="showScene(2)">2. Повернутись до охоронця</button>
+        <button class="choice" onclick="showScene(4)">3. Допитати прибиральницю</button>
+        <button class="choice" onclick="showScene(9)">4. Звинуватити куратора</button>
+    </div>
+
+    <div id="scene4" class="scene">
+        <div class="status">Розділ 2: Прибиральниця</div>
+        <p>Прибиральниця Марія плаче. "Я прийшла о 06:00 ранку, як завжди. Вітрина вже була розбита. Я одразу зателефонувала поліції."</p>
+        <p>Ви перевіряєте її телефон. Дзвінок у поліцію о 06:17 — все сходиться. Але ви знаходите в її сумці ключ-карту музею.</p>
+        <p>"Це не моє!" — каже вона. "Хтось підкинув!"</p>
+        <button class="choice" onclick="showScene(10)">1. Запитати про ключ-карту</button>
+        <button class="choice" onclick="showScene(2)">2. Повернутись до охоронця</button>
+        <button class="choice" onclick="showScene(3)">3. Повернутись до куратора</button>
+        <button class="choice" onclick="showScene(11)">4. Звинуватити прибиральницю</button>
+    </div>
+
+    <div id="scene5" class="scene">
+        <div class="status">Розділ 2: Монета</div>
+        <p>Ви досліджуєте монету. Це німецька монета 1943 року. Дуже рідкісна. Вона коштує тисячі доларів.</p>
+        <p>Чому вона на місці злочину? Випадковість? Чи це підказка?</p>
+        <p>Ви перевіряєте записи музею. Ніхто не повідомляв про викрадення монети. Але в колекції музею є така монета!</p>
+        <button class="choice" onclick="showScene(12)">1. Перевірити колекцію музею</button>
+        <button class="choice" onclick="showScene(2)">2. Допитати охоронця про монету</button>
+        <button class="choice" onclick="showScene(3)">3. Допитати куратора про монету</button>
+    </div>
+
+    <div id="scene6" class="scene">
+        <div class="status">Розділ 3: Бруд</div>
+        <p>"Де ви були о 03:00?" — питаєте ви. Охоронець нервує. "Я... я виходив на вулицю. Палити."</p>
+        <p>"Але камера не зафіксувала, як ви виходили."</p>
+        <p>Він мовчить. Потім каже: "Гаразд. Я бачив когось. Людину в темному. Вона бігла від вітрини."</p>
+        <button class="choice" onclick="showScene(13)">1. Запитати: "Хто це був?"</button>
+        <button class="choice" onclick="showScene(3)">2. Перевірити куратора</button>
+        <button class="choice" onclick="showScene(4)">3. Перевірити прибиральницю</button>
+    </div>
+
+    <div id="scene7" class="scene">
+        <div class="status">ФІНАЛ: Помилкове звинувачення</div>
+        <p>Ви арештовуєте охоронця. Але через тиждень знаходять справжнього злочинця — куратора. Охоронця звільняють.</p>
+        <p>Вашу репутацію підірвано. Вас переводять на іншу посаду.</p>
+        <div class="final">СПРАВА НЕ РОЗКРИТА</div>
+        <button class="choice" onclick="showScene(1)">Спробувати ще раз</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene8" class="scene">
+        <div class="status">Розділ 3: Повернення куратора</div>
+        <p>"Чому ви повертались о 23:30?" — питаєте ви. Куратор нервує. "Я... я забула телефон."</p>
+        <p>"Але телефон знайшли в вашому кабінеті."</p>
+        <p>Вона мовчить. Потім каже: "Гаразд. Я поверталась, щоб перевірити діамант. Я хвилювалась за нього."</p>
+        <button class="choice" onclick="showScene(14)">1. Запитати: "Чому ви хвилювались?"</button>
+        <button class="choice" onclick="showScene(4)">2. Допитати прибиральницю</button>
+    </div>
+
+    <div id="scene9" class="scene">
+        <div class="status">ФІНАЛ: Правосуддя</div>
+        <p>Ви арештовуєте куратора Олену Коваль. Вона зізнається: "Мені потрібні були гроші. Чоловік хворів, лікування коштувало мільйони."</p>
+        <p>Вона використала свій код для відключення сигналізації, розбила вітрину і вкрала діамант. Її чоловік дав їй алібі, але камери все зафіксували.</p>
+        <p>Діамант знайдено в її сейфі. Справу закрито.</p>
+        <div class="final">СПРАВУ РОЗКРИТО!</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene10" class="scene">
+        <div class="status">Розділ 3: Ключ-карта</div>
+        <p>"Звідки у вас ключ-карта?" — питаєте ви. Марія плаче. "Не знаю! Хтось підкинув!"</p>
+        <p>Ви перевіряєте відбитки пальців на карті. Вони... збігаються з відбитками куратора!</p>
+        <p>Куратор підкинула карту прибиральниці, щоб відвести підозру!</p>
+        <button class="choice" onclick="showScene(9)">1. Арештувати куратора</button>
+        <button class="choice" onclick="showScene(15)">2. Дослідити, чому вона це зробила</button>
+    </div>
+
+    <div id="scene11" class="scene">
+        <div class="status">ФІНАЛ: Помилка</div>
+        <p>Ви арештовуєте прибиральницю. Вона невинна — ключ-карту їй підкинули. Справжній злочинець тікає з діамантом.</p>
+        <p>Через місяць його знаходять в іншій країні. Справу закривають.</p>
+        <div class="final">СПРАВА НЕ РОЗКРИТА</div>
+        <button class="choice" onclick="showScene(1)">Спробувати ще раз</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene12" class="scene">
+        <div class="status">Розділ 3: Колекція</div>
+        <p>Ви перевіряєте колекцію музею. Монети немає! Її викрали разом з діамантом.</p>
+        <p>Але чому злочинець взяв монету? Вона не така цінна, як діамант.</p>
+        <p>Або... монета була справжньою метою? А діамант — відволікання?</p>
+        <button class="choice" onclick="showScene(16)">1. Дослідити, хто цікавився монетою</button>
+        <button class="choice" onclick="showScene(3)">2. Допитати куратора про монету</button>
+    </div>
+
+    <div id="scene13" class="scene">
+        <div class="status">Розділ 4: Свідок</div>
+        <p>"Це була жінка," — каже охоронець. "Висока, в темному пальті. Я не бачив обличчя."</p>
+        <p>Жінка! Це звужує коло підозрюваних. Куратор — жінка. Прибиральниця — жінка.</p>
+        <button class="choice" onclick="showScene(3)">1. Допитати куратора</button>
+        <button class="choice" onclick="showScene(4)">2. Допитати прибиральницю</button>
+    </div>
+
+    <div id="scene14" class="scene">
+        <div class="status">Розділ 4: Мотив</div>
+        <p>"Мій чоловік хворіє," — каже куратор. "Рак. Лікування коштує мільйони. Страховка не покриває."</p>
+        <p>Вона плаче. "Я не хотіла красти. Але я не мала вибору."</p>
+        <p>Ви розумієте — у неї був мотив. Але чи достатньо цього для арешту?</p>
+        <button class="choice" onclick="showScene(9)">1. Арештувати куратора</button>
+        <button class="choice" onclick="showScene(15)">2. Шукати більше доказів</button>
+    </div>
+
+    <div id="scene15" class="scene">
+        <div class="status">ФІНАЛ: Милосердя</div>
+        <p>Ви дізнаєтесь, що чоловік куратора хворів на рак. Лікування коштувало мільйони. Вона вкрала діамант, щоб врятувати його.</p>
+        <p>Чоловік помер тиждень тому. Олена плаче: "Я зробила це для нього."</p>
+        <p>Ви передаєте справу суду. Олену засуджують, але з пом'якшенням. Діамант повертають музею.</p>
+        <div class="final">СПРАВУ РОЗКРИТО З ЛЮДЯНІСТЮ</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene16" class="scene">
+        <div class="status">Розділ 4: Колекціонер</div>
+        <p>Ви досліджуєте, хто цікавився монетою. Знаходите ім'я — колекціонер Петро Сидоренко. Він приходив в музей тиждень тому.</p>
+        <p>Ви їдете до нього. Він визнає, що хотів купити монету, але музей відмовив.</p>
+        <p>"Але я не крав її!" — каже він. "У мене є алібі."</p>
+        <button class="choice" onclick="showScene(17)">1. Перевірити алібі</button>
+        <button class="choice" onclick="showScene(3)">2. Повернутися до куратора</button>
+    </div>
+
+    <div id="scene17" class="scene">
+        <div class="status">ФІНАЛ: Колекціонер</div>
+        <p>Алібі Сидоренка підтверджується. Він невинний. Але він дає вам нову підказку — бачив куратора біля музею вночі.</p>
+        <p>Ви арештовуєте куратора. Вона зізнається. Справу закрито.</p>
+        <div class="final">СПРАВУ РОЗКРИТО!</div>
+        <button class="choice" onclick="showScene(1)">Почати спочатку</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <div id="scene18" class="scene">
+        <div class="status">ФІНАЛ: Нерозкрита таємниця</div>
+        <p>Ви не знаходите достатньо доказів. Справу закривають. Діамант залишається зниклим.</p>
+        <p>Але ви знаєте — правда десь поруч. Ви повернетесь до цієї справи.</p>
+        <div class="final">СПРАВА ЗАКРИТА, АЛЕ НЕ РОЗКРИТА</div>
+        <button class="choice" onclick="showScene(1)">Спробувати ще раз</button>
+        <a href="index.html" id="back-btn">До меню</a>
+    </div>
+
+    <script>
+        function showScene(num) {
+            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+            document.getElementById('scene' + num).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
