@@ -4,7 +4,7 @@
     const translations = {
         en: {
             title: "Modern Games",
-            subtitle: "Optimized for touchscreen Kindle Paperwhite, Oasis and Scribe",
+            subtitle: "Optimized for touchscreen Kindle",
             backToHome: "Back to Home",
             sections: {
                 puzzles: "Puzzles & Logic",
@@ -14,104 +14,100 @@
                 board: "Board Games"
             },
             games: {
-                sudoku: { name: "Sudoku", desc: "Classic logic puzzle with numbers" },
-                hangman: { name: "Hangman", desc: "Guess the word letter by letter" },
-                minesweeper: { name: "Minesweeper", desc: "Find all mines on the field" },
-                tictactoe: { name: "Tic-Tac-Toe", desc: "Play against computer" },
-                memory: { name: "Memory", desc: "Find matching pairs of cards" },
-                wordle: { name: "Word Guess", desc: "5 attempts to guess a 5-letter word" },
-                quiz: { name: "Quiz", desc: "10 questions on various topics" },
-                chess: { name: "Chess", desc: "Classic 8x8 board game" },
-                game2048: { name: "2048", desc: "Combine numbers to reach 2048" },
-                snake: { name: "Snake", desc: "Classic arcade game" },
-                puzzle15: { name: "Puzzle 15", desc: "Arrange numbers in order" },
-                reaction: { name: "Reaction Test", desc: "Test your reaction speed" },
-                tetris: { name: "Tetris", desc: "Classic block-stacking game" },
-                cards: { name: "Solitaire", desc: "Classic card game" }
+                sudoku: { name: "Sudoku", desc: "Classic logic puzzle" },
+                hangman: { name: "Hangman", desc: "Guess the word" },
+                minesweeper: { name: "Minesweeper", desc: "Find all mines" },
+                tictactoe: { name: "Tic-Tac-Toe", desc: "Play vs computer" },
+                memory: { name: "Memory", desc: "Find matching pairs" },
+                wordle: { name: "Word Guess", desc: "5-letter word game" },
+                quiz: { name: "Quiz", desc: "10 questions" },
+                chess: { name: "Chess", desc: "Classic 8x8 board" },
+                game2048: { name: "2048", desc: "Combine numbers" },
+                snake: { name: "Snake", desc: "Classic arcade" },
+                puzzle15: { name: "Puzzle 15", desc: "Arrange numbers" },
+                reaction: { name: "Reaction Test", desc: "Test your speed" },
+                tetris: { name: "Tetris", desc: "Block-stacking game" }
             }
         },
         uk: {
             title: "Сучасні ігри",
-            subtitle: "Оптимізовано для сенсорних екранів Kindle Paperwhite, Oasis та Scribe",
+            subtitle: "Оптимізовано для сенсорного Kindle",
             backToHome: "На головну",
             sections: {
-                puzzles: "Головоломки та логіка",
-                arcade: "Аркадні ігри",
+                puzzles: "Головоломки",
+                arcade: "Аркади",
                 quests: "Текстові квести",
                 word: "Словесні ігри",
                 board: "Настільні ігри"
             },
             games: {
-                sudoku: { name: "Судоку", desc: "Класична логічна гра з цифрами" },
-                hangman: { name: "Шибениця", desc: "Вгадайте слово по літерах" },
-                minesweeper: { name: "Сапер", desc: "Знайдіть всі міни на полі" },
+                sudoku: { name: "Судоку", desc: "Класична логічна гра" },
+                hangman: { name: "Шибениця", desc: "Вгадай слово" },
+                minesweeper: { name: "Сапер", desc: "Знайди всі міни" },
                 tictactoe: { name: "Хрестики-нулики", desc: "Гра проти комп'ютера" },
-                memory: { name: "Меморі", desc: "Знайдіть пари однакових карток" },
-                wordle: { name: "Вгадай слово", desc: "5 спроб вгадати слово з 5 літер" },
-                quiz: { name: "Вікторина", desc: "10 питань на різні теми" },
-                chess: { name: "Шахи", desc: "Класична гра на дошці 8x8" },
-                game2048: { name: "2048", desc: "З'єднуйте числа, щоб отримати 2048" },
-                snake: { name: "Змійка", desc: "Класична аркадна гра" },
-                puzzle15: { name: "П'ятнашки", desc: "Розташуйте числа по порядку" },
-                reaction: { name: "Тест на реакцію", desc: "Перевірте швидкість своєї реакції" },
-                tetris: { name: "Тетріс", desc: "Класична гра з блоками" },
-                cards: { name: "Пасьянс", desc: "Класична карткова гра" }
+                memory: { name: "Меморі", desc: "Знайди пари карток" },
+                wordle: { name: "Вгадай слово", desc: "Слово з 5 літер" },
+                quiz: { name: "Вікторина", desc: "10 питань" },
+                chess: { name: "Шахи", desc: "Класична гра" },
+                game2048: { name: "2048", desc: "З'єднуй числа" },
+                snake: { name: "Змійка", desc: "Класична аркада" },
+                puzzle15: { name: "П'ятнашки", desc: "Розташуй числа" },
+                reaction: { name: "Тест на реакцію", desc: "Перевір швидкість" },
+                tetris: { name: "Тетріс", desc: "Гра з блоками" }
             }
         },
         de: {
             title: "Moderne Spiele",
-            subtitle: "Optimiert für Touchscreen Kindle Paperwhite, Oasis und Scribe",
-            backToHome: "Zurück zur Startseite",
+            subtitle: "Optimiert für Touchscreen Kindle",
+            backToHome: "Zurück",
             sections: {
-                puzzles: "Puzzles & Logik",
-                arcade: "Arcade-Spiele",
+                puzzles: "Puzzles",
+                arcade: "Arcade",
                 quests: "Text-Quests",
                 word: "Wortspiele",
                 board: "Brettspiele"
             },
             games: {
-                sudoku: { name: "Sudoku", desc: "Klassisches Logikrätsel mit Zahlen" },
-                hangman: { name: "Galgenmännchen", desc: "Errate das Wort Buchstabe für Buchstabe" },
-                minesweeper: { name: "Minesweeper", desc: "Finde alle Minen auf dem Feld" },
-                tictactoe: { name: "Tic-Tac-Toe", desc: "Spiele gegen den Computer" },
-                memory: { name: "Memory", desc: "Finde passende Kartenpaare" },
-                wordle: { name: "Wort-Raten", desc: "5 Versuche, ein 5-Buchstaben-Wort zu erraten" },
-                quiz: { name: "Quiz", desc: "10 Fragen zu verschiedenen Themen" },
-                chess: { name: "Schach", desc: "Klassisches 8x8-Brettspiel" },
-                game2048: { name: "2048", desc: "Kombiniere Zahlen, um 2048 zu erreichen" },
-                snake: { name: "Snake", desc: "Klassisches Arcade-Spiel" },
-                puzzle15: { name: "Puzzle 15", desc: "Ordne Zahlen der Reihe nach an" },
-                reaction: { name: "Reaktionstest", desc: "Teste deine Reaktionsgeschwindigkeit" },
-                tetris: { name: "Tetris", desc: "Klassisches Block-Stapelspiel" },
-                cards: { name: "Solitaire", desc: "Klassisches Kartenspiel" }
+                sudoku: { name: "Sudoku", desc: "Logikrätsel" },
+                hangman: { name: "Galgenmännchen", desc: "Wort erraten" },
+                minesweeper: { name: "Minesweeper", desc: "Minen finden" },
+                tictactoe: { name: "Tic-Tac-Toe", desc: "Gegen Computer" },
+                memory: { name: "Memory", desc: "Paare finden" },
+                wordle: { name: "Wort-Raten", desc: "5-Buchstaben-Wort" },
+                quiz: { name: "Quiz", desc: "10 Fragen" },
+                chess: { name: "Schach", desc: "Brettspiel" },
+                game2048: { name: "2048", desc: "Zahlen kombinieren" },
+                snake: { name: "Snake", desc: "Arcade-Spiel" },
+                puzzle15: { name: "Puzzle 15", desc: "Zahlen ordnen" },
+                reaction: { name: "Reaktionstest", desc: "Geschwindigkeit testen" },
+                tetris: { name: "Tetris", desc: "Block-Spiel" }
             }
         },
         pl: {
             title: "Nowoczesne gry",
-            subtitle: "Zoptymalizowane dla dotykowych Kindle Paperwhite, Oasis i Scribe",
-            backToHome: "Powrót do strony głównej",
+            subtitle: "Zoptymalizowane dla dotykowego Kindle",
+            backToHome: "Powrót",
             sections: {
-                puzzles: "Puzzle i logika",
-                arcade: "Gry arcade",
+                puzzles: "Puzzle",
+                arcade: "Arcade",
                 quests: "Questy tekstowe",
                 word: "Gry słowne",
                 board: "Gry planszowe"
             },
             games: {
-                sudoku: { name: "Sudoku", desc: "Klasyczna łamigłówka logiczna z liczbami" },
-                hangman: { name: "Wisielec", desc: "Zgadnij słowo litera po literze" },
-                minesweeper: { name: "Saper", desc: "Znajdź wszystkie miny na polu" },
-                tictactoe: { name: "Kółko i krzyżyk", desc: "Gra przeciwko komputerowi" },
-                memory: { name: "Memory", desc: "Znajdź pasujące pary kart" },
-                wordle: { name: "Zgadnij słowo", desc: "5 prób na odgadnięcie 5-literowego słowa" },
-                quiz: { name: "Quiz", desc: "10 pytań na różne tematy" },
-                chess: { name: "Szachy", desc: "Klasyczna gra na planszy 8x8" },
-                game2048: { name: "2048", desc: "Łącz liczby, aby osiągnąć 2048" },
-                snake: { name: "Wąż", desc: "Klasyczna gra arkadowa" },
-                puzzle15: { name: "Puzzle 15", desc: "Ułóż liczby w kolejności" },
-                reaction: { name: "Test reakcji", desc: "Sprawdź szybkość swojej reakcji" },
-                tetris: { name: "Tetris", desc: "Klasyczna gra w układanie bloków" },
-                cards: { name: "Pasjans", desc: "Klasyczna gra karciana" }
+                sudoku: { name: "Sudoku", desc: "Łamigłówka logiczna" },
+                hangman: { name: "Wisielec", desc: "Zgadnij słowo" },
+                minesweeper: { name: "Saper", desc: "Znajdź miny" },
+                tictactoe: { name: "Kółko i krzyżyk", desc: "Przeciw komputerowi" },
+                memory: { name: "Memory", desc: "Znajdź pary" },
+                wordle: { name: "Zgadnij słowo", desc: "5-literowe słowo" },
+                quiz: { name: "Quiz", desc: "10 pytań" },
+                chess: { name: "Szachy", desc: "Gra planszowa" },
+                game2048: { name: "2048", desc: "Łącz liczby" },
+                snake: { name: "Wąż", desc: "Gra arkadowa" },
+                puzzle15: { name: "Puzzle 15", desc: "Ułóż liczby" },
+                reaction: { name: "Test reakcji", desc: "Sprawdź szybkość" },
+                tetris: { name: "Tetris", desc: "Gra w bloki" }
             }
         }
     };
@@ -127,9 +123,7 @@
     }
 
     function setLanguage(lang) {
-        try {
-            localStorage.setItem('language', lang);
-        } catch(e) {}
+        try { localStorage.setItem('language', lang); } catch(e) {}
         applyTranslations();
     }
 
@@ -171,7 +165,6 @@
     }
 
     window.setLanguage = setLanguage;
-    window.t = t;
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
@@ -182,4 +175,4 @@
         applyTranslations();
         addLanguageSelector();
     }
-})();s2sw2
+})();
