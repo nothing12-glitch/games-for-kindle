@@ -9,7 +9,7 @@
     <meta name="author" content="nothing12-glitch">
     
     <!-- Open Graph (для красивих посилань) -->
-    <meta property="og:title" content="Kindle Games ">
+    <meta property="og:title" content="Kindle Games 📚">
     <meta property="og:description" content="Free browser games for Kindle - 15+ games, 4 languages, works on all Kindle models!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nothing12-glitch.github.io/games-for-kindle/">
@@ -35,26 +35,76 @@
             min-height: 100vh;
         }
         
-        /* Dark theme */
-        body.dark-theme {
+        /* ===== РЕЖИМ ВЕЛИКИЙ ШРИФТ ===== */
+        body.large-font { font-size: 32px; }
+        body.large-font h1 { font-size: 40px; }
+        body.large-font .version-btn { font-size: 32px; padding: 30px; }
+        body.large-font .hint, body.large-font .daily-riddle p { font-size: 24px; }
+        
+        /* ===== ПРОГРЕС БАР ЧИТАННЯ ===== */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: currentColor;
+            z-index: 10001;
+            transition: width 0.1s;
+        }
+        
+        /* ===== ТОСТ-ПОВІДОМЛЕННЯ ===== */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 15px 30px;
+            border-radius: 8px;
+            background: currentColor;
             color: #fff;
-            background: #1a1a1a;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 10002;
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
-        body.dark-theme .version-btn,
-        body.dark-theme .footer-block,
-        body.dark-theme .hint {
-            background: #2a2a2a;
-            color: #fff;
-            border-color: #fff;
+        body.green-theme .toast { color: #001100; }
+        body.dark-theme .toast { color: #1a1a1a; }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
-        body.dark-theme p {
-            color: #ccc;
+        
+        /* ===== КОНФЕТІ ===== */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f00;
+            z-index: 10003;
+            animation: confettiFall 3s linear forwards;
         }
-        body.dark-theme .version-btn:focus,
-        body.dark-theme .version-btn:hover {
-            background: #fff;
-            color: #1a1a1a;
+        @keyframes confettiFall {
+            to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
+        
+        /* ===== 4 ТЕМИ ===== */
+        body.dark-theme { color: #fff; background: #1a1a1a; }
+        body.sepia-theme { color: #5b4636; background: #f4ecd8; }
+        body.green-theme { color: #00ff00; background: #001100; }
+
+        .themed-box {
+            background: #f9f9f9;
+            border: 2px solid #000;
+            color: #000;
+        }
+        body.dark-theme .themed-box { background: #2a2a2a; border-color: #fff; color: #fff; }
+        body.sepia-theme .themed-box { background: #e8dcc4; border-color: #5b4636; color: #5b4636; }
+        body.green-theme .themed-box { background: #002200; border-color: #00ff00; color: #00ff00; }
+
+        body.dark-theme p, body.sepia-theme p, body.green-theme p { color: inherit; opacity: 0.9; }
         
         h1 { font-size: 32px; margin-bottom: 10px; }
         p { margin-bottom: 40px; }
@@ -67,65 +117,95 @@
             padding: 25px;
             font-size: 26px;
             font-weight: bold;
-            color: #000;
-            background: #fff;
-            border: 3px solid #000;
             text-decoration: none;
             text-align: center;
-            box-shadow: 4px 4px 0px #000;
+            box-shadow: 4px 4px 0px currentColor;
             cursor: pointer;
         }
-        .version-btn:focus, .version-btn:hover {
-            background: #000;
-            color: #fff;
-        }
+        .version-btn:focus, .version-btn:hover { opacity: 0.8; }
+        
         .hint {
             font-size: 16px;
-            color: #333;
             margin: 40px auto;
             padding: 15px 20px;
-            border: 2px solid #000;
             border-radius: 8px;
-            background: #f9f9f9;
             max-width: 600px;
-            box-shadow: 3px 3px 0px #000;
+            box-shadow: 3px 3px 0px currentColor;
         }
-        .language-selector {
+        
+        /* ===== ЩОДЕННА ЗАГАДКА ===== */
+        .daily-riddle {
+            margin: 40px auto;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 600px;
+            box-shadow: 4px 4px 0px currentColor;
+            text-align: center;
+        }
+        .daily-riddle h3 { margin: 0 0 15px 0; font-size: 22px; }
+        .daily-riddle p { font-size: 20px; margin: 15px 0; font-style: italic; }
+        .show-riddle-btn {
+            padding: 12px 25px;
+            font-size: 18px;
+            background: transparent;
+            border: 2px solid currentColor;
+            color: currentColor;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .show-riddle-btn:active { background: currentColor; color: #fff; }
+        .riddle-answer {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(128,128,128,0.2);
+            border-left: 4px solid currentColor;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .riddle-answer.show { display: block; }
+        
+        /* ===== СЕЛЕКТОРИ ===== */
+        .language-selector, .theme-selector {
             position: absolute;
             top: 10px;
-            right: 10px;
             z-index: 1000;
         }
-        .language-selector select {
+        .language-selector { right: 10px; }
+        .theme-selector { right: 130px; }
+        
+        .language-selector select, .theme-selector select {
             padding: 8px;
             font-size: 14px;
-            border: 2px solid #000;
+            border: 2px solid currentColor;
             border-radius: 4px;
-            background: #fff;
+            background: transparent;
+            color: currentColor;
             cursor: pointer;
             font-family: Georgia, serif;
         }
         
-        /* Theme toggle button */
-        .theme-toggle {
+        /* ===== КНОПКА ВЕЛИКИЙ ШРИФТ ===== */
+        .large-font-btn {
             position: absolute;
             top: 10px;
-            right: 150px;
+            right: 250px;
+            z-index: 1000;
             padding: 8px 12px;
             font-size: 14px;
-            border: 2px solid #000;
+            border: 2px solid currentColor;
             border-radius: 4px;
-            background: #fff;
+            background: transparent;
+            color: currentColor;
             cursor: pointer;
-            font-family: Georgia, serif;
+            font-weight: bold;
         }
-        body.dark-theme .theme-toggle {
-            background: #2a2a2a;
-            color: #fff;
-            border-color: #fff;
-        }
+        .large-font-btn.active { background: currentColor; color: #fff; }
+        body.green-theme .large-font-btn.active { color: #001100; }
+        body.dark-theme .large-font-btn.active { color: #1a1a1a; }
         
-        /* Scroll to top button */
+        /* ===== SCROLL TO TOP ===== */
         .scroll-top {
             position: fixed;
             bottom: 100px;
@@ -133,9 +213,9 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: #000;
+            background: currentColor;
             color: #fff;
-            border: 2px solid #000;
+            border: 2px solid currentColor;
             font-size: 24px;
             cursor: pointer;
             display: none;
@@ -144,19 +224,14 @@
             z-index: 999;
             box-shadow: 3px 3px 0px #666;
         }
-        .scroll-top:hover {
-            background: #333;
-        }
-        body.dark-theme .scroll-top {
-            background: #fff;
-            color: #1a1a1a;
-        }
+        body.green-theme .scroll-top { color: #001100; }
+        body.dark-theme .scroll-top { color: #1a1a1a; }
         
-        /* Footer - внизу сторінки, не fixed */
+        /* ===== FOOTER ===== */
         .footer {
             margin-top: 60px;
             padding: 30px 20px;
-            border-top: 2px solid #000;
+            border-top: 2px solid currentColor;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
@@ -169,17 +244,13 @@
             flex: 1;
             min-width: 250px;
             max-width: 350px;
-            background: #f9f9f9;
-            border: 2px solid #000;
-            border-radius: 8px;
             padding: 15px;
-            box-shadow: 3px 3px 0px #000;
             text-align: left;
         }
         .footer-block h3 {
             margin: 0 0 10px 0;
             font-size: 16px;
-            border-bottom: 1px solid #000;
+            border-bottom: 1px solid currentColor;
             padding-bottom: 5px;
         }
         .footer-block p {
@@ -187,35 +258,25 @@
             font-size: 13px;
             line-height: 1.4;
         }
-        .footer-block a {
-            color: #0066cc;
-            text-decoration: underline;
-            word-break: break-all;
-        }
-        .footer-center {
-            text-align: center;
-        }
-        .footer-right {
-            text-align: right;
-            font-style: italic;
-        }
-        .made-by-link {
-            cursor: pointer;
-            user-select: none;
-        }
-        .made-by-link:hover {
-            text-decoration: underline;
-        }
+        .footer-block a { color: #0066cc; text-decoration: underline; word-break: break-all; }
+        body.green-theme .footer-block a { color: #00ff00; }
+        body.sepia-theme .footer-block a { color: #8b4513; }
         
-        /* Easter egg modal */
+        .footer-center { text-align: center; }
+        .footer-right { text-align: right; font-style: italic; }
+        .made-by-link { cursor: pointer; user-select: none; }
+        .made-by-link:hover { text-decoration: underline; }
+        .visit-counter { font-weight: bold; font-size: 14px; margin-top: 10px; }
+        .time-on-site { font-size: 12px; opacity: 0.7; margin-top: 5px; }
+        
+        /* ===== EASTER EGG ===== */
         .easter-egg {
             display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #fff;
-            border: 3px solid #000;
+            border: 3px solid currentColor;
             border-radius: 10px;
             padding: 30px;
             max-width: 400px;
@@ -223,69 +284,63 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
             text-align: center;
         }
-        .easter-egg.show {
-            display: block;
-            animation: popIn 0.3s ease-out;
-        }
+        .easter-egg.show { display: block; animation: popIn 0.3s ease-out; }
         @keyframes popIn {
             from { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
             to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
-        .easter-egg h2 {
-            margin: 0 0 15px 0;
-            font-size: 24px;
-        }
-        .easter-egg p {
-            margin: 10px 0;
-            font-size: 16px;
-        }
+        .easter-egg h2 { margin: 0 0 15px 0; font-size: 24px; }
+        .easter-egg p { margin: 10px 0; font-size: 16px; }
         .easter-egg button {
             margin-top: 15px;
             padding: 10px 20px;
             font-size: 16px;
-            background: #000;
+            background: currentColor;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
-        .easter-egg button:hover {
-            background: #333;
-        }
+        body.green-theme .easter-egg button { color: #001100; }
+        body.dark-theme .easter-egg button { color: #1a1a1a; }
         .overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.7);
             z-index: 9999;
         }
-        .overlay.show {
-            display: block;
-        }
+        .overlay.show { display: block; }
         
+        /* ===== АДАПТИВ ===== */
         @media (max-width: 768px) {
-            .footer {
-                flex-direction: column;
-                align-items: center;
-            }
-            .footer-block {
-                max-width: 100%;
-                width: 100%;
-            }
-            body {
-                padding: 30px 15px;
-            }
-            .theme-toggle {
-                right: 130px;
-                font-size: 12px;
-            }
+            .footer { flex-direction: column; align-items: center; }
+            .footer-block { max-width: 100%; width: 100%; }
+            body { padding: 30px 15px; }
+            .theme-selector { right: 120px; }
+            .large-font-btn { right: 240px; }
+            .language-selector select, .theme-selector select { font-size: 12px; padding: 6px; }
+            .large-font-btn { font-size: 12px; padding: 6px 10px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Прогрес бар читання -->
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+        <select onchange="changeTheme(this.value)" id="theme-select">
+            <option value="light" id="theme-light">☀️ Light</option>
+            <option value="dark" id="theme-dark">🌙 Dark</option>
+            <option value="sepia" id="theme-sepia">📜 Sepia</option>
+            <option value="green" id="theme-green">🌿 Green</option>
+        </select>
+    </div>
+
+    <!-- Кнопка великий шрифт -->
+    <button class="large-font-btn" onclick="toggleLargeFont()" id="large-font-btn" title="Large font mode">A+</button>
 
     <!-- Language Selector -->
     <div class="language-selector">
@@ -297,53 +352,60 @@
         </select>
     </div>
 
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
-
     <!-- Scroll to Top -->
     <button class="scroll-top" onclick="scrollToTop()" id="scroll-top">↑</button>
+
+    <!-- Тост-повідомлення -->
+    <div class="toast" id="toast"></div>
 
     <!-- Main Content -->
     <h1 id="title">Kindle Games</h1>
     <p id="subtitle">Choose your device version:</p>
 
-    <a href="classic/index.html" class="version-btn">
+    <a href="classic/index.html" class="version-btn themed-box">
         <span id="old-kindle">Old Kindle</span><br>
         <span style="font-size: 18px; font-weight: normal;" id="old-kindle-desc">(with buttons, no JavaScript)</span>
     </a>
 
-    <a href="modern/index.html" class="version-btn">
+    <a href="modern/index.html" class="version-btn themed-box">
         <span id="new-kindle">New Kindle</span><br>
         <span style="font-size: 18px; font-weight: normal;" id="new-kindle-desc">(touchscreen, with JavaScript)</span>
     </a>
 
-    <a href="about.html" class="version-btn" style="font-size: 20px; padding: 15px;">
+    <a href="about.html" class="version-btn themed-box" style="font-size: 20px; padding: 15px;">
         <span id="about-btn">ℹ️ About this project</span>
     </a>
 
-    <!-- Tip -->
-    <div class="hint" id="tip">
-        💡 Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript).
+    <!-- Daily Riddle -->
+    <div class="daily-riddle themed-box" id="daily-riddle">
+        <h3 id="riddle-title">🧩 Daily Riddle:</h3>
+        <p id="riddle-text">Loading...</p>
+        <button class="show-riddle-btn" onclick="toggleRiddle()" id="riddle-btn">Show Answer</button>
+        <div class="riddle-answer" id="riddle-answer"></div>
     </div>
 
-    <!-- Footer (внизу сторінки, не fixed) -->
+    <!-- Tip -->
+    <div class="hint themed-box" id="tip">
+        💡 Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript). Keyboard shortcuts: T - theme, L - language, R - riddle.
+    </div>
+
+    <!-- Footer -->
     <div class="footer">
-        <!-- Project Info (Left) -->
-        <div class="footer-block">
+        <div class="footer-block themed-box">
             <h3 id="project-title">Project Info:</h3>
             <p id="project-desc">This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.</p>
             <p id="project-contact">Found a bug or have suggestions? Email: <a href="mailto:workingnothing12.github@gmail.com">workingnothing12.github@gmail.com</a></p>
         </div>
 
-        <!-- Made By (Center) -->
-        <div class="footer-block footer-center">
+        <div class="footer-block themed-box footer-center">
             <h3>Credits:</h3>
             <p class="made-by-link" id="made-by" onclick="showEasterEgg()">Made with ❤️ for Kindle lovers</p>
-            <p style="font-size: 11px; color: #999; margin-top: 10px;">(Click me! 😉)</p>
+            <p style="font-size: 11px; opacity: 0.7; margin-top: 10px;">(Click me! 😉)</p>
+            <p class="visit-counter" id="visit-counter">You've visited this site 1 time</p>
+            <p class="time-on-site" id="time-on-site">Time on site: 0s</p>
         </div>
 
-        <!-- Quote of the Day (Right) -->
-        <div class="footer-block footer-right">
+        <div class="footer-block themed-box footer-right">
             <h3 id="quote-title">Quote of the Day:</h3>
             <p id="quote-text">"Java is to JavaScript what car is to Carpet." - Chris Heilmann</p>
         </div>
@@ -351,14 +413,15 @@
 
     <!-- Easter Egg Modal -->
     <div class="overlay" id="overlay" onclick="hideEasterEgg()"></div>
-    <div class="easter-egg" id="easter-egg">
+    <div class="easter-egg themed-box" id="easter-egg">
         <h2 id="easter-title">🎉 You found the Easter Egg!</h2>
         <p id="easter-text">Thanks for exploring! You're a true Kindle enthusiast.</p>
-        <p style="font-size: 14px; color: #666;" id="easter-fact">Fun fact: This project has 15+ games and supports 4 languages!</p>
+        <p style="font-size: 14px; opacity: 0.8;" id="easter-fact">Fun fact: This project has 15+ games and supports 4 languages!</p>
         <button onclick="hideEasterEgg()" id="easter-btn">Awesome! 🚀</button>
     </div>
 
     <script>
+        // ===== ПОВНІ ПЕРЕКЛАДИ (4 мови) =====
         const translations = {
             en: {
                 title: "Kindle Games",
@@ -368,16 +431,28 @@
                 newKindle: "New Kindle",
                 newKindleDesc: "(touchscreen, with JavaScript)",
                 aboutBtn: "ℹ️ About this project",
-                tip: "💡 Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript).",
+                tip: "💡 Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript). Keyboard shortcuts: T - theme, L - language, R - riddle.",
                 projectTitle: "Project Info:",
                 projectDesc: "This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.",
                 projectContact: "Found a bug or have suggestions? Email:",
                 madeBy: "Made with ❤️ for Kindle lovers",
-                themeBtn: "🌙 Dark",
+                riddleTitle: "🧩 Daily Riddle:",
+                riddleBtnShow: "Show Answer",
+                riddleBtnHide: "Hide Answer",
+                quoteTitle: "Quote of the Day:",
                 easterTitle: "🎉 You found the Easter Egg!",
                 easterText: "Thanks for exploring! You're a true Kindle enthusiast.",
                 easterFact: "Fun fact: This project has 15+ games and supports 4 languages!",
-                easterBtn: "Awesome! 🚀"
+                easterBtn: "Awesome! 🚀",
+                visitCounter: "You've visited this site",
+                visitCounterTimes: "time",
+                visitCounterTimesPlural: "times",
+                timeOnSite: "Time on site:",
+                toastTheme: "Theme changed:",
+                toastLanguage: "Language changed:",
+                toastLargeFontOn: "Large font mode: ON",
+                toastLargeFontOff: "Large font mode: OFF",
+                themes: { light: "☀️ Light", dark: "🌙 Dark", sepia: "📜 Sepia", green: "🌿 Green" }
             },
             uk: {
                 title: "Ігри для Kindle",
@@ -387,16 +462,28 @@
                 newKindle: "Новий Kindle",
                 newKindleDesc: "(сенсорний, з JavaScript)",
                 aboutBtn: "ℹ️ Про проект",
-                tip: " Порада: Якщо ігри не працюють, увімкніть JavaScript у налаштуваннях браузера Kindle (Menu → Settings → Advanced → Enable JavaScript).",
+                tip: "💡 Порада: Якщо ігри не працюють, увімкніть JavaScript у налаштуваннях браузера Kindle (Menu → Settings → Advanced → Enable JavaScript). Клавіші: T - тема, L - мова, R - загадка.",
                 projectTitle: "Про проект:",
                 projectDesc: "Цей проект створено для любителів Kindle. Ігри оптимізовані для E-Ink дисплеїв.",
                 projectContact: "Знайшли помилку або маєте пропозиції? Пишіть:",
                 madeBy: "Створено з ❤️ для любителів Kindle",
-                themeBtn: "🌙 Темна",
+                riddleTitle: "🧩 Щоденна загадка:",
+                riddleBtnShow: "Показати відповідь",
+                riddleBtnHide: "Сховати відповідь",
+                quoteTitle: "Цитата дня:",
                 easterTitle: "🎉 Ви знайшли Easter Egg!",
                 easterText: "Дякуємо за дослідження! Ви справжній фанат Kindle.",
                 easterFact: "Цікавий факт: Цей проект має 15+ ігор та підтримує 4 мови!",
-                easterBtn: "Круто! "
+                easterBtn: "Круто! 🚀",
+                visitCounter: "Ви відвідали цей сайт",
+                visitCounterTimes: "раз",
+                visitCounterTimesPlural: "разів",
+                timeOnSite: "Час на сайті:",
+                toastTheme: "Тему змінено:",
+                toastLanguage: "Мову змінено:",
+                toastLargeFontOn: "Режим великий шрифт: УВІМК",
+                toastLargeFontOff: "Режим великий шрифт: ВИМК",
+                themes: { light: "☀️ Світла", dark: "🌙 Темна", sepia: "📜 Сепія", green: "🌿 Зелена" }
             },
             de: {
                 title: "Kindle Spiele",
@@ -406,16 +493,28 @@
                 newKindle: "Neuer Kindle",
                 newKindleDesc: "(Touchscreen, mit JavaScript)",
                 aboutBtn: "ℹ️ Über dieses Projekt",
-                tip: "💡 Tipp: Wenn Spiele nicht funktionieren, aktivieren Sie JavaScript in den Kindle-Browsereinstellungen (Menü → Einstellungen → Erweitert → JavaScript aktivieren).",
+                tip: "💡 Tipp: Wenn Spiele nicht funktionieren, aktivieren Sie JavaScript in den Kindle-Browsereinstellungen (Menü → Einstellungen → Erweitert → JavaScript aktivieren). Tasten: T - Thema, L - Sprache, R - Rätsel.",
                 projectTitle: "Projekt Info:",
                 projectDesc: "Dieses Projekt wurde für Kindle-Liebhaber erstellt. Spiele optimiert für E-Ink-Displays.",
                 projectContact: "Fehler gefunden oder Vorschläge? Email:",
                 madeBy: "Gemacht mit ❤️ für Kindle-Liebhaber",
-                themeBtn: "🌙 Dunkel",
+                riddleTitle: "🧩 Rätsel des Tages:",
+                riddleBtnShow: "Antwort zeigen",
+                riddleBtnHide: "Antwort verstecken",
+                quoteTitle: "Zitat des Tages:",
                 easterTitle: "🎉 Du hast das Easter Egg gefunden!",
                 easterText: "Danke fürs Erkunden! Du bist ein echter Kindle-Fan.",
                 easterFact: "Fun Fact: Dieses Projekt hat 15+ Spiele und unterstützt 4 Sprachen!",
-                easterBtn: "Cool! 🚀"
+                easterBtn: "Cool! 🚀",
+                visitCounter: "Du hast diese Seite besucht",
+                visitCounterTimes: "Mal",
+                visitCounterTimesPlural: "Mal",
+                timeOnSite: "Zeit auf der Seite:",
+                toastTheme: "Thema geändert:",
+                toastLanguage: "Sprache geändert:",
+                toastLargeFontOn: "Große Schrift: AN",
+                toastLargeFontOff: "Große Schrift: AUS",
+                themes: { light: "☀️ Hell", dark: "🌙 Dunkel", sepia: "📜 Sepia", green: "🌿 Grün" }
             },
             pl: {
                 title: "Gry Kindle",
@@ -425,47 +524,108 @@
                 newKindle: "Nowy Kindle",
                 newKindleDesc: "(dotykowy, z JavaScript)",
                 aboutBtn: "ℹ️ O tym projekcie",
-                tip: "💡 Wskazówka: Jeśli gry nie działają, włącz JavaScript w ustawieniach przeglądarki Kindle (Menu → Ustawienia → Zaawansowane → Włącz JavaScript).",
+                tip: "💡 Wskazówka: Jeśli gry nie działają, włącz JavaScript w ustawieniach przeglądarki Kindle (Menu → Ustawienia → Zaawansowane → Włącz JavaScript). Klawisze: T - motyw, L - język, R - zagadka.",
                 projectTitle: "Info o projekcie:",
                 projectDesc: "Ten projekt został stworzony dla miłośników Kindle. Gry zoptymalizowane dla wyświetlaczy E-Ink.",
                 projectContact: "Znalazłeś błąd lub masz sugestie? Email:",
                 madeBy: "Stworzone z ❤️ dla miłośników Kindle",
-                themeBtn: "🌙 Ciemny",
+                riddleTitle: "🧩 Zagadka dnia:",
+                riddleBtnShow: "Pokaż odpowiedź",
+                riddleBtnHide: "Ukryj odpowiedź",
+                quoteTitle: "Cytat dnia:",
                 easterTitle: "🎉 Znalazłeś Easter Egg!",
                 easterText: "Dzięki za eksplorację! Jesteś prawdziwym fanem Kindle.",
                 easterFact: "Ciekawostka: Ten projekt ma 15+ gier i obsługuje 4 języki!",
-                easterBtn: "Super! 🚀"
+                easterBtn: "Super! 🚀",
+                visitCounter: "Odwiedziłeś tę stronę",
+                visitCounterTimes: "raz",
+                visitCounterTimesPlural: "razy",
+                timeOnSite: "Czas na stronie:",
+                toastTheme: "Zmieniono motyw:",
+                toastLanguage: "Zmieniono język:",
+                toastLargeFontOn: "Duża czcionka: WŁ",
+                toastLargeFontOff: "Duża czcionka: WYŁ",
+                themes: { light: "☀️ Jasny", dark: "🌙 Ciemny", sepia: "📜 Sepia", green: "🌿 Zielony" }
             }
         };
 
+        // ===== 8 ЦИТАТ (повний набір) =====
         const quotes = [
             { en: '"Java is to JavaScript what car is to Carpet." - Chris Heilmann', uk: '"Java відноситься до JavaScript як килим до автомобіля." - Chris Heilmann', de: '"Java ist zu JavaScript, was Teppich zu Auto ist." - Chris Heilmann', pl: '"Java ma się do JavaScript jak dywan do samochodu." - Chris Heilmann' },
             { en: '"The only way to do great work is to love what you do." - Steve Jobs', uk: '"Єдиний спосіб робити великі справи - любити те, що робиш." - Steve Jobs', de: '"Der einzige Weg, großartige Arbeit zu leisten, ist zu lieben, was man tut." - Steve Jobs', pl: '"Jedyny sposób na wykonanie wielkiej pracy to kochać to, co się robi." - Steve Jobs' },
             { en: '"Code is like humor. When you have to explain it, it\'s bad." - Cory House', uk: '"Код як гумор. Якщо треба пояснювати - він поганий." - Cory House', de: '"Code ist wie Humor. Wenn man ihn erklären muss, ist er schlecht." - Cory House', pl: '"Kod jest jak humor. Kiedy trzeba go wyjaśniać, jest zły." - Cory House' },
             { en: '"Simplicity is the ultimate sophistication." - Leonardo da Vinci', uk: '"Простота - це вища форма досконалості." - Leonardo da Vinci', de: '"Einfachheit ist die höchste Form der Raffinesse." - Leonardo da Vinci', pl: '"Prostota to najwyższa forma wyrafinowania." - Leonardo da Vinci' },
-            { en: '"Make it work, make it right, make it fast." - Kent Beck', uk: '"Зроби щоб працювало, зроби правильно, зроби швидко." - Kent Beck', de: '"Lass es funktionieren, mach es richtig, mach es schnell." - Kent Beck', pl: '"Spraw, by działało, spraw, by było dobrze, spraw, by było szybko." - Kent Beck' }
+            { en: '"Make it work, make it right, make it fast." - Kent Beck', uk: '"Зроби щоб працювало, зроби правильно, зроби швидко." - Kent Beck', de: '"Lass es funktionieren, mach es richtig, mach es schnell." - Kent Beck', pl: '"Spraw, by działało, spraw, by było dobrze, spraw, by było szybko." - Kent Beck' },
+            { en: '"First, solve the problem. Then, write the code." - John Johnson', uk: '"Спочатку розв\'яжи проблему. Потім пиши код." - John Johnson', de: '"Löse zuerst das Problem. Dann schreibe den Code." - John Johnson', pl: '"Najpierw rozwiąż problem. Potem napisz kod." - John Johnson' },
+            { en: '"Experience is the name everyone gives to their mistakes." - Oscar Wilde', uk: '"Досвід - це ім\'я, яке всі дають своїм помилкам." - Oscar Wilde', de: '"Erfahrung ist der Name, den jeder seinen Fehlern gibt." - Oscar Wilde', pl: '"Doświadczenie to imię, które każdy nadaje swoim błędom." - Oscar Wilde' },
+            { en: '"In order to be irreplaceable, one must always be different." - Coco Chanel', uk: '"Щоб бути незамінним, треба завжди бути іншим." - Coco Chanel', de: '"Um unersetzlich zu sein, muss man immer anders sein." - Coco Chanel', pl: '"Aby być niezastąpionym, trzeba zawsze być innym." - Coco Chanel' }
+        ];
+
+        // ===== 10 ЩОДЕННИХ ЗАГАДОК =====
+        const dailyRiddles = [
+            { en: "I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?", uk: "У мене є міста, але немає будинків. Гори, але немає дерев. Вода, але немає риби. Що я?", de: "Ich habe Städte, aber keine Häuser. Berge, aber keine Bäume. Wasser, aber keine Fische. Was bin ich?", pl: "Mam miasta, ale nie mam domów. Góry, ale nie mam drzew. Wodę, ale nie mam ryb. Czym jestem?", answer: { en: "A map", uk: "Карта", de: "Eine Landkarte", pl: "Mapa" }},
+            { en: "The more you take, the more you leave behind. What am I?", uk: "Чим більше береш, тим більше залишаєш позаду. Що я?", de: "Je mehr du nimmst, desto mehr lässt du zurück. Was bin ich?", pl: "Im więcej bierzesz, tym więcej zostawiasz za sobą. Czym jestem?", answer: { en: "Footsteps", uk: "Сліди", de: "Fußspuren", pl: "Ślady stóp" }},
+            { en: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?", uk: "Я говорю без рота і чую без вух. У мене немає тіла, але я оживаю з вітром. Що я?", de: "Ich spreche ohne Mund und höre ohne Ohren. Ich habe keinen Körper, aber ich werde mit Wind lebendig. Was bin ich?", pl: "Mówię bez ust i słyszę bez uszu. Nie mam ciała, ale ożywam z wiatrem. Czym jestem?", answer: { en: "An echo", uk: "Луна", de: "Ein Echo", pl: "Echo" }},
+            { en: "I have keys but no locks. I have space but no room. You can enter but can't go inside. What am I?", uk: "У мене є ключі, але немає замків. Простір, але немає кімнати. Ви можете увійти, але не зайти всередину. Що я?", de: "Ich habe Tasten, aber keine Schlösser. Raum, aber kein Zimmer. Du kannst eintreten, aber nicht hineingehen. Was bin ich?", pl: "Mam klawisze, ale nie mam zamków. Przestrzeń, ale nie mam pokoju. Możesz wejść, ale nie do środka. Czym jestem?", answer: { en: "A keyboard", uk: "Клавіатура", de: "Eine Tastatur", pl: "Klawiatura" }},
+            { en: "I'm tall when I'm young, and I'm short when I'm old. What am I?", uk: "Я високий, коли молодий, і низький, коли старий. Що я?", de: "Ich bin groß, wenn ich jung bin, und klein, wenn ich alt bin. Was bin ich?", pl: "Jestem wysoki, gdy jestem młody, i niski, gdy jestem stary. Czym jestem?", answer: { en: "A candle", uk: "Свічка", de: "Eine Kerze", pl: "Świeca" }},
+            { en: "What has hands but can't clap?", uk: "Що має руки, але не може плескати?", de: "Was hat Hände, aber nicht klatschen kann?", pl: "Co ma ręce, ale nie może klaskać?", answer: { en: "A clock", uk: "Годинник", de: "Eine Uhr", pl: "Zegar" }},
+            { en: "I can be cracked, made, told, and played. What am I?", uk: "Мене можна розбити, створити, розповісти і зіграти. Що я?", de: "Ich kann geknackt, gemacht, erzählt und gespielt werden. Was bin ich?", pl: "Mogę być złamany, zrobiony, opowiedziany i zagrany. Czym jestem?", answer: { en: "A joke", uk: "Жарт", de: "Ein Witz", pl: "Żart" }},
+            { en: "What has a head and a tail but no body?", uk: "Що має голову і хвіст, але немає тіла?", de: "Was hat einen Kopf und einen Schwanz, aber keinen Körper?", pl: "Co ma głowę i ogon, ale nie ma ciała?", answer: { en: "A coin", uk: "Монета", de: "Eine Münze", pl: "Moneta" }},
+            { en: "The person who makes it, sells it. The person who buys it never uses it. The person who uses it never knows. What is it?", uk: "Хто робить, продає. Хто купує, не використовує. Хто використовує, не знає. Що це?", de: "Der Hersteller verkauft es. Der Käufer benutzt es nie. Der Benutzer weiß es nie. Was ist es?", pl: "Twórca to sprzedaje. Kupujący nigdy tego nie używa. Użytkownik nigdy nie wie. Co to jest?", answer: { en: "A coffin", uk: "Труна", de: "Ein Sarg", pl: "Trumna" }},
+            { en: "I'm not alive, but I grow; I don't have lungs, but I need air; water kills me. What am I?", uk: "Я не живий, але росту; немає легень, але потрібне повітря; вода вбиває мене. Що я?", de: "Ich bin nicht lebendig, aber ich wachse; keine Lungen, aber brauche Luft; Wasser tötet mich. Was bin ich?", pl: "Nie jestem żywy, ale rosnę; nie mam płuc, ale potrzebuję powietrza; woda mnie zabija. Czym jestem?", answer: { en: "Fire", uk: "Вогонь", de: "Feuer", pl: "Ogień" }}
         ];
 
         let currentLang = 'en';
+        let startTime = Date.now();
 
+        // ===== ТОСТ-ПОВІДОМЛЕННЯ =====
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // ===== КОНФЕТІ =====
+        function showConfetti() {
+            const colors = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3500);
+            }
+        }
+
+        // ===== ЗМІНА МОВИ =====
         function changeLanguage(lang) {
             currentLang = lang;
-            document.getElementById('title').textContent = translations[lang].title;
-            document.getElementById('subtitle').textContent = translations[lang].subtitle;
-            document.getElementById('old-kindle').textContent = translations[lang].oldKindle;
-            document.getElementById('old-kindle-desc').textContent = translations[lang].oldKindleDesc;
-            document.getElementById('new-kindle').textContent = translations[lang].newKindle;
-            document.getElementById('new-kindle-desc').textContent = translations[lang].newKindleDesc;
-            document.getElementById('about-btn').textContent = translations[lang].aboutBtn;
-            document.getElementById('tip').textContent = translations[lang].tip;
-            document.getElementById('project-title').textContent = translations[lang].projectTitle;
-            document.getElementById('project-desc').textContent = translations[lang].projectDesc;
-            document.getElementById('made-by').textContent = translations[lang].madeBy;
-            document.getElementById('theme-btn').textContent = translations[lang].themeBtn;
-            document.getElementById('easter-title').textContent = translations[lang].easterTitle;
-            document.getElementById('easter-text').textContent = translations[lang].easterText;
-            document.getElementById('easter-fact').textContent = translations[lang].easterFact;
-            document.getElementById('easter-btn').textContent = translations[lang].easterBtn;
+            const t = translations[lang];
+            
+            document.getElementById('title').textContent = t.title;
+            document.getElementById('subtitle').textContent = t.subtitle;
+            document.getElementById('old-kindle').textContent = t.oldKindle;
+            document.getElementById('old-kindle-desc').textContent = t.oldKindleDesc;
+            document.getElementById('new-kindle').textContent = t.newKindle;
+            document.getElementById('new-kindle-desc').textContent = t.newKindleDesc;
+            document.getElementById('about-btn').textContent = t.aboutBtn;
+            document.getElementById('tip').textContent = t.tip;
+            document.getElementById('project-title').textContent = t.projectTitle;
+            document.getElementById('project-desc').textContent = t.projectDesc;
+            document.getElementById('made-by').textContent = t.madeBy;
+            document.getElementById('riddle-title').textContent = t.riddleTitle;
+            document.getElementById('quote-title').textContent = t.quoteTitle;
+            document.getElementById('easter-title').textContent = t.easterTitle;
+            document.getElementById('easter-text').textContent = t.easterText;
+            document.getElementById('easter-fact').textContent = t.easterFact;
+            document.getElementById('easter-btn').textContent = t.easterBtn;
+            
+            updateRiddleButton();
+            loadDailyRiddle();
+            updateVisitCounter();
             
             const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
             document.getElementById('quote-text').textContent = quotes[dayIndex][lang];
@@ -476,15 +636,92 @@
             document.getElementById('lang-pl').selected = (lang === 'pl');
             
             localStorage.setItem('language', lang);
+            showToast(t.toastLanguage + ' ' + lang.toUpperCase());
         }
 
-        function toggleTheme() {
-            document.body.classList.toggle('dark-theme');
-            const isDark = document.body.classList.contains('dark-theme');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            document.getElementById('theme-btn').textContent = isDark ? '☀️ Light' : translations[currentLang].themeBtn;
+        // ===== ЗМІНА ТЕМИ =====
+        function changeTheme(theme) {
+            document.body.classList.remove('dark-theme', 'sepia-theme', 'green-theme');
+            if (theme !== 'light') {
+                document.body.classList.add(theme + '-theme');
+            }
+            localStorage.setItem('theme', theme);
+            
+            const t = translations[currentLang].themes;
+            document.getElementById('theme-light').textContent = t.light;
+            document.getElementById('theme-dark').textContent = t.dark;
+            document.getElementById('theme-sepia').textContent = t.sepia;
+            document.getElementById('theme-green').textContent = t.green;
+            
+            showToast(translations[currentLang].toastTheme + ' ' + t[theme]);
         }
 
+        // ===== РЕЖИМ ВЕЛИКИЙ ШРИФТ =====
+        function toggleLargeFont() {
+            const isLarge = document.body.classList.toggle('large-font');
+            document.getElementById('large-font-btn').classList.toggle('active', isLarge);
+            localStorage.setItem('largeFont', isLarge ? 'on' : 'off');
+            showToast(isLarge ? translations[currentLang].toastLargeFontOn : translations[currentLang].toastLargeFontOff);
+        }
+
+        // ===== ЩОДЕННА ЗАГАДКА =====
+        function toggleRiddle() {
+            const answer = document.getElementById('riddle-answer');
+            answer.classList.toggle('show');
+            updateRiddleButton();
+        }
+
+        function updateRiddleButton() {
+            const isShown = document.getElementById('riddle-answer').classList.contains('show');
+            document.getElementById('riddle-btn').textContent = isShown ? translations[currentLang].riddleBtnHide : translations[currentLang].riddleBtnShow;
+        }
+
+        function loadDailyRiddle() {
+            const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % dailyRiddles.length;
+            const riddle = dailyRiddles[dayIndex];
+            document.getElementById('riddle-text').textContent = riddle[currentLang] || riddle.en;
+            document.getElementById('riddle-answer').textContent = (riddle.answer[currentLang] || riddle.answer.en);
+        }
+
+        // ===== ЛІЧИЛЬНИК ВІДВІДУВАНЬ =====
+        function updateVisitCounter() {
+            let visits = parseInt(localStorage.getItem('visits') || '0') + 1;
+            localStorage.setItem('visits', visits);
+            const t = translations[currentLang];
+            const timesWord = visits === 1 ? t.visitCounterTimes : t.visitCounterTimesPlural;
+            document.getElementById('visit-counter').textContent = t.visitCounter + ' ' + visits + ' ' + timesWord;
+        }
+
+        // ===== ЛІЧИЛЬНИК ЧАСУ НА САЙТІ =====
+        function updateTimeOnSite() {
+            const seconds = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            document.getElementById('time-on-site').textContent = translations[currentLang].timeOnSite + ' ' + (minutes > 0 ? minutes + 'm ' : '') + secs + 's';
+        }
+        setInterval(updateTimeOnSite, 1000);
+
+        // ===== КЛАВІАТУРНІ ШОРТКАТИ =====
+        document.addEventListener('keydown', function(e) {
+            if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+            
+            const key = e.key.toLowerCase();
+            if (key === 't') {
+                const themes = ['light', 'dark', 'sepia', 'green'];
+                const current = localStorage.getItem('theme') || 'light';
+                const next = themes[(themes.indexOf(current) + 1) % themes.length];
+                changeTheme(next);
+                document.getElementById('theme-select').value = next;
+            } else if (key === 'l') {
+                const langs = ['en', 'uk', 'de', 'pl'];
+                const next = langs[(langs.indexOf(currentLang) + 1) % langs.length];
+                changeLanguage(next);
+            } else if (key === 'r') {
+                toggleRiddle();
+            }
+        });
+
+        // ===== ДОПОМІЖНІ ФУНКЦІЇ =====
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -492,6 +729,7 @@
         function showEasterEgg() {
             document.getElementById('overlay').classList.add('show');
             document.getElementById('easter-egg').classList.add('show');
+            showConfetti();
         }
 
         function hideEasterEgg() {
@@ -499,7 +737,7 @@
             document.getElementById('easter-egg').classList.remove('show');
         }
 
-        // Show/hide scroll-to-top button
+        // ===== SCROLL TO TOP + ПРОГРЕС БАР =====
         window.onscroll = function() {
             const btn = document.getElementById('scroll-top');
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
@@ -507,18 +745,42 @@
             } else {
                 btn.style.display = 'none';
             }
+            
+            // Прогрес бар читання
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
         };
 
-        // Initialize
+        // ===== АВТО ТЕМНА ТЕМА ЗА ЧАСОМ ДОБИ =====
+        function autoThemeByTime() {
+            const hour = new Date().getHours();
+            const savedTheme = localStorage.getItem('theme');
+            if (!savedTheme && (hour >= 20 || hour < 6)) {
+                changeTheme('dark');
+                document.getElementById('theme-select').value = 'dark';
+            }
+        }
+
+        // ===== ІНІЦІАЛІЗАЦІЯ =====
         window.onload = function() {
             const savedLang = localStorage.getItem('language') || 'en';
-            changeLanguage(savedLang);
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const savedLargeFont = localStorage.getItem('largeFont') || 'off';
             
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                document.body.classList.add('dark-theme');
-                document.getElementById('theme-btn').textContent = '☀️ Light';
+            changeLanguage(savedLang);
+            changeTheme(savedTheme);
+            document.getElementById('theme-select').value = savedTheme;
+            
+            if (savedLargeFont === 'on') {
+                document.body.classList.add('large-font');
+                document.getElementById('large-font-btn').classList.add('active');
             }
+            
+            autoThemeByTime();
+            updateVisitCounter();
+            updateTimeOnSite();
             
             const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
             document.getElementById('quote-text').textContent = quotes[dayIndex][savedLang];
