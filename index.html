@@ -8,13 +8,11 @@
     <meta name="keywords" content="kindle, games, sudoku, chess, browser games, e-ink, text quests">
     <meta name="author" content="nothing12-glitch">
     
-    <!-- Open Graph (для красивих посилань) -->
     <meta property="og:title" content="Kindle Games 📚">
     <meta property="og:description" content="Free browser games for Kindle - 15+ games, 4 languages, works on all Kindle models!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nothing12-glitch.github.io/games-for-kindle/">
     
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
     
     <style>
@@ -53,15 +51,15 @@
             transition: width 0.1s;
         }
         
-        /* ===== ТОСТ-ПОВІДОМЛЕННЯ ===== */
+        /* ===== ТОСТ (ВИПРАВЛЕНО: явні кольори) ===== */
         .toast {
             position: fixed;
             bottom: 20px;
             left: 50%;
-            transform: translateX(-50%) translateY(100px);
+            transform: translateX(-50%) translateY(120px);
             padding: 15px 30px;
             border-radius: 8px;
-            background: currentColor;
+            background: #000;
             color: #fff;
             font-size: 18px;
             font-weight: bold;
@@ -69,9 +67,12 @@
             opacity: 0;
             transition: transform 0.3s, opacity 0.3s;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            pointer-events: none;
+            max-width: 90%;
         }
-        body.green-theme .toast { color: #001100; }
-        body.dark-theme .toast { color: #1a1a1a; }
+        body.dark-theme .toast { background: #fff; color: #1a1a1a; }
+        body.sepia-theme .toast { background: #5b4636; color: #f4ecd8; }
+        body.green-theme .toast { background: #00ff00; color: #001100; }
         .toast.show {
             transform: translateX(-50%) translateY(0);
             opacity: 1;
@@ -85,6 +86,7 @@
             background: #f00;
             z-index: 10003;
             animation: confettiFall 3s linear forwards;
+            pointer-events: none;
         }
         @keyframes confettiFall {
             to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
@@ -154,7 +156,7 @@
             cursor: pointer;
             font-weight: bold;
         }
-        .show-riddle-btn:active { background: currentColor; color: #fff; }
+        .show-riddle-btn:active { opacity: 0.6; }
         .riddle-answer {
             display: none;
             margin-top: 20px;
@@ -186,7 +188,7 @@
             font-family: Georgia, serif;
         }
         
-        /* ===== КНОПКА ВЕЛИКИЙ ШРИФТ ===== */
+        /* ===== КНОПКА ВЕЛИКИЙ ШРИФТ (ВИПРАВЛЕНО) ===== */
         .large-font-btn {
             position: absolute;
             top: 10px;
@@ -201,11 +203,12 @@
             cursor: pointer;
             font-weight: bold;
         }
-        .large-font-btn.active { background: currentColor; color: #fff; }
-        body.green-theme .large-font-btn.active { color: #001100; }
-        body.dark-theme .large-font-btn.active { color: #1a1a1a; }
+        .large-font-btn.active { background: #000; color: #fff; }
+        body.dark-theme .large-font-btn.active { background: #fff; color: #1a1a1a; }
+        body.sepia-theme .large-font-btn.active { background: #5b4636; color: #f4ecd8; }
+        body.green-theme .large-font-btn.active { background: #00ff00; color: #001100; }
         
-        /* ===== SCROLL TO TOP ===== */
+        /* ===== SCROLL TO TOP (ВИПРАВЛЕНО) ===== */
         .scroll-top {
             position: fixed;
             bottom: 100px;
@@ -213,9 +216,9 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: currentColor;
+            background: #000;
             color: #fff;
-            border: 2px solid currentColor;
+            border: 2px solid #000;
             font-size: 24px;
             cursor: pointer;
             display: none;
@@ -224,8 +227,9 @@
             z-index: 999;
             box-shadow: 3px 3px 0px #666;
         }
-        body.green-theme .scroll-top { color: #001100; }
-        body.dark-theme .scroll-top { color: #1a1a1a; }
+        body.dark-theme .scroll-top { background: #fff; color: #1a1a1a; border-color: #fff; }
+        body.sepia-theme .scroll-top { background: #5b4636; color: #f4ecd8; border-color: #5b4636; }
+        body.green-theme .scroll-top { background: #00ff00; color: #001100; border-color: #00ff00; }
         
         /* ===== FOOTER ===== */
         .footer {
@@ -295,14 +299,15 @@
             margin-top: 15px;
             padding: 10px 20px;
             font-size: 16px;
-            background: currentColor;
+            background: #000;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
-        body.green-theme .easter-egg button { color: #001100; }
-        body.dark-theme .easter-egg button { color: #1a1a1a; }
+        body.dark-theme .easter-egg button { background: #fff; color: #1a1a1a; }
+        body.sepia-theme .easter-egg button { background: #5b4636; color: #f4ecd8; }
+        body.green-theme .easter-egg button { background: #00ff00; color: #001100; }
         .overlay {
             display: none;
             position: fixed;
@@ -549,7 +554,7 @@
             }
         };
 
-        // ===== 8 ЦИТАТ (повний набір) =====
+        // ===== 8 ЦИТАТ =====
         const quotes = [
             { en: '"Java is to JavaScript what car is to Carpet." - Chris Heilmann', uk: '"Java відноситься до JavaScript як килим до автомобіля." - Chris Heilmann', de: '"Java ist zu JavaScript, was Teppich zu Auto ist." - Chris Heilmann', pl: '"Java ma się do JavaScript jak dywan do samochodu." - Chris Heilmann' },
             { en: '"The only way to do great work is to love what you do." - Steve Jobs', uk: '"Єдиний спосіб робити великі справи - любити те, що робиш." - Steve Jobs', de: '"Der einzige Weg, großartige Arbeit zu leisten, ist zu lieben, was man tut." - Steve Jobs', pl: '"Jedyny sposób na wykonanie wielkiej pracy to kochać to, co się robi." - Steve Jobs' },
@@ -577,9 +582,11 @@
 
         let currentLang = 'en';
         let startTime = Date.now();
+        let uiReady = false; // НЕ показувати тости при завантаженні
 
-        // ===== ТОСТ-ПОВІДОМЛЕННЯ =====
+        // ===== ТОСТ (ВИПРАВЛЕНО: не показується при завантаженні) =====
         function showToast(message) {
+            if (!uiReady) return;
             const toast = document.getElementById('toast');
             toast.textContent = message;
             toast.classList.add('show');
@@ -685,14 +692,14 @@
 
         // ===== ЛІЧИЛЬНИК ВІДВІДУВАНЬ =====
         function updateVisitCounter() {
-            let visits = parseInt(localStorage.getItem('visits') || '0') + 1;
+            let visits = parseInt(localStorage.getItem('visits') || '0', 10) + 1;
             localStorage.setItem('visits', visits);
             const t = translations[currentLang];
             const timesWord = visits === 1 ? t.visitCounterTimes : t.visitCounterTimesPlural;
             document.getElementById('visit-counter').textContent = t.visitCounter + ' ' + visits + ' ' + timesWord;
         }
 
-        // ===== ЛІЧИЛЬНИК ЧАСУ НА САЙТІ =====
+        // ===== ЛІЧИЛЬНИК ЧАСУ =====
         function updateTimeOnSite() {
             const seconds = Math.floor((Date.now() - startTime) / 1000);
             const minutes = Math.floor(seconds / 60);
@@ -721,7 +728,7 @@
             }
         });
 
-        // ===== ДОПОМІЖНІ ФУНКЦІЇ =====
+        // ===== ДОПОМІЖНІ =====
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -737,7 +744,7 @@
             document.getElementById('easter-egg').classList.remove('show');
         }
 
-        // ===== SCROLL TO TOP + ПРОГРЕС БАР =====
+        // ===== SCROLL: прогрес бар + кнопка вгору =====
         window.onscroll = function() {
             const btn = document.getElementById('scroll-top');
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
@@ -746,20 +753,20 @@
                 btn.style.display = 'none';
             }
             
-            // Прогрес бар читання
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
+            const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
             document.getElementById('progress-bar').style.width = scrolled + '%';
         };
 
-        // ===== АВТО ТЕМНА ТЕМА ЗА ЧАСОМ ДОБИ =====
+        // ===== АВТО ТЕМНА ТЕМА ВНОЧІ =====
         function autoThemeByTime() {
             const hour = new Date().getHours();
             const savedTheme = localStorage.getItem('theme');
             if (!savedTheme && (hour >= 20 || hour < 6)) {
-                changeTheme('dark');
+                document.body.classList.add('dark-theme');
                 document.getElementById('theme-select').value = 'dark';
+                localStorage.setItem('theme', 'dark');
             }
         }
 
@@ -779,11 +786,12 @@
             }
             
             autoThemeByTime();
-            updateVisitCounter();
             updateTimeOnSite();
             
             const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
             document.getElementById('quote-text').textContent = quotes[dayIndex][savedLang];
+            
+            uiReady = true; // ТЕПЕР тости працюють (тільки після завантаження)
         };
     </script>
 </body>
