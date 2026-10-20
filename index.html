@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kindle Games</title>
-    <meta name="description" content="Free browser games optimized for Amazon Kindle - Sudoku, Chess, Text Quests and more!">
-    <meta name="keywords" content="kindle, games, sudoku, chess, browser games, e-ink">
+    <title>Kindle Games - Free Browser Games for E-Ink Readers</title>
+    <meta name="description" content="Free browser games optimized for Amazon Kindle - Sudoku, Chess, Text Quests and more! Works on Old and New Kindle.">
+    <meta name="keywords" content="kindle, games, sudoku, chess, browser games, e-ink, text quests">
     <meta name="author" content="nothing12-glitch">
+    
+    <!-- Open Graph (для красивих посилань) -->
+    <meta property="og:title" content="Kindle Games ">
+    <meta property="og:description" content="Free browser games for Kindle - 15+ games, 4 languages, works on all Kindle models!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nothing12-glitch.github.io/games-for-kindle/">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
@@ -146,7 +152,7 @@
             color: #1a1a1a;
         }
         
-        /* Footer */
+        /* Footer - внизу сторінки, не fixed */
         .footer {
             margin-top: 60px;
             padding: 30px 20px;
@@ -311,25 +317,32 @@
         <span style="font-size: 18px; font-weight: normal;" id="new-kindle-desc">(touchscreen, with JavaScript)</span>
     </a>
 
+    <a href="about.html" class="version-btn" style="font-size: 20px; padding: 15px;">
+        <span id="about-btn">ℹ️ About this project</span>
+    </a>
+
     <!-- Tip -->
     <div class="hint" id="tip">
         💡 Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript).
     </div>
 
-    <!-- Footer -->
+    <!-- Footer (внизу сторінки, не fixed) -->
     <div class="footer">
+        <!-- Project Info (Left) -->
         <div class="footer-block">
             <h3 id="project-title">Project Info:</h3>
             <p id="project-desc">This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.</p>
             <p id="project-contact">Found a bug or have suggestions? Email: <a href="mailto:workingnothing12.github@gmail.com">workingnothing12.github@gmail.com</a></p>
         </div>
 
+        <!-- Made By (Center) -->
         <div class="footer-block footer-center">
             <h3>Credits:</h3>
             <p class="made-by-link" id="made-by" onclick="showEasterEgg()">Made with ❤️ for Kindle lovers</p>
             <p style="font-size: 11px; color: #999; margin-top: 10px;">(Click me! 😉)</p>
         </div>
 
+        <!-- Quote of the Day (Right) -->
         <div class="footer-block footer-right">
             <h3 id="quote-title">Quote of the Day:</h3>
             <p id="quote-text">"Java is to JavaScript what car is to Carpet." - Chris Heilmann</p>
@@ -339,10 +352,10 @@
     <!-- Easter Egg Modal -->
     <div class="overlay" id="overlay" onclick="hideEasterEgg()"></div>
     <div class="easter-egg" id="easter-egg">
-        <h2>🎉 You found the Easter Egg!</h2>
-        <p>Thanks for exploring! You're a true Kindle enthusiast.</p>
-        <p style="font-size: 14px; color: #666;">Fun fact: This project has <span id="game-count">15</span> games and supports 4 languages!</p>
-        <button onclick="hideEasterEgg()">Awesome! 🚀</button>
+        <h2 id="easter-title">🎉 You found the Easter Egg!</h2>
+        <p id="easter-text">Thanks for exploring! You're a true Kindle enthusiast.</p>
+        <p style="font-size: 14px; color: #666;" id="easter-fact">Fun fact: This project has 15+ games and supports 4 languages!</p>
+        <button onclick="hideEasterEgg()" id="easter-btn">Awesome! 🚀</button>
     </div>
 
     <script>
@@ -354,16 +367,17 @@
                 oldKindleDesc: "(with buttons, no JavaScript)",
                 newKindle: "New Kindle",
                 newKindleDesc: "(touchscreen, with JavaScript)",
-                tip: " Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript).",
+                aboutBtn: "ℹ️ About this project",
+                tip: "💡 Tip: If games don't work, enable JavaScript in Kindle browser settings (Menu → Settings → Advanced → Enable JavaScript).",
                 projectTitle: "Project Info:",
                 projectDesc: "This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.",
                 projectContact: "Found a bug or have suggestions? Email:",
                 madeBy: "Made with ❤️ for Kindle lovers",
                 themeBtn: "🌙 Dark",
-                easterEggTitle: " You found the Easter Egg!",
-                easterEggText: "Thanks for exploring! You're a true Kindle enthusiast.",
-                easterEggFact: "Fun fact: This project has 15 games and supports 4 languages!",
-                easterEggBtn: "Awesome! 🚀"
+                easterTitle: "🎉 You found the Easter Egg!",
+                easterText: "Thanks for exploring! You're a true Kindle enthusiast.",
+                easterFact: "Fun fact: This project has 15+ games and supports 4 languages!",
+                easterBtn: "Awesome! 🚀"
             },
             uk: {
                 title: "Ігри для Kindle",
@@ -372,16 +386,17 @@
                 oldKindleDesc: "(з кнопками, без JavaScript)",
                 newKindle: "Новий Kindle",
                 newKindleDesc: "(сенсорний, з JavaScript)",
-                tip: "💡 Порада: Якщо ігри не працюють, увімкніть JavaScript у налаштуваннях браузера Kindle (Menu → Settings → Advanced → Enable JavaScript).",
+                aboutBtn: "ℹ️ Про проект",
+                tip: " Порада: Якщо ігри не працюють, увімкніть JavaScript у налаштуваннях браузера Kindle (Menu → Settings → Advanced → Enable JavaScript).",
                 projectTitle: "Про проект:",
                 projectDesc: "Цей проект створено для любителів Kindle. Ігри оптимізовані для E-Ink дисплеїв.",
                 projectContact: "Знайшли помилку або маєте пропозиції? Пишіть:",
                 madeBy: "Створено з ❤️ для любителів Kindle",
-                themeBtn: " Темна",
-                easterEggTitle: "🎉 Ви знайшли Easter Egg!",
-                easterEggText: "Дякуємо за дослідження! Ви справжній фанат Kindle.",
-                easterEggFact: "Цікавий факт: Цей проект має 15 ігор та підтримує 4 мови!",
-                easterEggBtn: "Круто! 🚀"
+                themeBtn: "🌙 Темна",
+                easterTitle: "🎉 Ви знайшли Easter Egg!",
+                easterText: "Дякуємо за дослідження! Ви справжній фанат Kindle.",
+                easterFact: "Цікавий факт: Цей проект має 15+ ігор та підтримує 4 мови!",
+                easterBtn: "Круто! "
             },
             de: {
                 title: "Kindle Spiele",
@@ -390,16 +405,17 @@
                 oldKindleDesc: "(mit Tasten, kein JavaScript)",
                 newKindle: "Neuer Kindle",
                 newKindleDesc: "(Touchscreen, mit JavaScript)",
-                tip: "💡 Tipp: Wenn Spiele nicht funktionieren, aktivieren Sie JavaScript in den Kindle-Browsereinstellungen.",
+                aboutBtn: "ℹ️ Über dieses Projekt",
+                tip: "💡 Tipp: Wenn Spiele nicht funktionieren, aktivieren Sie JavaScript in den Kindle-Browsereinstellungen (Menü → Einstellungen → Erweitert → JavaScript aktivieren).",
                 projectTitle: "Projekt Info:",
-                projectDesc: "Dieses Projekt wurde für Kindle-Liebhaber erstellt.",
+                projectDesc: "Dieses Projekt wurde für Kindle-Liebhaber erstellt. Spiele optimiert für E-Ink-Displays.",
                 projectContact: "Fehler gefunden oder Vorschläge? Email:",
                 madeBy: "Gemacht mit ❤️ für Kindle-Liebhaber",
                 themeBtn: "🌙 Dunkel",
-                easterEggTitle: " Du hast das Easter Egg gefunden!",
-                easterEggText: "Danke fürs Erkunden! Du bist ein echter Kindle-Fan.",
-                easterEggFact: "Fun Fact: Dieses Projekt hat 15 Spiele und unterstützt 4 Sprachen!",
-                easterEggBtn: "Cool! 🚀"
+                easterTitle: "🎉 Du hast das Easter Egg gefunden!",
+                easterText: "Danke fürs Erkunden! Du bist ein echter Kindle-Fan.",
+                easterFact: "Fun Fact: Dieses Projekt hat 15+ Spiele und unterstützt 4 Sprachen!",
+                easterBtn: "Cool! 🚀"
             },
             pl: {
                 title: "Gry Kindle",
@@ -408,16 +424,17 @@
                 oldKindleDesc: "(z przyciskami, bez JavaScript)",
                 newKindle: "Nowy Kindle",
                 newKindleDesc: "(dotykowy, z JavaScript)",
-                tip: " Wskazówka: Jeśli gry nie działają, włącz JavaScript w ustawieniach przeglądarki Kindle.",
+                aboutBtn: "ℹ️ O tym projekcie",
+                tip: "💡 Wskazówka: Jeśli gry nie działają, włącz JavaScript w ustawieniach przeglądarki Kindle (Menu → Ustawienia → Zaawansowane → Włącz JavaScript).",
                 projectTitle: "Info o projekcie:",
-                projectDesc: "Ten projekt został stworzony dla miłośników Kindle.",
+                projectDesc: "Ten projekt został stworzony dla miłośników Kindle. Gry zoptymalizowane dla wyświetlaczy E-Ink.",
                 projectContact: "Znalazłeś błąd lub masz sugestie? Email:",
                 madeBy: "Stworzone z ❤️ dla miłośników Kindle",
                 themeBtn: "🌙 Ciemny",
-                easterEggTitle: "🎉 Znalazłeś Easter Egg!",
-                easterEggText: "Dzięki za eksplorację! Jesteś prawdziwym fanem Kindle.",
-                easterEggFact: "Ciekawostka: Ten projekt ma 15 gier i obsługuje 4 języki!",
-                easterEggBtn: "Super! "
+                easterTitle: "🎉 Znalazłeś Easter Egg!",
+                easterText: "Dzięki za eksplorację! Jesteś prawdziwym fanem Kindle.",
+                easterFact: "Ciekawostka: Ten projekt ma 15+ gier i obsługuje 4 języki!",
+                easterBtn: "Super! 🚀"
             }
         };
 
@@ -439,11 +456,16 @@
             document.getElementById('old-kindle-desc').textContent = translations[lang].oldKindleDesc;
             document.getElementById('new-kindle').textContent = translations[lang].newKindle;
             document.getElementById('new-kindle-desc').textContent = translations[lang].newKindleDesc;
+            document.getElementById('about-btn').textContent = translations[lang].aboutBtn;
             document.getElementById('tip').textContent = translations[lang].tip;
             document.getElementById('project-title').textContent = translations[lang].projectTitle;
             document.getElementById('project-desc').textContent = translations[lang].projectDesc;
             document.getElementById('made-by').textContent = translations[lang].madeBy;
             document.getElementById('theme-btn').textContent = translations[lang].themeBtn;
+            document.getElementById('easter-title').textContent = translations[lang].easterTitle;
+            document.getElementById('easter-text').textContent = translations[lang].easterText;
+            document.getElementById('easter-fact').textContent = translations[lang].easterFact;
+            document.getElementById('easter-btn').textContent = translations[lang].easterBtn;
             
             const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
             document.getElementById('quote-text').textContent = quotes[dayIndex][lang];
@@ -460,7 +482,7 @@
             document.body.classList.toggle('dark-theme');
             const isDark = document.body.classList.contains('dark-theme');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            document.getElementById('theme-btn').textContent = isDark ? '️ Light' : translations[currentLang].themeBtn;
+            document.getElementById('theme-btn').textContent = isDark ? '☀️ Light' : translations[currentLang].themeBtn;
         }
 
         function scrollToTop() {
