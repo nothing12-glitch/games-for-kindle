@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book of Riddles</title>
+    <style>
+        body { font-family: Georgia, serif; padding: 20px; background: #fff; color: #000; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+        h1 { font-size: 28px; border-bottom: 2px solid #000; padding-bottom: 10px; }
+        .riddle { margin: 30px 0; padding: 20px; border: 2px solid #000; border-radius: 8px; }
+        .riddle h2 { font-size: 22px; margin-top: 0; }
+        .riddle p { font-size: 18px; line-height: 1.6; }
+        .answer { display: none; margin-top: 15px; padding: 15px; background: #f0f0f0; border-left: 4px solid #000; font-weight: bold; }
+        .answer.show { display: block; }
+        .show-btn { display: inline-block; padding: 10px 20px; background: #fff; border: 2px solid #000; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        .show-btn:active { background: #000; color: #fff; }
+        #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; margin-top: 30px; box-shadow: 3px 3px 0px #000; }
+        #back-btn:active { box-shadow: 1px 1px 0px #000; transform: translate(2px, 2px); }
+    </style>
+</head>
+<body>
+    <h1>Book of Riddles</h1>
+    <p>Test your wit with these 10 riddles. Click "Show Answer" to reveal the solution.</p>
+
+    <div class="riddle">
+        <h2>Riddle 1</h2>
+        <p>I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?</p>
+        <button class="show-btn" onclick="toggleAnswer(1)">Show Answer</button>
+        <div class="answer" id="answer1">A map</div>
+    </div>
+
+    <div class="riddle">
+        <h2>Riddle 2</h2>
+        <p>The more you take, the more you leave behind. What am I?</p>
+        <button class="show-btn" onclick="toggleAnswer(2)">Show Answer</button>
+        <div class="answer" id="answer2">Footsteps</div>
+    </div>
+
+    <div class="riddle">
+        <h2>Riddle 3</h2>
+        <p>I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?</p>
+        <button class="show-btn" onclick="toggleAnswer(3)">Show Answer</button>
+        <div class="answer" id="answer3">An echo</div>
+    </div>
+
+    <div class="riddle">
+        <h2>Riddle 4</h2>
+        <p>I have keys but no locks. I have space but no room. You can enter but can't go inside. What am I?</p>
+        <button class="show-btn" onclick="toggleAnswer(4)">Show Answer</button>
+        <div class="answer" id="answer4">A keyboard</div>
+    </div>
+
+    <div class="riddle">
+        <h2>Riddle 5</h2>
+        <p>I'm tall when I'm young, and I'm short when I'm old. What am I?</p>
+        <button class="show-btn" onclick="toggleAnswer(5)">Show Answer</button>
+        <div class="answer" id="answer5">A candle</div>
+    </div>
+
+    <div class="riddle">
+        <h2>Riddle 6</h2>
+        <p>I have a head and a tail but no body. What am I?</p>
+        <button class="show-btn" onclick="toggleAnswer(6)">Show Answer</button>
+        <div class="answer" id="answer6">A coin</div>
+    </div>
+
+    <div class="riddle">
+        <h2>Riddle 7</h2>
+        <p>The person who makes it, sells it. The person who buys it never uses it. The person who uses it never knows they're using it. What is it?</p>
+        <button class="show-btn" onclick="toggleAnswer(7)">Show Answer</button>
+        <div class="answer" id="answer7">A coffin</div>
+    </div>
+
+    <div class="riddle">
+        <h2>Riddle 8</h2>
+        <p>I can be cracked, made, told, and played. What am I?</p>
+        <button class="show-btn" onclick="toggleAnswer(8)">Show Answer</button>
+        <div class="answer" id="answer8">A joke</div>
+    </div>
+
+    <div class="riddle">
+        <h2>Riddle 9</h2>
+        <p>What has hands but can't clap?</p>
+        <button class="show-btn" onclick="toggleAnswer(9)">Show Answer</button>
+        <div class="answer" id="answer9">A clock</div>
+    </div>
+
+    <div class="riddle">
+        <h2>Riddle 10</h2>
+        <p>I'm not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?</p>
+        <button class="show-btn" onclick="toggleAnswer(10)">Show Answer</button>
+        <div class="answer" id="answer10">Fire</div>
+    </div>
+
+    <a href="index.html" id="back-btn">← Back to Menu</a>
+
+    <script>
+        function toggleAnswer(num) {
+            const answer = document.getElementById('answer' + num);
+            answer.classList.toggle('show');
+        }
+    </script>
+</body>
+</html>
