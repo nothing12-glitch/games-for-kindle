@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stats & Achievements</title>
+<style>
+body{font-family:Georgia,serif;padding:20px;background:#fff;color:#000;max-width:600px;margin:0 auto;line-height:1.6}
+h1{font-size:28px;border-bottom:2px solid #000;padding-bottom:10px}
+.ach{margin:12px 0;padding:15px;border:2px solid #000;border-radius:8px}
+.ach.ok{background:#e8f5e9}
+.ach.no{opacity:.55}
+.ach b{display:block;font-size:18px}
+.ach span{font-size:15px;color:#555}
+a.btn{display:inline-block;margin-top:25px;padding:12px 25px;background:#ddd;border:2px solid #000;text-decoration:none;color:#000;font-weight:bold;border-radius:6px}
+</style>
+</head>
+<body>
+<h1 id="t"></h1>
+<div id="list"></div>
+<a href="index.html" class="btn" id="bb"></a>
+<script>
+const L={
+en:{t:"Stats & Achievements",bb:"Home",
+a1:["First visit","You opened this site"],a2:["Regular guest","5+ visits"],a3:["Lights Out master","Finished Lights Out"],a4:["Memory of steel","Simon level 5+"],a5:["Tactician","Won Connect 4"],a6:["Explorer","Tried a non-English language"],a7:["Night owl","Used dark theme"],a8:["Curious","Found the Easter Egg"]},
+uk:{t:"Статистика та досягнення",bb:"На головну",
+a1:["Перший візит","Ви відкрили цей сайт"],a2:["Постійний гість","5+ візитів"],a3:["Майстер світла","Пройшли Lights Out"],a4:["Сталева пам'ять","Саймон рівень 5+"],a5:["Тактик","Перемога у Чотири поспіль"],a6:["Дослідник","Спробували не англійську мову"],a7:["Нічна сова","Темна тема"],a8:["Допитливий","Знайшли Easter Egg"]},
+de:{t:"Statistik & Erfolge",bb:"Start",
+a1:["Erster Besuch","Du hast die Seite geöffnet"],a2:["Stammgast","5+ Besuche"],a3:["Lichter-Meister","Lights Out geschafft"],a4:["Stahlgedächtnis","Simon Level 5+"],a5:["Taktiker","Vier gewinnt gewonnen"],a6:["Entdecker","Nicht-Englisch getestet"],a7:["Nachteule","Dunkles Thema"],a8:["Neugierig","Easter Egg gefunden"]},
+pl:{t:"Statystyki i osiągnięcia",bb:"Start",
+a1:["Pierwsza wizyta","Otworzyłeś tę stronę"],a2:["Stały gość","5+ wizyt"],a3:["Mistrz świateł","Ukończono Lights Out"],a4:["Stalowa pamięć","Simon poziom 5+"],a5:["Taktyk","Wygrana w Czwórki"],a6:["Odkrywca","Wypróbowano inny język"],a7:["Nocny marek","Ciemny motyw"],a8:["Ciekawski","Znaleziono Easter Egg"]}};
+let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+const v=+(localStorage.getItem('visits')||0);
+const lo=localStorage.getItem('best_lightsout');
+const si=+(localStorage.getItem('best_simon')||0);
+const c4=+(localStorage.getItem('stats_c4_wins')||0);
+const lg=localStorage.getItem('language');
+const th=localStorage.getItem('theme');
+const ee=localStorage.getItem('egg_found');
+const conds={a1:v>=1,a2:v>=5,a3:!!lo,a4:si>=5,a5:c4>=1,a6:!!lg&&lg!=='en',a7:th==='dark'||th==='green',a8:!!ee};
+const list=document.getElementById('list');
+['a1','a2','a3','a4','a5','a6','a7','a8'].forEach(function(k){
+const d=document.createElement('div');
+d.className='ach '+(conds[k]?'ok':'no');
+d.innerHTML='<b>'+(conds[k]?'✓':'✗')+' '+L[lang][k][0]+'</b><span>'+L[lang][k][1]+'</span>';
+list.appendChild(d);});
+document.getElementById('t').textContent=L[lang].t;
+document.getElementById('bb').textContent=L[lang].bb;
+</script>
+</body>
+</html>
