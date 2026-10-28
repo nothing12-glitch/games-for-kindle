@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Поїзд №7</title>
+<style>
+body{font-family:Georgia,serif;padding:20px;background:#fff;color:#000;max-width:600px;margin:0 auto}
+h1{font-size:28px;border-bottom:2px solid #000;padding-bottom:10px}
+.scene{display:none}
+.scene.active{display:block}
+.status{font-style:italic;color:#666;margin-bottom:20px;border-left:3px solid #000;padding-left:10px}
+p{font-size:18px;line-height:1.6;margin-bottom:20px}
+.choice{display:block;width:100%;padding:15px;margin:10px 0;font-size:18px;background:#fff;border:2px solid #000;cursor:pointer;text-align:left}
+.choice:active{background:#000;color:#fff}
+.final{font-size:24px;text-align:center;margin:30px 0;font-weight:bold}
+#back-btn{display:inline-block;padding:15px 30px;background:#ddd;border:2px solid #000;text-decoration:none;color:#000;font-weight:bold;margin-top:20px}
+</style>
+</head>
+<body>
+<h1>Поїзд №7 «Комета»</h1>
+
+<div id="scene1" class="scene active">
+<div class="status">Розділ 1: Ніч у вагоні</div>
+<p>О півночі експрес «Комета» гуркоче між Києвом і Віднем. Ви — приватний детектив, що їде у відпустку. Але о 02:15 у вагоні-люкс знаходять тіло: ювелір Арнольд Пеппер мертвий у купе, зачиненому зсередини.</p>
+<p>Провідник бігає блідий: «До ранку ніхто не вийде з вагона. Розкрийте це — і потяг їде далі.»</p>
+<p>У вагоні четверо підозрюваних: графиня, полковник, лікар і сам провідник.</p>
+<button class="choice" onclick="showScene(2)">1. Допитати графиню</button>
+<button class="choice" onclick="showScene(3)">2. Допитати полковника</button>
+<button class="choice" onclick="showScene(4)">3. Допитати лікаря</button>
+</div>
+
+<div id="scene2" class="scene">
+<div class="status">Розділ 2: Графиня</div>
+<p>Графиня Олівія холодна й зібрана. «О другій ночі я бачила лікаря у коридорі з чорним саквояжем. Він ішов від купе покійного.»</p>
+<p>На столику біля неї — пара шовкових рукавичок. Одна з них брудна на кінчиках пальців.</p>
+<button class="choice" onclick="showScene(3)">1. Допитати полковника</button>
+<button class="choice" onclick="showScene(4)">2. Допитати лікаря</button>
+<button class="choice" onclick="showScene(5)">3. Оглянути купе жертви</button>
+</div>
+
+<div id="scene3" class="scene">
+<div class="status">Розділ 2: Полковник</div>
+<p>Полковник Гриценко буркоче: «Я спав. Учора ввечері загубив свій кишеньковий годинник — і тепер усі думають, що я його продав?»</p>
+<p>Він показує ланцюжок без годинника. «А ще цей провідник крутився біля купе Пеппера до відбою. Питав, чи багато у того готівки.»</p>
+<button class="choice" onclick="showScene(2)">1. Допитати графиню</button>
+<button class="choice" onclick="showScene(4)">2. Допитати лікаря</button>
+<button class="choice" onclick="showScene(5)">3. Оглянути купе жертви</button>
+</div>
+
+<div id="scene4" class="scene">
+<div class="status">Розділ 2: Лікар</div>
+<p>Лікар Ковач нервово миє руки. Від нього ледь тягне гіркотою мигдалю. «Новe мило», — каже він, не дивлячись вам в очі.</p>
+<p>«Пеппер випив чаю перед сном. Я лише перевіряв його ввечері — серце було в нормі.»</p>
+<button class="choice" onclick="showScene(2)">1. Допитати графиню</button>
+<button class="choice" onclick="showScene(3)">2. Допитати полковника</button>
+<button class="choice" onclick="showScene(5)">3. Оглянути купе жертви</button>
+</div>
+
+<div id="scene5" class="scene">
+<div class="status">Розділ 3: Купе жертви</div>
+<p>У купе три знахідки: філіжанка з осадом, що пахне мигдалем; зірваний квиток на справжнє ім'я «Пеппер А.» (він їхав під прізвищем «Мюллер»); і ґудзик від форми провідника під сидінням.</p>
+<p>За вікном темрява. Поїд далі гуркоче, ніби нічого не сталося.</p>
+<button class="choice" onclick="showScene(6)">1. Допитати провідника</button>
+<button class="choice" onclick="showScene(14)">2. Влаштувати засідку вночі</button>
+<button class="choice" onclick="showScene(8)">3. Одразу звинуватити лікаря</button>
+</div>
+
+<div id="scene6" class="scene">
+<div class="status">Розділ 3: Провідник</div>
+<p>Провідник Бондар пітніє. «Ґудзик? Я заходив до пана Мюллера вже ПОСЛЯ того, як знайшов його... То я з переляку взяв його гаманця — борги ж!»</p>
+<p>«Клянуся, він уже не дихав! А чай йому приносив лікар, ще на станції!»</p>
+<button class="choice" onclick="showScene(7)">1. Звинуватити графиню</button>
+<button class="choice" onclick="showScene(8)">2. Звинуватити лікаря</button>
+<button class="choice" onclick="showScene(9)">3. Звинуватити полковника</button>
+<button class="choice" onclick="showScene(12)">4. Звинуватити провідника</button>
+</div>
+
+<div id="scene7" class="scene">
+<div class="status">ФІНАЛ: Хибний слід</div>
+<p>Ви звинувачуєте графиню. Вона з непритомністю падає у крісло. Поки ви шукаєте «докази» проти неї, на ранковій станції лікар Ковач зникає з чорним саквояжем і діамантами Пеппера.</p>
+<div class="final">СПРАВУ ПРОВАЛЕНО</div>
+<button class="choice" onclick="showScene(1)">Спробувати ще раз</button>
+<a href="index.html" id="back-btn">До меню</a>
+</div>
+
+<div id="scene8" class="scene">
+<div class="status">ФІНАЛ: Правда</div>
+<p>«Ціанід у чаї, лікарю. Запах мигдалю — не від мила, а від ваших рук. Ви лікували борги Пеппера своїми боргами йому — і вирішили їх скасувати разом із ним.»</p>
+<p>У саквояжі Ковача знаходять діаманти й ампулу. На станції у Відні його чекають жандарми.</p>
+<div class="final">СПРАВУ РОЗКРИТО!</div>
+<button class="choice" onclick="showScene(1)">Почати спочатку</button>
+<a href="index.html" id="back-btn">До меню</a>
+</div>
+
+<div id="scene9" class="scene">
+<div class="status">ФІНАЛ: Хибний слід</div>
+<p>Полковник лютий: годинник він справді загубив, але алібі має — картярня гра у салоні до першої. Поки ви виправдовуєтесь перед ним, лікар встигає викинути ампулу у вікно.</p>
+<div class="final">СПРАВУ ПРОВАЛЕНО</div>
+<button class="choice" onclick="showScene(1)">Спробувати ще раз</button>
+<a href="index.html" id="back-btn">До меню</a>
+</div>
+
+<div id="scene10" class="scene">
+<div class="status">ФІНАЛ: Хибний слід</div>
+<p>Графиня непритомніє, полковник вимагає адвоката, а провідник зізнається лише у крадіжці гаманця. Справжній отруйник спокійно доїжджає до кордону.</p>
+<div class="final">СПРАВУ ПРОВАЛЕНО</div>
+<button class="choice" onclick="showScene(1)">Спробувати ще раз</button>
+<a href="index.html" id="back-btn">До меню</a>
+</div>
+
+<div id="scene11" class="scene">
+<div class="status">ФІНАЛ: Хибний слід</div>
+<p>Провідника в'яжуть. Він ридає і каже правду про гаманця — але не про отруту. Без нього лікар спокійно виходить на пероні у Братиславі.</p>
+<div class="final">СПРАВУ ПРОВАЛЕНО</div>
+<button class="choice" onclick="showScene(1)">Спробувати ще раз</button>
+<a href="index.html" id="back-btn">До меню</a>
+</div>
+
+<div id="scene12" class="scene">
+<div class="status">ФІНАЛ: Хибний слід</div>
+<p>Ви вважаєте, що провідник отруїв пасажира ради грошей. Але експертиза у Відні покаже: отрута була в чаї задовго до того, як провідник зайшов у купе.</p>
+<div class="final">СПРАВУ ПРОВАЛЕНО</div>
+<button class="choice" onclick="showScene(1)">Спробувати ще раз</button>
+<a href="index.html" id="back-btn">До меню</a>
+</div>
+
+<div id="scene13" class="scene">
+<div class="status">Розділ 4: Засідка</div>
+<p>О 03:40 ви тихенько чекаєте у тамбурі. Двері купе лікаря прочиняються: Ковач миє саквояж і виливає щось просто у вікно. Він помічає вас у дзеркалі.</p>
+<button class="choice" onclick="showScene(8)">1. Зібрати всіх і звинуватити лікаря</button>
+<button class="choice" onclick="showScene(15)">2. Затримати його самотужки</button>
+</div>
+
+<div id="scene14" class="scene">
+<div class="status">Розділ 4: Ніч</div>
+<p>Ви гасите світло у коридорі й чекаєте. Години тягнуться, але о 03:40 ви чуєте кроки та скрип дверей купе лікаря.</p>
+<button class="choice" onclick="showScene(13)">1. Підглянути у тамбурі</button>
+<button class="choice" onclick="showScene(8)">2. Одразу підняти тривогу</button>
+</div>
+
+<div id="scene15" class="scene">
+<div class="status">ФІНАЛ: Гостра зупинка</div>
+<p>Ви кидаєтесь на Ковача у тамбурі. Він сильніший, ніж здається, — але галас будить полковника, і той прикладає лікаря прикладом тростини. У саквояжі — діаманти Пеппера.</p>
+<p>На найближчій станції жандарми забирають отруйника. Графиня дарує вам флакон парфумів, полковник — потиск руки, а провідник — безкоштовний квиток додому.</p>
+<div class="final">ВИ СПІЙМАЛИ ЗЛОЧИНЦЯ САМОТУЖКИ!</div>
+<button class="choice" onclick="showScene(1)">Почати спочатку</button>
+<a href="index.html" id="back-btn">До меню</a>
+</div>
+
+<script>
+function showScene(num){
+document.querySelectorAll('.scene').forEach(function(s){s.classList.remove('active');});
+document.getElementById('scene'+num).classList.add('active');
+window.scrollTo(0,0);}
+</script>
+</body>
+</html>
