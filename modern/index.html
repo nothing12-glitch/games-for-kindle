@@ -1,335 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Games for Kindle</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            font-family: Georgia, serif;
-            font-size: 20px;
-            color: #000;
-            background: #fff;
-            margin: 0;
-            padding: 20px 20px 40px;
-            line-height: 1.6;
-        }
-        h1 { font-size: 28px; text-align: center; margin-bottom: 10px; }
-        .subtitle { text-align: center; color: #666; margin-bottom: 30px; font-style: italic; }
-        .section { margin: 40px 0; }
-        .section h2 { 
-            font-size: 24px; 
-            border-bottom: 2px solid #000; 
-            padding-bottom: 10px; 
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .game-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        .game-card {
-            display: block;
-            background: #fff;
-            border: 2px solid #000;
-            border-radius: 8px;
-            padding: 20px;
-            text-decoration: none;
-            color: #000;
-            box-shadow: 3px 3px 0px #000;
-            transition: transform 0.1s;
-        }
-        .game-card:active {
-            transform: translate(2px, 2px);
-            box-shadow: 1px 1px 0px #000;
-        }
-        .game-card .title {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .game-card .desc {
-            font-size: 16px;
-            color: #666;
-        }
-        .back-btn {
-            display: block;
-            text-align: center;
-            padding: 15px;
-            background: #ddd;
-            border: 2px solid #000;
-            border-radius: 8px;
-            text-decoration: none;
-            color: #000;
-            font-weight: bold;
-            font-size: 18px;
-            margin: 40px auto;
-            max-width: 500px;
-        }
-        .back-btn:active {
-            background: #bbb;
-        }
-        .language-selector {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 1000;
-        }
-        .language-selector select {
-            padding: 8px;
-            font-size: 14px;
-            border: 2px solid #000;
-            border-radius: 4px;
-            background: #fff;
-            cursor: pointer;
-            font-family: Georgia, serif;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Games for Kindle</title>
+<style>
+body{font-family:Georgia,serif;font-size:20px;color:#000;background:#fff;margin:0;padding:20px 20px 40px;line-height:1.6}
+h1{font-size:28px;text-align:center;margin-bottom:10px}
+.subtitle{text-align:center;color:#666;margin-bottom:30px;font-style:italic}
+.section{margin:40px 0}
+.section h2{font-size:24px;border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:20px;text-align:center}
+.game-grid{display:flex;flex-direction:column;gap:15px;max-width:500px;margin:0 auto}
+.game-card{display:block;background:#fff;border:2px solid #000;border-radius:8px;padding:20px;text-decoration:none;color:#000;box-shadow:3px 3px 0 #000}
+.game-card:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
+.game-card .title{font-size:22px;font-weight:bold;margin-bottom:5px}
+.game-card .desc{font-size:16px;color:#666}
+.back-btn{display:block;text-align:center;padding:15px;background:#ddd;border:2px solid #000;border-radius:8px;text-decoration:none;color:#000;font-weight:bold;font-size:18px;margin:40px auto;max-width:500px}
+.language-selector{position:absolute;top:10px;right:10px;z-index:1000}
+.language-selector select{padding:8px;font-size:14px;border:2px solid #000;border-radius:4px;background:#fff;cursor:pointer;font-family:Georgia,serif}
+</style>
 </head>
 <body>
+<div class="language-selector">
+<select onchange="changeLanguage(this.value)">
+<option value="en" id="lang-en" selected>English</option>
+<option value="uk" id="lang-uk">Українська</option>
+<option value="de" id="lang-de">Deutsch</option>
+<option value="pl" id="lang-pl">Polski</option>
+</select>
+</div>
 
-    <!-- Language Selector -->
-    <div class="language-selector">
-        <select onchange="changeLanguage(this.value)">
-            <option value="en" id="lang-en" selected>English</option>
-            <option value="uk" id="lang-uk">Українська</option>
-            <option value="de" id="lang-de">Deutsch</option>
-            <option value="pl" id="lang-pl">Polski</option>
-        </select>
-    </div>
+<h1 id="title">Modern Games</h1>
+<p class="subtitle" id="subtitle">Optimized for touchscreen Kindle</p>
 
-    <!-- Main Content -->
-    <h1 id="title">Modern Games</h1>
-    <p class="subtitle" id="subtitle">Optimized for touchscreen Kindle</p>
+<div class="section"><h2 id="puzzles">Puzzles & Logic</h2><div class="game-grid">
+<a href="sudoku.html" class="game-card"><div class="title" id="sudoku-t">Sudoku</div><div class="desc" id="sudoku-d">Classic logic puzzle</div></a>
+<a href="minesweeper.html" class="game-card"><div class="title" id="minesweeper-t">Minesweeper</div><div class="desc" id="minesweeper-d">Find all mines</div></a>
+<a href="puzzle15.html" class="game-card"><div class="title" id="puzzle15-t">Puzzle 15</div><div class="desc" id="puzzle15-d">Arrange numbers</div></a>
+<a href="game2048.html" class="game-card"><div class="title" id="game2048-t">2048</div><div class="desc" id="game2048-d">Combine numbers</div></a>
+<a href="tetris.html" class="game-card"><div class="title" id="tetris-t">Tetris</div><div class="desc" id="tetris-d">Block-stacking game</div></a>
+<a href="lightsout.html" class="game-card"><div class="title" id="lightsout-t">Lights Out</div><div class="desc" id="lightsout-d">Turn off all lights</div></a>
+</div></div>
 
-    <div class="section">
-        <h2 id="puzzles">Puzzles & Logic</h2>
-        <div class="game-grid">
-            <a href="sudoku.html" class="game-card">
-                <div class="title" id="sudoku-title">Sudoku</div>
-                <div class="desc" id="sudoku-desc">Classic logic puzzle</div>
-            </a>
-            <a href="minesweeper.html" class="game-card">
-                <div class="title" id="minesweeper-title">Minesweeper</div>
-                <div class="desc" id="minesweeper-desc">Find all mines</div>
-            </a>
-            <a href="puzzle15.html" class="game-card">
-                <div class="title" id="puzzle15-title">Puzzle 15</div>
-                <div class="desc" id="puzzle15-desc">Arrange numbers</div>
-            </a>
-            <a href="game2048.html" class="game-card">
-                <div class="title" id="game2048-title">2048</div>
-                <div class="desc" id="game2048-desc">Combine numbers</div>
-            </a>
-            <a href="tetris.html" class="game-card">
-                <div class="title" id="tetris-title">Tetris</div>
-                <div class="desc" id="tetris-desc">Block-stacking game</div>
-            </a>
-        </div>
-    </div>
+<div class="section"><h2 id="arcade">Arcade Games</h2><div class="game-grid">
+<a href="snake.html" class="game-card"><div class="title" id="snake-t">Snake</div><div class="desc" id="snake-d">Classic arcade</div></a>
+<a href="reaction.html" class="game-card"><div class="title" id="reaction-t">Reaction Test</div><div class="desc" id="reaction-d">Test your speed</div></a>
+<a href="tictactoe.html" class="game-card"><div class="title" id="tictactoe-t">Tic-Tac-Toe</div><div class="desc" id="tictactoe-d">Play vs computer</div></a>
+<a href="memory.html" class="game-card"><div class="title" id="memory-t">Memory</div><div class="desc" id="memory-d">Find matching pairs</div></a>
+<a href="simon.html" class="game-card"><div class="title" id="simon-t">Simon</div><div class="desc" id="simon-d">Repeat the sequence</div></a>
+</div></div>
 
-    <div class="section">
-        <h2 id="arcade">Arcade Games</h2>
-        <div class="game-grid">
-            <a href="snake.html" class="game-card">
-                <div class="title" id="snake-title">Snake</div>
-                <div class="desc" id="snake-desc">Classic arcade</div>
-            </a>
-            <a href="reaction.html" class="game-card">
-                <div class="title" id="reaction-title">Reaction Test</div>
-                <div class="desc" id="reaction-desc">Test your speed</div>
-            </a>
-            <a href="tictactoe.html" class="game-card">
-                <div class="title" id="tictactoe-title">Tic-Tac-Toe</div>
-                <div class="desc" id="tictactoe-desc">Play vs computer</div>
-            </a>
-            <a href="memory.html" class="game-card">
-                <div class="title" id="memory-title">Memory</div>
-                <div class="desc" id="memory-desc">Find matching pairs</div>
-            </a>
-        </div>
-    </div>
+<div class="section"><h2 id="word">Word Games</h2><div class="game-grid">
+<a href="hangman.html" class="game-card"><div class="title" id="hangman-t">Hangman</div><div class="desc" id="hangman-d">Guess the word</div></a>
+<a href="wordle.html" class="game-card"><div class="title" id="wordle-t">Word Guess</div><div class="desc" id="wordle-d">5-letter word game</div></a>
+<a href="quiz.html" class="game-card"><div class="title" id="quiz-t">Quiz</div><div class="desc" id="quiz-d">10 questions</div></a>
+</div></div>
 
-    <div class="section">
-        <h2 id="word">Word Games</h2>
-        <div class="game-grid">
-            <a href="hangman.html" class="game-card">
-                <div class="title" id="hangman-title">Hangman</div>
-                <div class="desc" id="hangman-desc">Guess the word</div>
-            </a>
-            <a href="wordle.html" class="game-card">
-                <div class="title" id="wordle-title">Word Guess</div>
-                <div class="desc" id="wordle-desc">5-letter word game</div>
-            </a>
-            <a href="quiz.html" class="game-card">
-                <div class="title" id="quiz-title">Quiz</div>
-                <div class="desc" id="quiz-desc">10 questions</div>
-            </a>
-        </div>
-    </div>
+<div class="section"><h2 id="board">Board Games</h2><div class="game-grid">
+<a href="chess.html" class="game-card"><div class="title" id="chess-t">Chess</div><div class="desc" id="chess-d">Classic 8x8 board</div></a>
+<a href="connect4.html" class="game-card"><div class="title" id="connect4-t">Connect 4</div><div class="desc" id="connect4-d">Line up 4 discs</div></a>
+</div></div>
 
-    <div class="section">
-        <h2 id="board">Board Games</h2>
-        <div class="game-grid">
-            <a href="chess.html" class="game-card">
-                <div class="title" id="chess-title">Chess</div>
-                <div class="desc" id="chess-desc">Classic 8x8 board</div>
-            </a>
-        </div>
-    </div>
+<div class="section"><h2 id="progress">Progress</h2><div class="game-grid">
+<a href="../stats.html" class="game-card"><div class="title" id="stats-t">Stats & Achievements</div><div class="desc" id="stats-d">Your records and badges</div></a>
+</div></div>
 
-    <a href="../index.html" class="back-btn" id="back-btn">Back to Home</a>
+<a href="../index.html" class="back-btn" id="back-btn">Back to Home</a>
 
-    <script>
-        // Translations
-        const translations = {
-            en: {
-                title: "Modern Games",
-                subtitle: "Optimized for touchscreen Kindle",
-                puzzles: "Puzzles & Logic",
-                arcade: "Arcade Games",
-                word: "Word Games",
-                board: "Board Games",
-                back: "Back to Home",
-                sudoku: { title: "Sudoku", desc: "Classic logic puzzle" },
-                minesweeper: { title: "Minesweeper", desc: "Find all mines" },
-                puzzle15: { title: "Puzzle 15", desc: "Arrange numbers" },
-                game2048: { title: "2048", desc: "Combine numbers" },
-                tetris: { title: "Tetris", desc: "Block-stacking game" },
-                snake: { title: "Snake", desc: "Classic arcade" },
-                reaction: { title: "Reaction Test", desc: "Test your speed" },
-                tictactoe: { title: "Tic-Tac-Toe", desc: "Play vs computer" },
-                memory: { title: "Memory", desc: "Find matching pairs" },
-                hangman: { title: "Hangman", desc: "Guess the word" },
-                wordle: { title: "Word Guess", desc: "5-letter word game" },
-                quiz: { title: "Quiz", desc: "10 questions" },
-                chess: { title: "Chess", desc: "Classic 8x8 board" }
-            },
-            uk: {
-                title: "Сучасні ігри",
-                subtitle: "Оптимізовано для сенсорного Kindle",
-                puzzles: "Головоломки",
-                arcade: "Аркади",
-                word: "Словесні ігри",
-                board: "Настільні ігри",
-                back: "На головну",
-                sudoku: { title: "Судоку", desc: "Класична логічна гра" },
-                minesweeper: { title: "Сапер", desc: "Знайди всі міни" },
-                puzzle15: { title: "П'ятнашки", desc: "Розташуй числа" },
-                game2048: { title: "2048", desc: "З'єднуй числа" },
-                tetris: { title: "Тетріс", desc: "Гра з блоками" },
-                snake: { title: "Змійка", desc: "Класична аркада" },
-                reaction: { title: "Тест на реакцію", desc: "Перевір швидкість" },
-                tictactoe: { title: "Хрестики-нулики", desc: "Гра проти комп'ютера" },
-                memory: { title: "Меморі", desc: "Знайди пари карток" },
-                hangman: { title: "Шибениця", desc: "Вгадай слово" },
-                wordle: { title: "Вгадай слово", desc: "Слово з 5 літер" },
-                quiz: { title: "Вікторина", desc: "10 питань" },
-                chess: { title: "Шахи", desc: "Класична гра" }
-            },
-            de: {
-                title: "Moderne Spiele",
-                subtitle: "Optimiert für Touchscreen Kindle",
-                puzzles: "Puzzles",
-                arcade: "Arcade",
-                word: "Wortspiele",
-                board: "Brettspiele",
-                back: "Zurück",
-                sudoku: { title: "Sudoku", desc: "Logikrätsel" },
-                minesweeper: { title: "Minesweeper", desc: "Minen finden" },
-                puzzle15: { title: "Puzzle 15", desc: "Zahlen ordnen" },
-                game2048: { title: "2048", desc: "Zahlen kombinieren" },
-                tetris: { title: "Tetris", desc: "Block-Spiel" },
-                snake: { title: "Snake", desc: "Arcade-Spiel" },
-                reaction: { title: "Reaktionstest", desc: "Geschwindigkeit testen" },
-                tictactoe: { title: "Tic-Tac-Toe", desc: "Gegen Computer" },
-                memory: { title: "Memory", desc: "Paare finden" },
-                hangman: { title: "Galgenmännchen", desc: "Wort erraten" },
-                wordle: { title: "Wort-Raten", desc: "5-Buchstaben-Wort" },
-                quiz: { title: "Quiz", desc: "10 Fragen" },
-                chess: { title: "Schach", desc: "Brettspiel" }
-            },
-            pl: {
-                title: "Nowoczesne gry",
-                subtitle: "Zoptymalizowane dla dotykowego Kindle",
-                puzzles: "Puzzle",
-                arcade: "Arcade",
-                word: "Gry słowne",
-                board: "Gry planszowe",
-                back: "Powrót",
-                sudoku: { title: "Sudoku", desc: "Łamigłówka logiczna" },
-                minesweeper: { title: "Saper", desc: "Znajdź miny" },
-                puzzle15: { title: "Puzzle 15", desc: "Ułóż liczby" },
-                game2048: { title: "2048", desc: "Łącz liczby" },
-                tetris: { title: "Tetris", desc: "Gra w bloki" },
-                snake: { title: "Wąż", desc: "Gra arkadowa" },
-                reaction: { title: "Test reakcji", desc: "Sprawdź szybkość" },
-                tictactoe: { title: "Kółko i krzyżyk", desc: "Przeciw komputerowi" },
-                memory: { title: "Memory", desc: "Znajdź pary" },
-                hangman: { title: "Wisielec", desc: "Zgadnij słowo" },
-                wordle: { title: "Zgadnij słowo", desc: "5-literowe słowo" },
-                quiz: { title: "Quiz", desc: "10 pytań" },
-                chess: { title: "Szachy", desc: "Gra planszowa" }
-            }
-        };
-
-        function changeLanguage(lang) {
-            // Update all elements
-            document.getElementById('title').textContent = translations[lang].title;
-            document.getElementById('subtitle').textContent = translations[lang].subtitle;
-            document.getElementById('puzzles').textContent = translations[lang].puzzles;
-            document.getElementById('arcade').textContent = translations[lang].arcade;
-            document.getElementById('word').textContent = translations[lang].word;
-            document.getElementById('board').textContent = translations[lang].board;
-            document.getElementById('back-btn').textContent = translations[lang].back;
-            
-            // Update game cards
-            document.getElementById('sudoku-title').textContent = translations[lang].sudoku.title;
-            document.getElementById('sudoku-desc').textContent = translations[lang].sudoku.desc;
-            document.getElementById('minesweeper-title').textContent = translations[lang].minesweeper.title;
-            document.getElementById('minesweeper-desc').textContent = translations[lang].minesweeper.desc;
-            document.getElementById('puzzle15-title').textContent = translations[lang].puzzle15.title;
-            document.getElementById('puzzle15-desc').textContent = translations[lang].puzzle15.desc;
-            document.getElementById('game2048-title').textContent = translations[lang].game2048.title;
-            document.getElementById('game2048-desc').textContent = translations[lang].game2048.desc;
-            document.getElementById('tetris-title').textContent = translations[lang].tetris.title;
-            document.getElementById('tetris-desc').textContent = translations[lang].tetris.desc;
-            document.getElementById('snake-title').textContent = translations[lang].snake.title;
-            document.getElementById('snake-desc').textContent = translations[lang].snake.desc;
-            document.getElementById('reaction-title').textContent = translations[lang].reaction.title;
-            document.getElementById('reaction-desc').textContent = translations[lang].reaction.desc;
-            document.getElementById('tictactoe-title').textContent = translations[lang].tictactoe.title;
-            document.getElementById('tictactoe-desc').textContent = translations[lang].tictactoe.desc;
-            document.getElementById('memory-title').textContent = translations[lang].memory.title;
-            document.getElementById('memory-desc').textContent = translations[lang].memory.desc;
-            document.getElementById('hangman-title').textContent = translations[lang].hangman.title;
-            document.getElementById('hangman-desc').textContent = translations[lang].hangman.desc;
-            document.getElementById('wordle-title').textContent = translations[lang].wordle.title;
-            document.getElementById('wordle-desc').textContent = translations[lang].wordle.desc;
-            document.getElementById('quiz-title').textContent = translations[lang].quiz.title;
-            document.getElementById('quiz-desc').textContent = translations[lang].quiz.desc;
-            document.getElementById('chess-title').textContent = translations[lang].chess.title;
-            document.getElementById('chess-desc').textContent = translations[lang].chess.desc;
-            
-            // Update language selector
-            document.getElementById('lang-en').selected = (lang === 'en');
-            document.getElementById('lang-uk').selected = (lang === 'uk');
-            document.getElementById('lang-de').selected = (lang === 'de');
-            document.getElementById('lang-pl').selected = (lang === 'pl');
-            
-            // Save preference
-            localStorage.setItem('language', lang);
-        }
-
-        // Initialize
-        window.onload = function() {
-            const savedLang = localStorage.getItem('language') || 'en';
-            changeLanguage(savedLang);
-        };
-    </script>
+<script>
+const T={
+en:{title:"Modern Games",subtitle:"Optimized for touchscreen Kindle",puzzles:"Puzzles & Logic",arcade:"Arcade Games",word:"Word Games",board:"Board Games",progress:"Progress",back:"Back to Home",
+sudoku:["Sudoku","Classic logic puzzle"],minesweeper:["Minesweeper","Find all mines"],puzzle15:["Puzzle 15","Arrange numbers"],game2048:["2048","Combine numbers"],tetris:["Tetris","Block-stacking game"],lightsout:["Lights Out","Turn off all lights"],
+snake:["Snake","Classic arcade"],reaction:["Reaction Test","Test your speed"],tictactoe:["Tic-Tac-Toe","Play vs computer"],memory:["Memory","Find matching pairs"],simon:["Simon","Repeat the sequence"],
+hangman:["Hangman","Guess the word"],wordle:["Word Guess","5-letter word game"],quiz:["Quiz","10 questions"],chess:["Chess","Classic 8x8 board"],connect4:["Connect 4","Line up 4 discs"],
+stats:["Stats & Achievements","Your records and badges"]},
+uk:{title:"Сучасні ігри",subtitle:"Оптимізовано для сенсорного Kindle",puzzles:"Головоломки",arcade:"Аркади",word:"Словесні ігри",board:"Настільні ігри",progress:"Прогрес",back:"На головну",
+sudoku:["Судоку","Класична логічна гра"],minesweeper:["Сапер","Знайди всі міни"],puzzle15:["П'ятнашки","Розташуй числа"],game2048:["2048","З'єднуй числа"],tetris:["Тетріс","Гра з блоками"],lightsout:["Вимкнути світло","Вимкни всі лампочки"],
+snake:["Змійка","Класична аркада"],reaction:["Тест на реакцію","Перевір швидкість"],tictactoe:["Хрестики-нулики","Гра проти комп'ютера"],memory:["Меморі","Знайди пари карток"],simon:["Саймон","Повтори послідовність"],
+hangman:["Шибениця","Вгадай слово"],wordle:["Вгадай слово","Слово з 5 літер"],quiz:["Вікторина","10 питань"],chess:["Шахи","Класична гра"],connect4:["Чотири поспіль","Зібери 4 фішки"],
+stats:["Статистика та досягнення","Твої рекорди та значки"]},
+de:{title:"Moderne Spiele",subtitle:"Optimiert für Touchscreen Kindle",puzzles:"Puzzles",arcade:"Arcade",word:"Wortspiele",board:"Brettspiele",progress:"Fortschritt",back:"Zurück",
+sudoku:["Sudoku","Logikrätsel"],minesweeper:["Minesweeper","Minen finden"],puzzle15:["Puzzle 15","Zahlen ordnen"],game2048:["2048","Zahlen kombinieren"],tetris:["Tetris","Block-Spiel"],lightsout:["Lichter aus","Alle Lichter ausschalten"],
+snake:["Snake","Arcade-Spiel"],reaction:["Reaktionstest","Geschwindigkeit testen"],tictactoe:["Tic-Tac-Toe","Gegen Computer"],memory:["Memory","Paare finden"],simon:["Simon","Sequenz wiederholen"],
+hangman:["Galgenmännchen","Wort erraten"],wordle:["Wort-Raten","5-Buchstaben-Wort"],quiz:["Quiz","10 Fragen"],chess:["Schach","Brettspiel"],connect4:["Vier gewinnt","4 in eine Reihe"],
+stats:["Statistik & Erfolge","Deine Rekorde und Abzeichen"]},
+pl:{title:"Nowoczesne gry",subtitle:"Zoptymalizowane dla dotykowego Kindle",puzzles:"Puzzle",arcade:"Arcade",word:"Gry słowne",board:"Gry planszowe",progress:"Postęp",back:"Powrót",
+sudoku:["Sudoku","Łamigłówka logiczna"],minesweeper:["Saper","Znajdź miny"],puzzle15:["Puzzle 15","Ułóż liczby"],game2048:["2048","Łącz liczby"],tetris:["Tetris","Gra w bloki"],lightsout:["Zgaś światła","Zgaś wszystkie światła"],
+snake:["Wąż","Gra arkadowa"],reaction:["Test reakcji","Sprawdź szybkość"],tictactoe:["Kółko i krzyżyk","Przeciw komputerowi"],memory:["Memory","Znajdź pary"],simon:["Simon","Powtórz sekwencję"],
+hangman:["Wisielec","Zgadnij słowo"],wordle:["Zgadnij słowo","5-literowe słowo"],quiz:["Quiz","10 pytań"],chess:["Szachy","Gra planszowa"],connect4:["Czwórki","Ułóż 4 żetony"],
+stats:["Statystyki i osiągnięcia","Twoje rekordy i odznaki"]}};
+function changeLanguage(lang){if(!T[lang])lang='en';const t=T[lang];
+document.getElementById('title').textContent=t.title;
+document.getElementById('subtitle').textContent=t.subtitle;
+document.getElementById('puzzles').textContent=t.puzzles;
+document.getElementById('arcade').textContent=t.arcade;
+document.getElementById('word').textContent=t.word;
+document.getElementById('board').textContent=t.board;
+document.getElementById('progress').textContent=t.progress;
+document.getElementById('back-btn').textContent=t.back;
+Object.keys(t).forEach(function(k){if(Array.isArray(t[k])){
+const a=document.getElementById(k+'-t'),b=document.getElementById(k+'-d');
+if(a)a.textContent=t[k][0];if(b)b.textContent=t[k][1];}});
+document.getElementById('lang-en').selected=(lang==='en');
+document.getElementById('lang-uk').selected=(lang==='uk');
+document.getElementById('lang-de').selected=(lang==='de');
+document.getElementById('lang-pl').selected=(lang==='pl');
+localStorage.setItem('language',lang);}
+window.onload=function(){changeLanguage(localStorage.getItem('language')||'en');};
+</script>
 </body>
 </html>
