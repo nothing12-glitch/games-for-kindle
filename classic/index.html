@@ -1,209 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classic Games for Kindle</title>
-    <meta property="og:title" content="Classic Kindle Games">
-    <meta property="og:description" content="Text quests and games optimized for Kindle with buttons">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
-    <style>
-        body {
-            font-family: Georgia, serif;
-            font-size: 20px;
-            color: #000;
-            background: #fff;
-            margin: 0;
-            padding: 20px 20px 40px;
-            line-height: 1.6;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-        h1 { 
-            font-size: 28px; 
-            border-bottom: 2px solid #000; 
-            padding-bottom: 10px; 
-            margin-bottom: 10px;
-        }
-        .subtitle {
-            font-style: italic;
-            color: #666;
-            margin-bottom: 30px;
-        }
-        h2 {
-            font-size: 22px;
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
-        .game-list {
-            margin: 20px 0;
-        }
-        .game-list a {
-            display: block;
-            padding: 15px;
-            margin: 10px 0;
-            border: 2px solid #000;
-            text-decoration: none;
-            color: #000;
-            font-size: 18px;
-            box-shadow: 3px 3px 0px #000;
-        }
-        .game-list a:active {
-            box-shadow: 1px 1px 0px #000;
-            transform: translate(2px, 2px);
-        }
-        .back-link {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 12px 25px;
-            background: #ddd;
-            border: 2px solid #000;
-            text-decoration: none;
-            color: #000;
-            font-weight: bold;
-            font-size: 18px;
-            box-shadow: 3px 3px 0px #000;
-        }
-        .back-link:active {
-            background: #bbb;
-            box-shadow: 1px 1px 0px #000;
-        }
-        .language-selector {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 1000;
-        }
-        .language-selector select {
-            padding: 8px;
-            font-size: 14px;
-            border: 2px solid #000;
-            border-radius: 4px;
-            background: #fff;
-            cursor: pointer;
-            font-family: Georgia, serif;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classic Games for Kindle</title>
+<style>
+body{font-family:Georgia,serif;font-size:20px;color:#000;background:#fff;margin:0;padding:20px 20px 40px;line-height:1.6}
+h1{font-size:28px;border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:10px}
+.subtitle{font-style:italic;color:#666;margin-bottom:30px}
+h2{font-size:22px;margin-top:30px;margin-bottom:15px}
+.game-list a{display:block;padding:15px;margin:10px 0;border:2px solid #000;text-decoration:none;color:#000;font-size:18px;box-shadow:3px 3px 0 #000}
+.game-list a:active{box-shadow:1px 1px 0 #000;transform:translate(2px,2px)}
+.back-link{display:inline-block;margin-top:30px;padding:12px 25px;background:#ddd;border:2px solid #000;text-decoration:none;color:#000;font-weight:bold;font-size:18px;box-shadow:3px 3px 0 #000}
+.language-selector{position:absolute;top:10px;right:10px;z-index:1000}
+.language-selector select{padding:8px;font-size:14px;border:2px solid #000;border-radius:4px;background:#fff;cursor:pointer;font-family:Georgia,serif}
+</style>
 </head>
 <body>
+<div class="language-selector">
+<select onchange="changeLanguage(this.value)">
+<option value="en" id="lang-en" selected>English</option>
+<option value="uk" id="lang-uk">Українська</option>
+<option value="de" id="lang-de">Deutsch</option>
+<option value="pl" id="lang-pl">Polski</option>
+</select>
+</div>
 
-    <!-- Language Selector -->
-    <div class="language-selector">
-        <select onchange="changeLanguage(this.value)">
-            <option value="en" id="lang-en" selected>English</option>
-            <option value="uk" id="lang-uk">Українська</option>
-            <option value="de" id="lang-de">Deutsch</option>
-            <option value="pl" id="lang-pl">Polski</option>
-        </select>
-    </div>
+<h1 id="title">Classic Games</h1>
+<p class="subtitle" id="subtitle">Optimized for Kindle with buttons</p>
 
-    <!-- Main Content -->
-    <h1 id="title">Classic Games</h1>
-    <p class="subtitle" id="subtitle">Optimized for Kindle with buttons</p>
+<h2 id="quests-title">Text Quests</h2>
+<div class="game-list">
+<a href="lighthouse.html" id="quest1">Lighthouse Mystery</a>
+<a href="spacestation.html" id="quest2">Space Station</a>
+<a href="castle.html" id="quest3">Castle of Shadows</a>
+<a href="detective.html" id="quest4">Detective Case #47</a>
+<a href="shipwreck.html" id="quest5">Shipwreck Survival</a>
+<a href="train.html" id="quest6">Train No. 7 "Comet"</a>
+</div>
 
-    <h2 id="quests-title">Text Quests</h2>
-    <div class="game-list">
-        <a href="lighthouse.html" id="quest1">Lighthouse Mystery - text quest</a>
-        <a href="spacestation.html" id="quest2">Space Station - sci-fi quest</a>
-        <a href="castle.html" id="quest3">Castle of Shadows - fantasy quest</a>
-        <a href="detective.html" id="quest4">Detective Case #47 - detective</a>
-    </div>
+<h2 id="other-title">Other Games</h2>
+<div class="game-list">
+<a href="capitals/index.html" id="game1">World Capitals - quiz</a>
+<a href="maze/index.html" id="game2">Maze - adventure</a>
+<a href="riddles.html" id="game3">Book of Riddles (20)</a>
+<a href="../stats.html" id="game4">Stats & Achievements</a>
+</div>
 
-    <h2 id="other-title">Other Games</h2>
-    <div class="game-list">
-        <a href="capitals/index.html" id="game1">World Capitals - quiz</a>
-        <a href="maze/index.html" id="game2">Maze - adventure game</a>
-        <a href="riddles.html" id="game3">Book of Riddles - 10 riddles with answers</a>
-    </div>
+<a href="../index.html" class="back-link" id="back-btn">Back to Home</a>
 
-    <a href="../index.html" class="back-link" id="back-btn">Back to Home</a>
-
-    <script>
-        const translations = {
-            en: {
-                title: "Classic Games",
-                subtitle: "Optimized for Kindle with buttons",
-                questsTitle: "Text Quests",
-                otherTitle: "Other Games",
-                back: "Back to Home",
-                quest1: "Lighthouse Mystery - text quest",
-                quest2: "Space Station - sci-fi quest",
-                quest3: "Castle of Shadows - fantasy quest",
-                quest4: "Detective Case #47 - detective",
-                game1: "World Capitals - quiz",
-                game2: "Maze - adventure game",
-                game3: "Book of Riddles - 10 riddles with answers"
-            },
-            uk: {
-                title: "Класичні ігри",
-                subtitle: "Оптимізовано для Kindle з кнопками",
-                questsTitle: "Текстові квести",
-                otherTitle: "Інші ігри",
-                back: "На головну",
-                quest1: "Таємниця маяка - текстовий квест",
-                quest2: "Космічна станція - sci-fi квест",
-                quest3: "Замок Тіней - фентезі квест",
-                quest4: "Справа №47 - детектив",
-                game1: "Столиці світу - вікторина",
-                game2: "Лабіринт - пригодницька гра",
-                game3: "Книга загадок - 10 загадок з відповідями"
-            },
-            de: {
-                title: "Klassische Spiele",
-                subtitle: "Optimiert für Kindle mit Tasten",
-                questsTitle: "Text-Quests",
-                otherTitle: "Andere Spiele",
-                back: "Zurück",
-                quest1: "Leuchtturm-Mystery - Textquest",
-                quest2: "Raumstation - Sci-Fi-Quest",
-                quest3: "Schloss der Schatten - Fantasy-Quest",
-                quest4: "Detektivfall #47 - Detektiv",
-                game1: "Hauptstädte der Welt - Quiz",
-                game2: "Labyrinth - Abenteuerspiel",
-                game3: "Rätselbuch - 10 Rätsel mit Antworten"
-            },
-            pl: {
-                title: "Gry klasyczne",
-                subtitle: "Zoptymalizowane dla Kindle z przyciskami",
-                questsTitle: "Questy tekstowe",
-                otherTitle: "Inne gry",
-                back: "Powrót",
-                quest1: "Tajemnica latarni - quest tekstowy",
-                quest2: "Stacja kosmiczna - quest sci-fi",
-                quest3: "Zamek Cieni - quest fantasy",
-                quest4: "Sprawa #47 - detektyw",
-                game1: "Stolice świata - quiz",
-                game2: "Labirynt - gra przygodowa",
-                game3: "Księga zagadek - 10 zagadek z odpowiedziami"
-            }
-        };
-
-        function changeLanguage(lang) {
-            document.getElementById('title').textContent = translations[lang].title;
-            document.getElementById('subtitle').textContent = translations[lang].subtitle;
-            document.getElementById('quests-title').textContent = translations[lang].questsTitle;
-            document.getElementById('other-title').textContent = translations[lang].otherTitle;
-            document.getElementById('back-btn').textContent = translations[lang].back;
-            document.getElementById('quest1').textContent = translations[lang].quest1;
-            document.getElementById('quest2').textContent = translations[lang].quest2;
-            document.getElementById('quest3').textContent = translations[lang].quest3;
-            document.getElementById('quest4').textContent = translations[lang].quest4;
-            document.getElementById('game1').textContent = translations[lang].game1;
-            document.getElementById('game2').textContent = translations[lang].game2;
-            document.getElementById('game3').textContent = translations[lang].game3;
-            
-            document.getElementById('lang-en').selected = (lang === 'en');
-            document.getElementById('lang-uk').selected = (lang === 'uk');
-            document.getElementById('lang-de').selected = (lang === 'de');
-            document.getElementById('lang-pl').selected = (lang === 'pl');
-            
-            localStorage.setItem('language', lang);
-        }
-
-        window.onload = function() {
-            const savedLang = localStorage.getItem('language') || 'en';
-            changeLanguage(savedLang);
-        };
-    </script>
+<script>
+const T={
+en:{title:"Classic Games",subtitle:"Optimized for Kindle with buttons",questsTitle:"Text Quests",otherTitle:"Other Games",back:"Back to Home",
+quest1:"Lighthouse Mystery",quest2:"Space Station",quest3:"Castle of Shadows",quest4:"Detective Case #47",quest5:"Shipwreck Survival",quest6:"Train No. 7 \"Comet\"",
+game1:"World Capitals - quiz",game2:"Maze - adventure",game3:"Book of Riddles (20)",game4:"Stats & Achievements"},
+uk:{title:"Класичні ігри",subtitle:"Оптимізовано для Kindle з кнопками",questsTitle:"Текстові квести",otherTitle:"Інші ігри",back:"На головну",
+quest1:"Таємниця маяка",quest2:"Космічна станція",quest3:"Замок Тіней",quest4:"Справа №47",quest5:"Загублений корабель",quest6:"Поїзд №7 «Комета»",
+game1:"Столиці світу",game2:"Лабіринт",game3:"Книга загадок (20)",game4:"Статистика та досягнення"},
+de:{title:"Klassische Spiele",subtitle:"Optimiert für Kindle mit Tasten",questsTitle:"Text-Quests",otherTitle:"Andere Spiele",back:"Zurück",
+quest1:"Leuchtturm-Mystery",quest2:"Raumstation",quest3:"Schloss der Schatten",quest4:"Detektivfall #47",quest5:"Schiffbruch",quest6:"Zug Nr. 7 \"Komet\"",
+game1:"Hauptstädte - Quiz",game2:"Labyrinth",game3:"Rätselbuch (20)",game4:"Statistik & Erfolge"},
+pl:{title:"Gry klasyczne",subtitle:"Zoptymalizowane dla Kindle z przyciskami",questsTitle:"Questy tekstowe",otherTitle:"Inne gry",back:"Powrót",
+quest1:"Tajemnica latarni",quest2:"Stacja kosmiczna",quest3:"Zamek Cieni",quest4:"Sprawa #47",quest5:"Rozbitek",quest6:"Pociąg nr 7 \"Kometa\"",
+game1:"Stolice świata",game2:"Labirynt",game3:"Księga zagadek (20)",game4:"Statystyki i osiągnięcia"}};
+function changeLanguage(lang){if(!T[lang])lang='en';const t=T[lang];
+Object.keys(t).forEach(function(k){const el=document.getElementById(k);if(el)el.textContent=t[k];});
+document.getElementById('lang-en').selected=(lang==='en');
+document.getElementById('lang-uk').selected=(lang==='uk');
+document.getElementById('lang-de').selected=(lang==='de');
+document.getElementById('lang-pl').selected=(lang==='pl');
+localStorage.setItem('language',lang);}
+window.onload=function(){changeLanguage(localStorage.getItem('language')||'en');};
+</script>
 </body>
 </html>
