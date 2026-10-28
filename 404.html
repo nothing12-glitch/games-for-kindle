@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 - Kindle Games</title>
+<style>
+body{font-family:Georgia,serif;text-align:center;padding:60px 20px;background:#fff;color:#000}
+h1{font-size:80px;margin:0}
+p{font-size:20px;color:#555}
+a.btn{display:inline-block;margin-top:25px;padding:15px 30px;background:#fff;border:3px solid #000;text-decoration:none;color:#000;font-weight:bold;font-size:20px;box-shadow:4px 4px 0 #000}
+</style>
+</head>
+<body>
+<h1>404</h1>
+<p id="msg">This page got lost somewhere between the shelves.</p>
+<a href="index.html" class="btn" id="bb">Back to Home</a>
+<script>
+const M={en:"This page got lost somewhere between the shelves.",uk:"Ця сторінка загубилась десь між полицями.",de:"Diese Seite hat sich zwischen den Regalen verirrt.",pl:"Ta strona zgubiła się gdzieś między półkami."};
+const B={en:"Back to Home",uk:"На головну",de:"Zurück",pl:"Powrót"};
+let lang=localStorage.getItem('language')||'en';if(!M[lang])lang='en';
+document.getElementById('msg').textContent=M[lang];
+document.getElementById('bb').textContent=B[lang];
+</script>
+</body>
+</html>
