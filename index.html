@@ -51,7 +51,7 @@
             transition: width 0.1s;
         }
         
-        /* ===== ТОСТ (ВИПРАВЛЕНО: явні кольори) ===== */
+        /* ===== ТОСТ ===== */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -188,7 +188,14 @@
             font-family: Georgia, serif;
         }
         
-        /* ===== КНОПКА ВЕЛИКИЙ ШРИФТ (ВИПРАВЛЕНО) ===== */
+        /* ===== ВИПРАВЛЕННЯ: опції списку завжди читабельні ===== */
+        .language-selector select option,
+        .theme-selector select option {
+            background: #fff;
+            color: #000;
+        }
+        
+        /* ===== КНОПКА ВЕЛИКИЙ ШРИФТ ===== */
         .large-font-btn {
             position: absolute;
             top: 10px;
@@ -208,7 +215,7 @@
         body.sepia-theme .large-font-btn.active { background: #5b4636; color: #f4ecd8; }
         body.green-theme .large-font-btn.active { background: #00ff00; color: #001100; }
         
-        /* ===== SCROLL TO TOP (ВИПРАВЛЕНО) ===== */
+        /* ===== SCROLL TO TOP ===== */
         .scroll-top {
             position: fixed;
             bottom: 100px;
@@ -582,9 +589,9 @@
 
         let currentLang = 'en';
         let startTime = Date.now();
-        let uiReady = false; // НЕ показувати тости при завантаженні
+        let uiReady = false;
 
-        // ===== ТОСТ (ВИПРАВЛЕНО: не показується при завантаженні) =====
+        // ===== ТОСТ =====
         function showToast(message) {
             if (!uiReady) return;
             const toast = document.getElementById('toast');
@@ -736,6 +743,7 @@
         function showEasterEgg() {
             document.getElementById('overlay').classList.add('show');
             document.getElementById('easter-egg').classList.add('show');
+            localStorage.setItem('egg_found', '1');
             showConfetti();
         }
 
@@ -791,7 +799,7 @@
             const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
             document.getElementById('quote-text').textContent = quotes[dayIndex][savedLang];
             
-            uiReady = true; // ТЕПЕР тости працюють (тільки після завантаження)
+            uiReady = true;
         };
     </script>
 </body>
