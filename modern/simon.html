@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simon</title>
+<style>
+body{font-family:Georgia,serif;text-align:center;padding:20px;background:#fff;color:#000}
+h1{font-size:28px}
+#pads{display:grid;grid-template-columns:repeat(2,110px);gap:10px;justify-content:center;margin:20px auto}
+.pad{width:110px;height:110px;border:3px solid #000;border-radius:10px;cursor:pointer}
+.pad0{background:#fff}.pad1{background:#bbb}.pad2{background:#666}.pad3{background:#000}
+.pad.lit{opacity:.4}
+#info{font-size:20px;margin:15px}
+button.btn,a.btn{padding:12px 25px;font-size:18px;border:2px solid #000;background:#fff;color:#000;border-radius:6px;cursor:pointer;text-decoration:none;font-weight:bold;margin:5px}
+</style>
+</head>
+<body>
+<h1 id="t"></h1>
+<p id="d"></p>
+<div id="info"></div>
+<div id="pads"></div>
+<div><button class="btn" onclick="start()" id="bs"></button> <a class="btn" href="index.html" id="bb"></a></div>
+<script>
+const L={
+en:{t:"Simon",d:"Watch the sequence, then repeat it.",lv:"Level",b:"Best",go:"Wrong! Game over.",ready:"Watch...",go2:"Your turn!",bs:"Start",bb:"Menu"},
+uk:{t:"Саймон",d:"Дивись послідовність, потім повтори.",lv:"Рівень",b:"Рекорд",go:"Невірно! Гра завершена.",ready:"Дивись...",go2:"Твоя черга!",bs:"Старт",bb:"Меню"},
+de:{t:"Simon",d:"Beobachte die Sequenz, dann wiederhole sie.",lv:"Level",b:"Best",go:"Falsch! Spiel vorbei.",ready:"Aufpassen...",go2:"Du bist dran!",bs:"Start",bb:"Menü"},
+pl:{t:"Simon",d:"Obserwuj sekwencję, potem ją powtórz.",lv:"Poziom",b:"Rekord",go:"Źle! Koniec gry.",ready:"Patrz...",go2:"Twoja kolej!",bs:"Start",bb:"Menu"}};
+let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+let seq=[],pos=0,accept=false;
+const padsEl=document.getElementById('pads');
+for(let i=0;i<4;i++){(function(ii){const d=document.createElement('div');d.className='pad pad'+ii;d.onclick=function(){tap(ii);};padsEl.appendChild(d);})(i);}
+function info(s){document.getElementById('info').textContent=s;}
+function start(){seq=[];next();}
+function next(){seq.push(Math.floor(Math.random()*4));pos=0;accept=false;
+info(L[lang].ready+' '+L[lang].lv+' '+seq.length);play(0);}
+function play(i){if(i>=seq.length){accept=true;info(L[lang].go2);return;}
+const p=padsEl.children[seq[i]];p.classList.add('lit');
+setTimeout(function(){p.classList.remove('lit');setTimeout(function(){play(i+1);},150);},350);}
+function tap(i){if(!accept)return;
+const p=padsEl.children[i];p.classList.add('lit');setTimeout(function(){p.classList.remove('lit');},200);
+if(i===seq[pos]){pos++;
+if(pos===seq.length){accept=false;
+const best=+(localStorage.getItem('best_simon')||0);
+if(seq.length>best)localStorage.setItem('best_simon',''+seq.length);
+setTimeout(next,700);}}
+else{accept=false;info(L[lang].go+' '+L[lang].b+': '+(localStorage.getItem('best_simon')||'0'));}}
+document.getElementById('t').textContent=L[lang].t;
+document.getElementById('d').textContent=L[lang].d;
+document.getElementById('bs').textContent=L[lang].bs;
+document.getElementById('bb').textContent=L[lang].bb;
+info(L[lang].d);
+</script>
+</body>
+</html>
