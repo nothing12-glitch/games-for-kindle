@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connect 4</title>
+<style>
+body{font-family:Georgia,serif;text-align:center;padding:20px;background:#fff;color:#000}
+h1{font-size:28px}
+#cols{display:grid;grid-template-columns:repeat(7,44px);gap:4px;justify-content:center;margin:10px auto 4px}
+#cols button{width:44px;height:36px;border:2px solid #000;background:#fff;cursor:pointer;font-size:18px;font-weight:bold}
+#cols button:active{background:#000;color:#fff}
+#board{display:grid;grid-template-columns:repeat(7,44px);gap:4px;justify-content:center;margin:0 auto}
+.c{width:44px;height:44px;border:2px solid #000;border-radius:50%;background:#fff}
+.c.p{background:#000}
+.c.a{background:#999}
+#info{font-size:20px;margin:15px}
+button.btn,a.btn{padding:12px 25px;font-size:18px;border:2px solid #000;background:#fff;color:#000;border-radius:6px;cursor:pointer;text-decoration:none;font-weight:bold;margin:5px}
+</style>
+</head>
+<body>
+<h1 id="t"></h1>
+<p id="d"></p>
+<div id="info"></div>
+<div id="cols"></div>
+<div id="board"></div>
+<div><button class="btn" onclick="init()" id="bn"></button> <a class="btn" href="index.html" id="bb"></a></div>
+<script>
+const L={
+en:{t:"Connect 4",d:"Line up 4 discs. You are black. Tap a column arrow.",w:"You won!",l:"Computer won!",dr:"Draw!",your:"Your turn",ai:"Computer thinks...",bn:"New Game",bb:"Menu",wins:"Total wins"},
+uk:{t:"Чотири поспіль",d:"Зібери 4 фішки поспіль. Ти — чорні. Натисни стрілку колонки.",w:"Ви виграли!",l:"Комп'ютер виграв!",dr:"Нічия!",your:"Ваш хід",ai:"Комп'ютер думає...",bn:"Нова гра",bb:"Меню",wins:"Всього перемог"},
+de:{t:"Vier gewinnt",d:"4 Steine in eine Reihe. Du bist Schwarz. Spaltenpfeil tippen.",w:"Gewonnen!",l:"Computer gewann!",dr:"Unentschieden!",your:"Dein Zug",ai:"Computer denkt...",bn:"Neues Spiel",bb:"Menü",wins:"Siege gesamt"},
+pl:{t:"Czwórki",d:"Ułóż 4 żetony w rzędzie. Jesteś czarny. Kliknij strzałkę kolumny.",w:"Wygrałeś!",l:"Komputer wygrał!",dr:"Remis!",your:"Twój ruch",ai:"Komputer myśli...",bn:"Nowa gra",bb:"Menu",wins:"Zwycięstwa"}};
+let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+let b=Array(42).fill(0),over=false;
+function info(s){document.getElementById('info').textContent=s;}
+function canDrop(c){return b[c]===0;}
+function dropRow(c){for(let r=5;r>=0;r--){if(!b[r*7+c])return r;}return -1;}
+function win(p){for(let r=0;r<6;r++)for(let c=0;c<7;c++){
+if(c<=3&&b[r*7+c]===p&&b[r*7+c+1]===p&&b[r*7+c+2]===p&&b[r*7+c+3]===p)return true;
+if(r<=2&&b[r*7+c]===p&&b[(r+1)*7+c]===p&&b[(r+2)*7+c]===p&&b[(r+3)*7+c]===p)return true;
+if(c<=3&&r<=2&&b[r*7+c]===p&&b[(r+1)*7+c+1]===p&&b[(r+2)*7+c+2]===p&&b[(r+3)*7+c+3]===p)return true;
+if(c>=3&&r<=2&&b[r*7+c]===p&&b[(r+1)*7+c-1]===p&&b[(r+2)*7+c-2]===p&&b[(r+3)*7+c-3]===p)return true;}
+return false;}
+function render(){const bd=document.getElementById('board');bd.innerHTML='';
+b.forEach(function(v){const d=document.createElement('div');d.className='c'+(v===1?' p':v===2?' a':'');bd.appendChild(d);});}
+function after(p){if(win(p)){over=true;info(p===1?L[lang].w:L[lang].l);
+if(p===1){localStorage.setItem('stats_c4_wins',''+((+(localStorage.getItem('stats_c4_wins')||0))+1));}
+return;}
+if(b.every(function(x){return x;})){over=true;info(L[lang].dr);return;}
+if(p===1){info(L[lang].ai);setTimeout(ai,400);}else{info(L[lang].your);}}
+function findWin(p){for(let c=0;c<7;c++){if(!canDrop(c))continue;const r=dropRow(c);b[r*7+c]=p;const w=win(p);b[r*7+c]=0;if(w)return c;}return -1;}
+function ai(){if(over)return;let c=findWin(2);if(c<0)c=findWin(1);
+if(c<0){const pref=[3,2,4,1,5,0,6].filter(canDrop);c=pref[Math.floor(Math.random()*pref.length)];}
+if(c===undefined)return;const r=dropRow(c);b[r*7+c]=2;render();after(2);}
+function playerDrop(c){if(over||!canDrop(c))return;const r=dropRow(c);b[r*7+c]=1;render();after(1);}
+function init(){b=Array(42).fill(0);over=false;render();
+info(L[lang].your+' | '+L[lang].wins+': '+(localStorage.getItem('stats_c4_wins')||0));}
+const colsEl=document.getElementById('cols');
+for(let c=0;c<7;c++){(function(cc){const btn=document.createElement('button');btn.textContent='↓';btn.onclick=function(){playerDrop(cc);};colsEl.appendChild(btn);})(c);}
+document.getElementById('t').textContent=L[lang].t;
+document.getElementById('d').textContent=L[lang].d;
+document.getElementById('bn').textContent=L[lang].bn;
+document.getElementById('bb').textContent=L[lang].bb;
+init();
+</script>
+</body>
+</html>
