@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lights Out</title>
+<style>
+body{font-family:Georgia,serif;text-align:center;padding:20px;background:#fff;color:#000}
+h1{font-size:28px}
+#board{display:grid;grid-template-columns:repeat(5,60px);gap:6px;justify-content:center;margin:20px auto}
+.c{width:60px;height:60px;border:2px solid #000;border-radius:6px;cursor:pointer;background:#fff}
+.c.on{background:#000}
+#info{font-size:20px;margin:15px}
+button.btn,a.btn{padding:12px 25px;font-size:18px;border:2px solid #000;background:#fff;color:#000;border-radius:6px;cursor:pointer;text-decoration:none;font-weight:bold;margin:5px}
+button.btn:active{background:#000;color:#fff}
+</style>
+</head>
+<body>
+<h1 id="t"></h1>
+<p id="d"></p>
+<div id="info"></div>
+<div id="board"></div>
+<div><button class="btn" onclick="init()" id="bn"></button> <a class="btn" href="index.html" id="bb"></a></div>
+<script>
+const L={
+en:{t:"Lights Out",d:"Turn off all lights! Tapping a cell toggles it and its neighbors.",m:"Moves",b:"Best",w:"You won!",bn:"New Game",bb:"Menu"},
+uk:{t:"Вимкнути світло",d:"Вимкніть усі лампочки! Натискання перемикає клітинку та сусідні.",m:"Ходи",b:"Рекорд",w:"Ви виграли!",bn:"Нова гра",bb:"Меню"},
+de:{t:"Lichter aus",d:"Schalte alle Lichter aus! Tippen schaltet Zelle und Nachbarn um.",m:"Züge",b:"Best",w:"Gewonnen!",bn:"Neues Spiel",bb:"Menü"},
+pl:{t:"Zgaś światła",d:"Zgaś wszystkie światła! Dotknięcie zmienia komórkę i sąsiadów.",m:"Ruchy",b:"Rekord",w:"Wygrałeś!",bn:"Nowa gra",bb:"Menu"}};
+let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+let g,moves,done;
+function init(){g=Array(25).fill(0);moves=0;done=false;
+for(let i=0;i<8;i++){press(Math.floor(Math.random()*25),true);}
+render();}
+function press(i,silent){const r=Math.floor(i/5),c=i%5;
+[[0,0],[0,1],[0,-1],[1,0],[-1,0]].forEach(function(d){const nr=r+d[0],nc=c+d[1];
+if(nr>=0&&nr<5&&nc>=0&&nc<5){const j=nr*5+nc;g[j]=g[j]?0:1;}});
+if(!silent){moves++;render();check();}}
+function check(){if(g.every(function(x){return !x;})){done=true;
+const best=localStorage.getItem('best_lightsout');
+if(!best||moves<+best)localStorage.setItem('best_lightsout',moves);
+render();}}
+function render(){const b=document.getElementById('board');b.innerHTML='';
+g.forEach(function(v,i){const d=document.createElement('div');d.className='c'+(v?' on':'');
+d.onclick=function(){if(!done)press(i,false);};b.appendChild(d);});
+const best=localStorage.getItem('best_lightsout')||'-';
+document.getElementById('info').textContent=L[lang].m+': '+moves+' | '+L[lang].b+': '+best+(done?' — '+L[lang].w:'');}
+document.getElementById('t').textContent=L[lang].t;
+document.getElementById('d').textContent=L[lang].d;
+document.getElementById('bn').textContent=L[lang].bn;
+document.getElementById('bb').textContent=L[lang].bb;
+init();
+</script>
+</body>
+</html>
