@@ -20,8 +20,8 @@
     </style>
 </head>
 <body>
-    <h1>Змійка</h1>
-    <p>Керуйте змійкою та їжте їжу!</p>
+    <h1 id="t">Змійка</h1>
+    <p id="d">Керуйте змійкою та їжте їжу!</p>
     
     <div id="score">Рахунок: 0</div>
     <div id="board"></div>
@@ -38,6 +38,19 @@
     <a href="index.html" id="back-btn">До меню</a>
 
     <script>
+        const L={
+            en:{t:"Snake",d:"Steer the snake and eat the food!",score:"Score",over:"Game over! Score: ",bn:"New Game",bb:"Menu"},
+            uk:{t:"Змійка",d:"Керуйте змійкою та їжте їжу!",score:"Рахунок",over:"Гра закінчена! Рахунок: ",bn:"Нова гра",bb:"До меню"},
+            de:{t:"Snake",d:"Steuere die Schlange und iss das Futter!",score:"Punkte",over:"Spiel vorbei! Punkte: ",bn:"Neues Spiel",bb:"Menü"},
+            pl:{t:"Wąż",d:"Kieruj wężem i jedz jedzenie!",score:"Wynik",over:"Koniec gry! Wynik: ",bn:"Nowa gra",bb:"Menu"}
+        };
+        let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+        document.documentElement.lang=lang;
+        document.getElementById('t').textContent=L[lang].t;
+        document.getElementById('d').textContent=L[lang].d;
+        document.getElementById('new-game').textContent=L[lang].bn;
+        document.getElementById('back-btn').textContent=L[lang].bb;
+
         const SIZE = 15;
         let snake, food, direction, nextDirection, score, gameOver, gameLoop;
 
@@ -66,7 +79,7 @@
         function updateDisplay() {
             const boardEl = document.getElementById('board');
             boardEl.innerHTML = '';
-            document.getElementById('score').textContent = 'Рахунок: ' + score;
+            document.getElementById('score').textContent = L[lang].score + ': ' + score;
             
             for (let y = 0; y < SIZE; y++) {
                 for (let x = 0; x < SIZE; x++) {
@@ -107,7 +120,7 @@
                 snake.some(s => s.x === head.x && s.y === head.y)) {
                 gameOver = true;
                 clearInterval(gameLoop);
-                document.getElementById('score').textContent = 'Гра закінчена! Рахунок: ' + score;
+                document.getElementById('score').textContent = L[lang].over + score;
                 return;
             }
             

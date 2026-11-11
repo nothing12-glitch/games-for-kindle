@@ -16,8 +16,8 @@
     </style>
 </head>
 <body>
-    <h1>Хрестики-нулики</h1>
-    <p>Ви граєте за X. Комп'ютер грає за O.</p>
+    <h1 id="t">Хрестики-нулики</h1>
+    <p id="d">Ви граєте за X. Комп'ютер грає за O.</p>
     
     <div id="status">Ваш хід</div>
     <div id="board"></div>
@@ -27,13 +27,26 @@
     <a href="index.html" id="back-btn">До меню</a>
 
     <script>
+        const L={
+            en:{t:"Tic-Tac-Toe",d:"You play X. The computer plays O.",your:"Your turn",ai:"Computer is thinking...",win:"You won!",lose:"Computer won!",draw:"Draw!",bn:"New Game",bb:"Menu"},
+            uk:{t:"Хрестики-нулики",d:"Ви граєте за X. Комп'ютер грає за O.",your:"Ваш хід",ai:"Хід комп'ютера...",win:"Ви виграли!",lose:"Комп'ютер виграв!",draw:"Нічия!",bn:"Нова гра",bb:"До меню"},
+            de:{t:"Tic-Tac-Toe",d:"Du spielst X. Der Computer spielt O.",your:"Du bist dran",ai:"Computer denkt...",win:"Du hast gewonnen!",lose:"Computer hat gewonnen!",draw:"Unentschieden!",bn:"Neues Spiel",bb:"Menü"},
+            pl:{t:"Kółko i krzyżyk",d:"Grasz X. Komputer gra O.",your:"Twój ruch",ai:"Ruch komputera...",win:"Wygrałeś!",lose:"Komputer wygrał!",draw:"Remis!",bn:"Nowa gra",bb:"Menu"}
+        };
+        let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+        document.documentElement.lang=lang;
+        document.getElementById('t').textContent=L[lang].t;
+        document.getElementById('d').textContent=L[lang].d;
+        document.getElementById('new-game').textContent=L[lang].bn;
+        document.getElementById('back-btn').textContent=L[lang].bb;
+
         let board, currentPlayer, gameOver;
 
         function initGame() {
             board = Array(9).fill('');
             currentPlayer = 'X';
             gameOver = false;
-            document.getElementById('status').textContent = 'Ваш хід';
+            document.getElementById('status').textContent = L[lang].your;
             renderBoard();
         }
 
@@ -56,19 +69,19 @@
             renderBoard();
             
             if (checkWin('X')) {
-                document.getElementById('status').textContent = 'Ви виграли!';
+                document.getElementById('status').textContent = L[lang].win;
                 gameOver = true;
                 return;
             }
             
             if (board.every(cell => cell)) {
-                document.getElementById('status').textContent = 'Нічия!';
+                document.getElementById('status').textContent = L[lang].draw;
                 gameOver = true;
                 return;
             }
             
             currentPlayer = 'O';
-            document.getElementById('status').textContent = 'Хід комп\'ютера...';
+            document.getElementById('status').textContent = L[lang].ai;
             setTimeout(computerMove, 500);
         }
 
@@ -83,19 +96,19 @@
             renderBoard();
             
             if (checkWin('O')) {
-                document.getElementById('status').textContent = 'Комп\'ютер виграв!';
+                document.getElementById('status').textContent = L[lang].lose;
                 gameOver = true;
                 return;
             }
             
             if (board.every(cell => cell)) {
-                document.getElementById('status').textContent = 'Нічия!';
+                document.getElementById('status').textContent = L[lang].draw;
                 gameOver = true;
                 return;
             }
             
             currentPlayer = 'X';
-            document.getElementById('status').textContent = 'Ваш хід';
+            document.getElementById('status').textContent = L[lang].your;
         }
 
         function checkWin(player) {

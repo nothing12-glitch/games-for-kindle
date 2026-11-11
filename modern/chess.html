@@ -19,8 +19,8 @@
     </style>
 </head>
 <body>
-    <h1>Шахи</h1>
-    <p>Натисніть на фігуру, потім на куди перемістити</p>
+    <h1 id="t">Шахи</h1>
+    <p id="d">Натисніть на фігуру, потім на куди перемістити</p>
     
     <div id="status">Хід білих</div>
     <div id="board"></div>
@@ -30,6 +30,21 @@
     <a href="index.html" id="back-btn">До меню</a>
 
     <script>
+        const L={
+            en:{t:"Chess",d:"Tap a piece, then tap where to move it",white:"White's turn",black:"Black's turn",bn:"New Game",bb:"Menu"},
+            uk:{t:"Шахи",d:"Натисніть на фігуру, потім на куди перемістити",white:"Хід білих",black:"Хід чорних",bn:"Нова гра",bb:"До меню"},
+            de:{t:"Schach",d:"Tippe eine Figur an, dann das Zielfeld",white:"Weiß ist am Zug",black:"Schwarz ist am Zug",bn:"Neues Spiel",bb:"Menü"},
+            pl:{t:"Szachy",d:"Kliknij figurę, a potem pole docelowe",white:"Ruch białych",black:"Ruch czarnych",bn:"Nowa gra",bb:"Menu"}
+        };
+        let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+        document.documentElement.lang=lang;
+        document.getElementById('t').textContent=L[lang].t;
+        document.getElementById('d').textContent=L[lang].d;
+        document.getElementById('new-game').textContent=L[lang].bn;
+        document.getElementById('back-btn').textContent=L[lang].bb;
+
+        function setTurn(){document.getElementById('status').textContent=L[lang][currentPlayer];}
+
         const pieces = {
             'R': '♜', 'N': '♞', 'B': '♝', 'Q': '♛', 'K': '♚', 'P': '♟',
             'r': '♖', 'n': '♘', 'b': '♗', 'q': '♕', 'k': '♔', 'p': '♙'
@@ -50,7 +65,7 @@
             ];
             selected = null;
             currentPlayer = 'white';
-            document.getElementById('status').textContent = 'Хід білих';
+            setTurn();
             renderBoard();
         }
 
@@ -89,7 +104,7 @@
                     board[selected.r][selected.c] = '';
                     selected = null;
                     currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
-                    document.getElementById('status').textContent = 'Хід ' + (currentPlayer === 'white' ? 'білих' : 'чорних');
+                    setTurn();
                 } else {
                     selected = null;
                 }

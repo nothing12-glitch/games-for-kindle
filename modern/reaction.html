@@ -18,8 +18,8 @@
     </style>
 </head>
 <body>
-    <h1>Тест на реакцію</h1>
-    <p>Натисніть, коли екран стане зеленим!</p>
+    <h1 id="t">Тест на реакцію</h1>
+    <p id="d">Натисніть, коли екран стане зеленим!</p>
     
     <div id="best-time">Найкращий час: -</div>
     <div id="attempts">Спроб: 0</div>
@@ -33,6 +33,22 @@
     <a href="index.html" id="back-btn">До меню</a>
 
     <script>
+        const L={
+            en:{t:"Reaction Test",d:"Tap when the screen turns green!",best:"Best time",attempts:"Attempts",start:"Tap to start",wait:"Wait for green...",go:"TAP!",early:"Too early! Tap to try again.",result:"{n} ms<br><br>Tap to try again",reset:"Reset results",bb:"Menu",ms:"ms"},
+            uk:{t:"Тест на реакцію",d:"Натисніть, коли екран стане зеленим!",best:"Найкращий час",attempts:"Спроб",start:"Натисніть, щоб почати",wait:"Чекайте на зелений...",go:"НАТИСНІТЬ!",early:"Занадто рано! Натисніть, щоб спробувати ще.",result:"{n} мс<br><br>Натисніть, щоб спробувати ще",reset:"Скинути результат",bb:"До меню",ms:"мс"},
+            de:{t:"Reaktionstest",d:"Tippe, wenn der Bildschirm grün wird!",best:"Bestzeit",attempts:"Versuche",start:"Tippen zum Starten",wait:"Warte auf Grün...",go:"TIPPEN!",early:"Zu früh! Tippe für einen neuen Versuch.",result:"{n} ms<br><br>Tippe für einen neuen Versuch",reset:"Ergebnisse zurücksetzen",bb:"Menü",ms:"ms"},
+            pl:{t:"Test reakcji",d:"Kliknij, gdy ekran zrobi się zielony!",best:"Najlepszy czas",attempts:"Prób",start:"Kliknij, aby zacząć",wait:"Czekaj na zielony...",go:"KLIKNIJ!",early:"Za wcześnie! Kliknij, aby spróbować ponownie.",result:"{n} ms<br><br>Kliknij, aby spróbować ponownie",reset:"Zresetuj wyniki",bb:"Menu",ms:"ms"}
+        };
+        let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+        document.documentElement.lang=lang;
+        document.getElementById('t').textContent=L[lang].t;
+        document.getElementById('d').textContent=L[lang].d;
+        document.getElementById('new-game').textContent=L[lang].reset;
+        document.getElementById('back-btn').textContent=L[lang].bb;
+        document.getElementById('game-area').textContent=L[lang].start;
+        document.getElementById('best-time').textContent=L[lang].best+': -';
+        document.getElementById('attempts').textContent=L[lang].attempts+': 0';
+
         const gameArea = document.getElementById('game-area');
         let state = 'idle';
         let startTime;
@@ -56,13 +72,13 @@
         function startGame() {
             state = 'waiting';
             gameArea.className = 'waiting';
-            gameArea.textContent = 'Чекайте на зелений...';
+            gameArea.textContent = L[lang].wait;
             
             const delay = 1000 + Math.random() * 4000;
             timeoutId = setTimeout(() => {
                 state = 'ready';
                 gameArea.className = 'ready';
-                gameArea.textContent = 'НАТИСНІТЬ!';
+                gameArea.textContent = L[lang].go;
                 startTime = Date.now();
             }, delay);
         }
@@ -71,7 +87,7 @@
             clearTimeout(timeoutId);
             state = 'result';
             gameArea.className = 'result';
-            gameArea.textContent = 'Занадто рано! Натисніть, щоб спробувати ще.';
+            gameArea.textContent = L[lang].early;
         }
 
         function recordTime() {
@@ -81,14 +97,14 @@
             
             if (reactionTime < bestTime) {
                 bestTime = reactionTime;
-                document.getElementById('best-time').textContent = 'Найкращий час: ' + bestTime + ' мс';
+                document.getElementById('best-time').textContent = L[lang].best + ': ' + bestTime + ' ' + L[lang].ms;
             }
             
-            document.getElementById('attempts').textContent = 'Спроб: ' + attempts;
+            document.getElementById('attempts').textContent = L[lang].attempts + ': ' + attempts;
             
             state = 'result';
             gameArea.className = 'result';
-            gameArea.innerHTML = reactionTime + ' мс<br><br>Натисніть, щоб спробувати ще';
+            gameArea.innerHTML = L[lang].result.replace('{n}', reactionTime);
         }
 
         function resetGame() {
@@ -98,9 +114,9 @@
             attempts = 0;
             times = [];
             gameArea.className = 'result';
-            gameArea.textContent = 'Натисніть, щоб почати';
-            document.getElementById('best-time').textContent = 'Найкращий час: -';
-            document.getElementById('attempts').textContent = 'Спроб: 0';
+            gameArea.textContent = L[lang].start;
+            document.getElementById('best-time').textContent = L[lang].best + ': -';
+            document.getElementById('attempts').textContent = L[lang].attempts + ': 0';
         }
     </script>
 </body>

@@ -28,8 +28,8 @@
     </style>
 </head>
 <body>
-    <h1>Вгадай слово</h1>
-    <p>Вгадайте слово з 5 літер за 6 спроб</p>
+    <h1 id="t">Вгадай слово</h1>
+    <p id="d">Вгадайте слово з 5 літер за 6 спроб</p>
     
     <div id="guesses"></div>
     <div id="message"></div>
@@ -41,37 +41,55 @@
     <a href="index.html" id="back-btn">До меню</a>
 
     <script>
+        const L={
+            en:{t:"Word Guess",d:"Guess the 5-letter word in 6 tries",need:"Enter 5 letters!",win:"You won!",lose:"You lost! The word was: ",enter:"ENTER",bn:"New Game",bb:"Menu"},
+            uk:{t:"Вгадай слово",d:"Вгадайте слово з 5 літер за 6 спроб",need:"Введіть 5 літер!",win:"Ви виграли!",lose:"Ви програли! Слово було: ",enter:"ВВІД",bn:"Нова гра",bb:"До меню"},
+            de:{t:"Wort-Raten",d:"Errate das 5-Buchstaben-Wort in 6 Versuchen",need:"Gib 5 Buchstaben ein!",win:"Gewonnen!",lose:"Verloren! Das Wort war: ",enter:"EINGABE",bn:"Neues Spiel",bb:"Menü"},
+            pl:{t:"Zgadnij słowo",d:"Zgadnij 5-literowe słowo w 6 próbach",need:"Wpisz 5 liter!",win:"Wygrałeś!",lose:"Przegrałeś! Słowo brzmiało: ",enter:"ENTER",bn:"Nowa gra",bb:"Menu"}
+        };
+        let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+        document.documentElement.lang=lang;
+        document.getElementById('t').textContent=L[lang].t;
+        document.getElementById('d').textContent=L[lang].d;
+        document.getElementById('new-game').textContent=L[lang].bn;
+        document.getElementById('back-btn').textContent=L[lang].bb;
+
         const words = {
-            uk: ['КНИГА', 'ЕКРАН', 'СЛОВО', 'ТЕКСТ', 'АВТОР', 'ГЛАВА', 'СЦЕНА', 'ФІЛЬМ', 'МУЗИКА', 'ПІСНЯ', 'СВІТЛО', 'ВІТЕР', 'ВОДА', 'ЗЕМЛЯ', 'НЕБО', 'СОНЦЕ', 'МІСЯЦЬ', 'ЗІРКА', 'ДЕРЕВО', 'КВІТКА'],
-            en: ['HOUSE', 'WATER', 'EARTH', 'MUSIC', 'LIGHT', 'DREAM', 'HEART', 'SMILE', 'DANCE', 'OCEAN', 'RIVER', 'FOREST', 'MOUNTAIN', 'CLOUD', 'STORM']
+            uk: ['КНИГА', 'ЕКРАН', 'СЛОВО', 'ТЕКСТ', 'АВТОР', 'ГЛАВА', 'СЦЕНА', 'ФІЛЬМ', 'ПІСНЯ', 'ВІТЕР', 'ЗЕМЛЯ', 'СОНЦЕ', 'ЗІРКА', 'РІЧКА', 'ХМАРА', 'ЛІТАК', 'ПОЇЗД', 'МІСТО', 'КВІТИ', 'ДЗВІН'],
+            en: ['HOUSE', 'WATER', 'EARTH', 'MUSIC', 'LIGHT', 'DREAM', 'HEART', 'SMILE', 'DANCE', 'OCEAN', 'RIVER', 'FIELD', 'CLOUD', 'STORM', 'BEACH', 'TRAIN', 'CHAIR', 'TABLE', 'BREAD', 'STONE'],
+            de: ['WOLKE', 'FLUSS', 'TRAUM', 'LICHT', 'MUSIK', 'OZEAN', 'STERN', 'SONNE', 'REGEN', 'BLUME', 'TISCH', 'STUHL', 'KRAFT', 'PFERD', 'VOGEL', 'APFEL', 'BIRNE', 'ZIEGE', 'KATZE', 'WIESE'],
+            pl: ['EKRAN', 'SŁOWO', 'TEKST', 'AUTOR', 'WIATR', 'SERCE', 'OCEAN', 'RZEKA', 'ŁÓDKA', 'KROWA', 'DRZWI', 'LAMPA', 'KOLOR', 'DZIEŃ', 'ZEGAR', 'MORZE', 'PLAŻA', 'BURZA', 'TĘCZA', 'TRAWA']
         };
         
         const keyboardLayout = {
             uk: [
                 ['Й','Ц','У','К','Е','Н','Г','Ш','Щ','З','Х','Ї'],
                 ['Ф','І','В','А','П','Р','О','Л','Д','Ж','Є'],
-                ['Я','Ч','С','М','И','Т','Ь','Б','Ю','⌫','ВВІД']
+                ['Я','Ч','С','М','И','Т','Ь','Б','Ю','⌫','ENTER']
             ],
             en: [
                 ['Q','W','E','R','T','Y','U','I','O','P'],
                 ['A','S','D','F','G','H','J','K','L'],
-                ['⌫','Z','X','C','V','B','N','M','ВВІД']
+                ['⌫','Z','X','C','V','B','N','M','ENTER']
+            ],
+            de: [
+                ['Q','W','E','R','T','Z','U','I','O','P','Ü'],
+                ['A','S','D','F','G','H','J','K','L','Ö','Ä'],
+                ['⌫','Y','X','C','V','B','N','M','ENTER']
+            ],
+            pl: [
+                ['Q','W','E','R','T','Y','U','I','O','P'],
+                ['A','S','D','F','G','H','J','K','L','Ł'],
+                ['Z','X','C','V','B','N','M','Ę','Ó'],
+                ['⌫','Ś','Ą','Ć','Ń','Ż','Ź','ENTER']
             ]
         };
 
         let target, guesses, gameOver, currentGuess, currentLang;
 
-        function getLanguage() {
-            try {
-                const saved = localStorage.getItem('language');
-                if (saved && ['en','uk','de','pl'].includes(saved)) return saved;
-            } catch(e) {}
-            return 'uk';
-        }
-
         function initGame() {
-            currentLang = getLanguage();
-            const wordList = words[currentLang] || words.uk;
+            currentLang = lang;
+            const wordList = words[currentLang] || words.en;
             target = wordList[Math.floor(Math.random() * wordList.length)];
             guesses = [];
             gameOver = false;
@@ -111,7 +129,7 @@
         function createKeyboard() {
             const keyboardEl = document.getElementById('keyboard');
             keyboardEl.innerHTML = '';
-            const layout = keyboardLayout[currentLang] || keyboardLayout.uk;
+            const layout = keyboardLayout[currentLang] || keyboardLayout.en;
             
             layout.forEach(row => {
                 const rowEl = document.createElement('div');
@@ -122,11 +140,14 @@
                     btn.className = 'key';
                     btn.textContent = key;
                     
-                    if (key === 'ВВІД') {
+                    if (key === 'ENTER') {
+                        btn.textContent = L[lang].enter;
                         btn.classList.add('enter');
+                        btn.dataset.role = 'enter';
                         btn.onclick = submitGuess;
-                    } else if (key === '') {
+                    } else if (key === '⌫') {
                         btn.classList.add('delete');
+                        btn.dataset.role = 'delete';
                         btn.onclick = deleteLetter;
                     } else {
                         btn.onclick = () => addLetter(key);
@@ -164,7 +185,7 @@
 
         function submitGuess() {
             if (gameOver || currentGuess.length !== 5) {
-                document.getElementById('message').textContent = 'Введіть 5 літер!';
+                document.getElementById('message').textContent = L[lang].need;
                 return;
             }
             
@@ -194,11 +215,11 @@
             saveGame();
             
             if (guesses[guesses.length - 1].word === target) {
-                document.getElementById('message').textContent = 'Ви виграли!';
+                document.getElementById('message').textContent = L[lang].win;
                 gameOver = true;
                 localStorage.removeItem('wordle_save');
             } else if (guesses.length === 6) {
-                document.getElementById('message').textContent = 'Ви програли! Слово було: ' + target;
+                document.getElementById('message').textContent = L[lang].lose + target;
                 gameOver = true;
                 localStorage.removeItem('wordle_save');
             }
@@ -207,8 +228,8 @@
         function updateKeyboard() {
             const keys = document.querySelectorAll('.key');
             keys.forEach(key => {
+                if (key.dataset && key.dataset.role) return;
                 const letter = key.textContent;
-                if (letter === 'ВВІД' || letter === '⌫') return;
                 
                 let status = '';
                 guesses.forEach(g => {
@@ -242,16 +263,16 @@
                     guesses = data.guesses;
                     gameOver = data.gameOver;
                     currentGuess = data.currentGuess || '';
-                    currentLang = data.currentLang || 'uk';
+                    currentLang = data.currentLang || lang;
                     renderGuesses();
                     createKeyboard();
                     updateCurrentRow();
                     updateKeyboard();
                     if (gameOver) {
                         if (guesses[guesses.length - 1].word === target) {
-                            document.getElementById('message').textContent = 'Ви виграли!';
+                            document.getElementById('message').textContent = L[lang].win;
                         } else {
-                            document.getElementById('message').textContent = 'Ви програли! Слово було: ' + target;
+                            document.getElementById('message').textContent = L[lang].lose + target;
                         }
                     }
                     return true;

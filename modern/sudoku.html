@@ -76,8 +76,8 @@
 </head>
 <body>
 
-    <h1>🔢 Судоку</h1>
-    <p>Натисніть на клітинку, потім оберіть цифру.</p>
+    <h1 id="t">🔢 Судоку</h1>
+    <p id="d">Натисніть на клітинку, потім оберіть цифру.</p>
 
     <div class="sudoku-board" id="board"></div>
 
@@ -94,9 +94,21 @@
         <button class="num-btn" onclick="inputNumber('C')" style="color:red;">X</button>
     </div>
 
-    <a href="index.html" class="back-btn">← До меню</a>
+    <a href="index.html" class="back-btn" id="back-btn">← До меню</a>
 
     <script>
+        const L={
+            en:{t:"🔢 Sudoku",d:"Tap a cell, then choose a number.",bb:"← Menu"},
+            uk:{t:"🔢 Судоку",d:"Натисніть на клітинку, потім оберіть цифру.",bb:"← До меню"},
+            de:{t:"🔢 Sudoku",d:"Tippe eine Zelle an und wähle eine Zahl.",bb:"← Menü"},
+            pl:{t:"🔢 Sudoku",d:"Kliknij pole, a potem wybierz cyfrę.",bb:"← Menu"}
+        };
+        let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+        document.documentElement.lang=lang;
+        document.getElementById('t').textContent=L[lang].t;
+        document.getElementById('d').textContent=L[lang].d;
+        document.getElementById('back-btn').textContent=L[lang].bb;
+
         // Проста демо-сітка (0 = порожньо)
         const initialBoard = [
             5, 3, 0, 0, 7, 0, 0, 0, 0,

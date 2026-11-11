@@ -20,8 +20,8 @@
     </style>
 </head>
 <body>
-    <h1>Tetris</h1>
-    <p>Use arrow buttons to move and rotate blocks</p>
+    <h1 id="t">Tetris</h1>
+    <p id="d">Use arrow buttons to move and rotate blocks</p>
     
     <div id="score">Score: 0</div>
     <div id="board"></div>
@@ -39,6 +39,19 @@
     <a href="index.html" id="back-btn">Back to Menu</a>
 
     <script>
+        const L={
+            en:{t:"Tetris",d:"Use arrow buttons to move and rotate blocks",score:"Score",over:"Game Over! Score: ",bn:"New Game",bb:"Back to Menu"},
+            uk:{t:"Тетріс",d:"Керуйте блоками стрілками — рух і обертання",score:"Рахунок",over:"Гра закінчена! Рахунок: ",bn:"Нова гра",bb:"До меню"},
+            de:{t:"Tetris",d:"Benutze die Pfeiltasten zum Bewegen und Drehen",score:"Punkte",over:"Spiel vorbei! Punkte: ",bn:"Neues Spiel",bb:"Zurück zum Menü"},
+            pl:{t:"Tetris",d:"Użyj strzałek, aby przesuwać i obracać bloki",score:"Wynik",over:"Koniec gry! Wynik: ",bn:"Nowa gra",bb:"Powrót do menu"}
+        };
+        let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+        document.documentElement.lang=lang;
+        document.getElementById('t').textContent=L[lang].t;
+        document.getElementById('d').textContent=L[lang].d;
+        document.getElementById('new-game').textContent=L[lang].bn;
+        document.getElementById('back-btn').textContent=L[lang].bb;
+
         const COLS = 10;
         const ROWS = 20;
         let board, currentBlock, score, gameOver, gameLoop;
@@ -75,7 +88,7 @@
             if (!isValidPosition(currentBlock.shape, currentBlock.x, currentBlock.y)) {
                 gameOver = true;
                 clearInterval(gameLoop);
-                document.getElementById('score').textContent = 'Game Over! Score: ' + score;
+                document.getElementById('score').textContent = L[lang].over + score;
             }
         }
 
@@ -96,7 +109,7 @@
         function updateDisplay() {
             const boardEl = document.getElementById('board');
             boardEl.innerHTML = '';
-            document.getElementById('score').textContent = 'Score: ' + score;
+            document.getElementById('score').textContent = L[lang].score + ': ' + score;
             
             const displayBoard = board.map(row => [...row]);
             

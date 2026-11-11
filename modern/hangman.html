@@ -19,8 +19,8 @@
     </style>
 </head>
 <body>
-    <h1>Шибениця</h1>
-    <p>Вгадайте слово, натискаючи на літери</p>
+    <h1 id="t">Шибениця</h1>
+    <p id="d">Вгадайте слово, натискаючи на літери</p>
     
     <div id="word"></div>
     <div id="message"></div>
@@ -33,7 +33,28 @@
     <a href="index.html" id="back-btn">До меню</a>
 
     <script>
-        const words = ['КНИГА', 'ЕКРАН', 'СЛОВО', 'ГРАФІК', 'ТЕКСТ', 'СТОРІНКА', 'РОЗДІЛ', 'ГЛАВА', 'АВТОР', 'ОПОВІДАННЯ'];
+        const L={
+            en:{t:"Hangman",d:"Guess the word by tapping letters",left:"Attempts left",win:"You won!",lose:"You lost! The word was: ",bn:"New Game",bb:"Menu",
+                words:['BOOK','SCREEN','WORD','GRAPH','TEXT','PAGE','CHAPTER','AUTHOR','STORY','LIBRARY'],
+                letters:'ABCDEFGHIJKLMNOPQRSTUVWXYZ'},
+            uk:{t:"Шибениця",d:"Вгадайте слово, натискаючи на літери",left:"Спроб залишилось",win:"Ви виграли!",lose:"Ви програли! Слово було: ",bn:"Нова гра",bb:"До меню",
+                words:['КНИГА','ЕКРАН','СЛОВО','ГРАФІК','ТЕКСТ','СТОРІНКА','РОЗДІЛ','ГЛАВА','АВТОР','ОПОВІДАННЯ'],
+                letters:'АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ'},
+            de:{t:"Galgenmännchen",d:"Errate das Wort, indem du Buchstaben antippst",left:"Versuche übrig",win:"Gewonnen!",lose:"Verloren! Das Wort war: ",bn:"Neues Spiel",bb:"Menü",
+                words:['BUCH','BILDSCHIRM','WORT','GRAFIK','TEXT','SEITE','KAPITEL','AUTOR','GESCHICHTE','BIBLIOTHEK'],
+                letters:'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ'},
+            pl:{t:"Wisielec",d:"Zgadnij słowo, klikając litery",left:"Pozostało prób",win:"Wygrałeś!",lose:"Przegrałeś! Słowo brzmiało: ",bn:"Nowa gra",bb:"Menu",
+                words:['KSIĄŻKA','EKRAN','SŁOWO','WYKRES','TEKST','STRONA','ROZDZIAŁ','AUTOR','OPOWIADANIE','BIBLIOTEKA'],
+                letters:'ABCDEFGHIJKLMNOPRSTUWYZĄĆĘŁŃÓŚŹŻ'}
+        };
+        let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+        document.documentElement.lang=lang;
+        document.getElementById('t').textContent=L[lang].t;
+        document.getElementById('d').textContent=L[lang].d;
+        document.getElementById('new-game').textContent=L[lang].bn;
+        document.getElementById('back-btn').textContent=L[lang].bb;
+
+        const words = L[lang].words;
         let word, guessed, attempts, gameOver;
 
         function initGame() {
@@ -53,10 +74,10 @@
                 if (i < word.length - 1) display += ' ';
             }
             document.getElementById('word').textContent = display;
-            document.getElementById('attempts').textContent = 'Спроб залишилось: ' + attempts;
+            document.getElementById('attempts').textContent = L[lang].left + ': ' + attempts;
             
             if (guessed.every(g => g)) {
-                document.getElementById('message').textContent = 'Ви виграли!';
+                document.getElementById('message').textContent = L[lang].win;
                 gameOver = true;
             }
         }
@@ -64,7 +85,7 @@
         function createKeyboard() {
             const keyboard = document.getElementById('keyboard');
             keyboard.innerHTML = '';
-            const letters = 'АБВГДЕЖЗИІЇКЛМНОПРСТУФХЦЧШЩЬЮЯ';
+            const letters = L[lang].letters;
             for (let letter of letters) {
                 const btn = document.createElement('button');
                 btn.className = 'letter-btn';
@@ -85,9 +106,9 @@
                 updateDisplay();
             } else {
                 attempts--;
-                document.getElementById('attempts').textContent = 'Спроб залишилось: ' + attempts;
+                document.getElementById('attempts').textContent = L[lang].left + ': ' + attempts;
                 if (attempts === 0) {
-                    document.getElementById('message').textContent = 'Ви програли! Слово було: ' + word;
+                    document.getElementById('message').textContent = L[lang].lose + word;
                     gameOver = true;
                 }
             }

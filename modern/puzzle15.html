@@ -17,8 +17,8 @@
     </style>
 </head>
 <body>
-    <h1>П'ятнашки</h1>
-    <p>Розташуйте числа по порядку від 1 до 15</p>
+    <h1 id="t">П'ятнашки</h1>
+    <p id="d">Розташуйте числа по порядку від 1 до 15</p>
     
     <div id="moves">Ходів: 0</div>
     <div id="board"></div>
@@ -28,6 +28,19 @@
     <a href="index.html" id="back-btn">До меню</a>
 
     <script>
+        const L={
+            en:{t:"Puzzle 15",d:"Arrange the numbers from 1 to 15",moves:"Moves",win:"You won in {n} moves!",bn:"New Game",bb:"Menu"},
+            uk:{t:"П'ятнашки",d:"Розташуйте числа по порядку від 1 до 15",moves:"Ходів",win:"Ви виграли за {n} ходів!",bn:"Нова гра",bb:"До меню"},
+            de:{t:"Puzzle 15",d:"Ordne die Zahlen von 1 bis 15",moves:"Züge",win:"Gewonnen in {n} Zügen!",bn:"Neues Spiel",bb:"Menü"},
+            pl:{t:"Puzzle 15",d:"Ułóż liczby od 1 do 15",moves:"Ruchy",win:"Wygrałeś w {n} ruchach!",bn:"Nowa gra",bb:"Menu"}
+        };
+        let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+        document.documentElement.lang=lang;
+        document.getElementById('t').textContent=L[lang].t;
+        document.getElementById('d').textContent=L[lang].d;
+        document.getElementById('new-game').textContent=L[lang].bn;
+        document.getElementById('back-btn').textContent=L[lang].bb;
+
         let tiles, emptyPos, moves;
 
         function initGame() {
@@ -68,7 +81,7 @@
         function updateDisplay() {
             const boardEl = document.getElementById('board');
             boardEl.innerHTML = '';
-            document.getElementById('moves').textContent = 'Ходів: ' + moves;
+            document.getElementById('moves').textContent = L[lang].moves + ': ' + moves;
             
             tiles.forEach((tile, index) => {
                 const tileEl = document.createElement('div');
@@ -101,7 +114,7 @@
             for (let i = 0; i < 15; i++) {
                 if (tiles[i] !== i + 1) return;
             }
-            document.getElementById('moves').textContent = 'Ви виграли за ' + moves + ' ходів!';
+            document.getElementById('moves').textContent = L[lang].win.replace('{n}', moves);
         }
 
         initGame();

@@ -17,8 +17,8 @@
     </style>
 </head>
 <body>
-    <h1>Меморі</h1>
-    <p>Знайдіть всі пари однакових карток</p>
+    <h1 id="t">Меморі</h1>
+    <p id="d">Знайдіть всі пари однакових карток</p>
     
     <div id="info">Ходів: 0 | Знайдено пар: 0/8</div>
     <div id="board"></div>
@@ -28,6 +28,19 @@
     <a href="index.html" id="back-btn">До меню</a>
 
     <script>
+        const L={
+            en:{t:"Memory",d:"Find all matching pairs",moves:"Moves",pairs:"Pairs found",win:"You won in {n} moves!",bn:"New Game",bb:"Menu"},
+            uk:{t:"Меморі",d:"Знайдіть всі пари однакових карток",moves:"Ходів",pairs:"Знайдено пар",win:"Ви виграли за {n} ходів!",bn:"Нова гра",bb:"До меню"},
+            de:{t:"Memory",d:"Finde alle Paare",moves:"Züge",pairs:"Gefundene Paare",win:"Gewonnen in {n} Zügen!",bn:"Neues Spiel",bb:"Menü"},
+            pl:{t:"Memory",d:"Znajdź wszystkie pary",moves:"Ruchy",pairs:"Znalezione pary",win:"Wygrałeś w {n} ruchach!",bn:"Nowa gra",bb:"Menu"}
+        };
+        let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+        document.documentElement.lang=lang;
+        document.getElementById('t').textContent=L[lang].t;
+        document.getElementById('d').textContent=L[lang].d;
+        document.getElementById('new-game').textContent=L[lang].bn;
+        document.getElementById('back-btn').textContent=L[lang].bb;
+
         const symbols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
         let cards, flipped, matched, moves, canFlip;
 
@@ -44,7 +57,7 @@
 
         function updateInfo() {
             const found = matched.filter(m => m).length / 2;
-            document.getElementById('info').textContent = 'Ходів: ' + moves + ' | Знайдено пар: ' + found + '/8';
+            document.getElementById('info').textContent = L[lang].moves + ': ' + moves + ' | ' + L[lang].pairs + ': ' + found + '/8';
         }
 
         function renderBoard() {
@@ -83,7 +96,7 @@
                     renderBoard();
                     
                     if (matched.every(m => m)) {
-                        document.getElementById('info').textContent = 'Ви виграли за ' + moves + ' ходів!';
+                        document.getElementById('info').textContent = L[lang].win.replace('{n}', moves);
                     }
                 } else {
                     setTimeout(() => {
