@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Загублений корабель</title>
+<style>
+body{font-family:Georgia,serif;padding:20px;background:#fff;color:#000;max-width:600px;margin:0 auto}
+h1{font-size:28px;border-bottom:2px solid #000;padding-bottom:10px}
+.scene{display:none}
+.scene.active{display:block}
+.status{font-style:italic;color:#666;margin-bottom:20px;border-left:3px solid #000;padding-left:10px}
+p{font-size:18px;line-height:1.6;margin-bottom:20px}
+.choice{display:block;width:100%;padding:15px;margin:10px 0;font-size:18px;background:#fff;border:2px solid #000;cursor:pointer;text-align:left}
+.choice:active{background:#000;color:#fff}
+.final{font-size:24px;text-align:center;margin:30px 0;font-weight:bold}
+#back-btn{display:inline-block;padding:15px 30px;background:#ddd;border:2px solid #000;text-decoration:none;color:#000;font-weight:bold;margin-top:20px}
+</style>
+</head>
+<body>
+<h1>Загублений корабель</h1>
+
+<div id="scene1" class="scene active">
+<div class="status">Розділ 1: Берег</div>
+<p>Шторм ущух. Ви прокидаєтесь на піску незнайомого острова — поруч уламки шхуни «Аргента», на якій ви були штурманом. Капітан зник у хвилях.</p>
+<p>Вціліли троє: боцман Гнат, юнга Тимко і пасажирка пані Лідія. Усі живі, але бочка з прісною водою розбита.</p>
+<p>До ночі лишається кілька годин.</p>
+<button class="choice" onclick="showScene(2)">1. Розвести вогонь на березі</button>
+<button class="choice" onclick="showScene(3)">2. Оглянути уламки шхуни</button>
+<button class="choice" onclick="showScene(4)">3. Піднятися на скелю</button>
+</div>
+
+<div id="scene2" class="scene">
+<div class="status">Розділ 2: Вогонь</div>
+<p>Ви збираєте сухе дерево і розводите вогонь. Гнат раптом дістає з-за пояса кремінь — і ви помічаєте, що його руки не тремтять, на відміну від усіх інших.</p>
+<p>«Я моряк, штурмане. Я не боюся ні шторму, ні острова», — каже він, але уникає вашого погляду.</p>
+<button class="choice" onclick="showScene(3)">1. Оглянути уламки шхуни</button>
+<button class="choice" onclick="showScene(4)">2. Піднятися на скелю</button>
+<button class="choice" onclick="showScene(5)">3. Поговорити з Тимком</button>
+</div>
+
+<div id="scene3" class="scene">
+<div class="status">Розділ 2: Уламки</div>
+<p>Серед дощок ви знаходите судновий журнал. Останній запис зроблено за годину до шторму, але почерк не капітана.</p>
+<p>«Курс змінено на північний схід. Вантаж перевантажено.» Далі — вирвана сторінка.</p>
+<p>А ще: компас шхуни розбитий не хвилями. Його розбили зсередини.</p>
+<button class="choice" onclick="showScene(2)">1. Розвести вогонь на березі</button>
+<button class="choice" onclick="showScene(4)">2. Піднятися на скелю</button>
+<button class="choice" onclick="showScene(6)">3. Показати журнал іншим</button>
+</div>
+
+<div id="scene4" class="scene">
+<div class="status">Розділ 2: Скеля</div>
+<p>З вершини скелі ви бачите вузьку протоку й на іншому боці — тонку цівку диму. Люди. Але між вами і ними — холодна вода й сильна течія.</p>
+<p>Унизу, біля води, пані Лідія миє руки. Вона довго дивиться на протоку, наче щось зважує.</p>
+<button class="choice" onclick="showScene(2)">1. Розвести вогонь на березі</button>
+<button class="choice" onclick="showScene(3)">2. Оглянути уламки шхуни</button>
+<button class="choice" onclick="showScene(7)">3. Спуститися до пані Лідії</button>
+</div>
+
+<div id="scene5" class="scene">
+<div class="status">Розділ 3: Юнга</div>
+<p>Тимко шепоче: «Штурмане, уночі я бачив, як боцман викидав щось за борт. Важке. А потім він зламав компас — я чув тріск, але злякався сказати.»</p>
+<p>Хлопець блідне: «Він помітив, що я дивився. Що мені робити?»</p>
+<button class="choice" onclick="showScene(3)">1. Оглянути уламки шхуни</button>
+<button class="choice" onclick="showScene(6)">2. Показати журнал іншим</button>
+<button class="choice" onclick="showScene(8)">3. Одразу звинуватити боцмана</button>
+</div>
+
+<div id="scene6" class="scene">
+<div class="status">Розділ 3: Розмова</div>
+<p>Ви читаєте журнал уголос. Гнат мовчить, пані Лідія блідне, Тимко дивиться собі під ноги.</p>
+<p>«Це ще нічого не доводить», — каже Гнат. На його зап'ясті — свіжий поріз, а з кишені виглядає край залізної коробки.</p>
+<button class="choice" onclick="showScene(8)">1. Звинуватити боцмана</button>
+<button class="choice" onclick="showScene(7)">2. Спитати пані Лідію</button>
+<button class="choice" onclick="showScene(9)">3. Змовчати і збудувати пліт</button>
+</div>
+
+<div id="scene7" class="scene">
+<div class="status">Розділ 3: Пасажирка</div>
+<p>«Я не пасажирка, — зізнається Лідія. — Я митниця. У трюмі була контрабанда, і я мала її затримати в порту. Шторм зірвав усе.»</p>
+<p>Вона дивиться на Гната: «Коли прокинувся, боцман лагодив човен. Не рятувальний — той, що вкрали з трюму.»</p>
+<button class="choice" onclick="showScene(6)">1. Показати журнал іншим</button>
+<button class="choice" onclick="showScene(8)">2. Звинуватити боцмана</button>
+<button class="choice" onclick="showScene(9)">3. Збудувати пліт разом</button>
+</div>
+
+<div id="scene8" class="scene">
+<div class="status">Розділ 4: Боцман</div>
+<p>Гнат відступає до води й витягає з коробки… сигнальну ракету. «Так, я ніс вантаж. Але я не вбивав капітана — це зробив шторм. А компас я зламав, щоб ніхто не доплив до порту раніше за мене.»</p>
+<p>Він піднімає ракету. «Один постріл — і нас заберуть. Але спершу ви дасте мені слово, що не згадаєте про вантаж.»</p>
+<button class="choice" onclick="showScene(10)">1. Дати слово і прийняти допомогу</button>
+<button class="choice" onclick="showScene(11)">2. Відмовитися і вимагати правди</button>
+</div>
+
+<div id="scene9" class="scene">
+<div class="status">Розділ 4: Пліт</div>
+<p>Ви вирішуєте не сперечатися, а діяти. Цілу ніч четверо вцілілих лагодять пліт з дощок шхуни. Гнат працює мовчки — і добре працює.</p>
+<p>На ранок пліт готовий. До протоки з димом — кілька годин на веслах.</p>
+<button class="choice" onclick="showScene(12)">1. Вирушити до диму</button>
+<button class="choice" onclick="showScene(8)">2. Спершу отримати правду від боцмана</button>
+</div>
+
+<div id="scene10" class="scene">
+<div class="status">ФІНАЛ: Порятунок</div>
+<p>Ви даєте слово. Ракета злітає над островом, і за годину обрій біліє вітрилами. Митниця в порту зустрічає вас протоколом, а не оплесками — але всі четверо живі.</p>
+<div class="final">ВИ ВРЯТУВАЛИСЯ</div>
+<button class="choice" onclick="showScene(1)">Почати спочатку</button>
+<a href="index.html" id="back-btn">До меню</a>
+</div>
+
+<div id="scene11" class="scene">
+<div class="status">ФІНАЛ: Гостра правда</div>
+<p>«Правду», — кажете ви. Гнат опускає ракету. У цю мить Лідія вибиває її з його рук — і ракета згасає у воді. Суперечка забирає останні години світла.</p>
+<p>Рятувальний корабель проходить протокою наступного ранку. Занадто далеко. Занадто пізно.</p>
+<div class="final">ПОРЯТУНКУ ПРОГАЯНО</div>
+<button class="choice" onclick="showScene(1)">Спробувати ще раз</button>
+<a href="index.html" id="back-btn">До меню</a>
+</div>
+
+<div id="scene12" class="scene">
+<div class="status">ФІНАЛ: Протока</div>
+<p>Течія виявляється сильнішою, ніж здавалося. Пліт несе прямо на рифи — і в останню мить ви бачите, як з острова злітає сигнальна ракета. Гнат не кинув вас.</p>
+<p>Рибальський човен, що йшов на дим, знімає всіх чотирьох з рифів. Вантаж боцмана лишається на дні протоки — разом із його таємницею.</p>
+<div class="final">ВИ ВРЯТУВАЛИСЯ</div>
+<button class="choice" onclick="showScene(1)">Почати спочатку</button>
+<a href="index.html" id="back-btn">До меню</a>
+</div>
+
+<script>
+function showScene(num){
+document.querySelectorAll('.scene').forEach(function(s){s.classList.remove('active');});
+document.getElementById('scene'+num).classList.add('active');
+window.scrollTo(0,0);}
+</script>
+</body>
+</html>
