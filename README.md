@@ -45,6 +45,7 @@ A collection of browser-based games optimized for Amazon Kindle devices.
   - Simon
   - Connect 4
   - Battleship
+  - Reversi
 
 ### Supported Languages
 - English
@@ -94,6 +95,7 @@ A collection of browser-based games optimized for Amazon Kindle devices.
   - Саймон
   - Чотири поспіль
   - Морський бій
+  - Реверсі
 
 ### Підтримувані мови
 - English (Англійська)
@@ -143,6 +145,7 @@ A collection of browser-based games optimized for Amazon Kindle devices.
   - Simon
   - Vier gewinnt
   - Schiffe versenken
+  - Reversi
 
 ### Unterstützte Sprachen
 - English
@@ -192,6 +195,7 @@ A collection of browser-based games optimized for Amazon Kindle devices.
   - Simon
   - Czwórki
   - Statki
+  - Reversi
 
 ### Obsługiwane języki
 - English

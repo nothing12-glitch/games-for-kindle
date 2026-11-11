@@ -60,6 +60,7 @@ h1{font-size:28px;text-align:center;margin-bottom:10px}
 <a href="chess.html" class="game-card"><div class="title" id="chess-t">Chess</div><div class="desc" id="chess-d">Classic 8x8 board</div></a>
 <a href="connect4.html" class="game-card"><div class="title" id="connect4-t">Connect 4</div><div class="desc" id="connect4-d">Line up 4 discs</div></a>
 <a href="battleship.html" class="game-card"><div class="title" id="battleship-t">Battleship</div><div class="desc" id="battleship-d">Sink the enemy fleet</div></a>
+<a href="reversi.html" class="game-card"><div class="title" id="reversi-t">Reversi</div><div class="desc" id="reversi-d">Flip the computer's discs</div></a>
 </div></div>
 
 <div class="section"><h2 id="progress">Progress</h2><div class="game-grid">
@@ -73,22 +74,22 @@ const T={
 en:{title:"Modern Games",subtitle:"Optimized for touchscreen Kindle",puzzles:"Puzzles & Logic",arcade:"Arcade Games",word:"Word Games",board:"Board Games",progress:"Progress",back:"Back to Home",
 sudoku:["Sudoku","Classic logic puzzle"],minesweeper:["Minesweeper","Find all mines"],puzzle15:["Puzzle 15","Arrange numbers"],game2048:["2048","Combine numbers"],tetris:["Tetris","Block-stacking game"],lightsout:["Lights Out","Turn off all lights"],
 snake:["Snake","Classic arcade"],reaction:["Reaction Test","Test your speed"],tictactoe:["Tic-Tac-Toe","Play vs computer"],memory:["Memory","Find matching pairs"],simon:["Simon","Repeat the sequence"],
-hangman:["Hangman","Guess the word"],wordle:["Word Guess","5-letter word game"],quiz:["Quiz","10 questions"],chess:["Chess","Classic 8x8 board"],connect4:["Connect 4","Line up 4 discs"],battleship:["Battleship","Sink the enemy fleet"],
+hangman:["Hangman","Guess the word"],wordle:["Word Guess","5-letter word game"],quiz:["Quiz","10 questions"],chess:["Chess","Classic 8x8 board"],connect4:["Connect 4","Line up 4 discs"],battleship:["Battleship","Sink the enemy fleet"],reversi:["Reversi","Flip the computer's discs"],
 stats:["Stats & Achievements","Your records and badges"]},
 uk:{title:"Сучасні ігри",subtitle:"Оптимізовано для сенсорного Kindle",puzzles:"Головоломки",arcade:"Аркади",word:"Словесні ігри",board:"Настільні ігри",progress:"Прогрес",back:"На головну",
 sudoku:["Судоку","Класична логічна гра"],minesweeper:["Сапер","Знайди всі міни"],puzzle15:["П'ятнашки","Розташуй числа"],game2048:["2048","З'єднуй числа"],tetris:["Тетріс","Гра з блоками"],lightsout:["Вимкнути світло","Вимкни всі лампочки"],
 snake:["Змійка","Класична аркада"],reaction:["Тест на реакцію","Перевір швидкість"],tictactoe:["Хрестики-нулики","Гра проти комп'ютера"],memory:["Меморі","Знайди пари карток"],simon:["Саймон","Повтори послідовність"],
-hangman:["Шибениця","Вгадай слово"],wordle:["Вгадай слово","Слово з 5 літер"],quiz:["Вікторина","10 питань"],chess:["Шахи","Класична гра"],connect4:["Чотири поспіль","Зібери 4 фішки"],battleship:["Морський бій","Потопи ворожий флот"],
+hangman:["Шибениця","Вгадай слово"],wordle:["Вгадай слово","Слово з 5 літер"],quiz:["Вікторина","10 питань"],chess:["Шахи","Класична гра"],connect4:["Чотири поспіль","Зібери 4 фішки"],battleship:["Морський бій","Потопи ворожий флот"],reversi:["Реверсі","Перевертай фішки суперника"],
 stats:["Статистика та досягнення","Твої рекорди та значки"]},
 de:{title:"Moderne Spiele",subtitle:"Optimiert für Touchscreen Kindle",puzzles:"Puzzles",arcade:"Arcade",word:"Wortspiele",board:"Brettspiele",progress:"Fortschritt",back:"Zurück",
 sudoku:["Sudoku","Logikrätsel"],minesweeper:["Minesweeper","Minen finden"],puzzle15:["Puzzle 15","Zahlen ordnen"],game2048:["2048","Zahlen kombinieren"],tetris:["Tetris","Block-Spiel"],lightsout:["Lichter aus","Alle Lichter ausschalten"],
 snake:["Snake","Arcade-Spiel"],reaction:["Reaktionstest","Geschwindigkeit testen"],tictactoe:["Tic-Tac-Toe","Gegen Computer"],memory:["Memory","Paare finden"],simon:["Simon","Sequenz wiederholen"],
-hangman:["Galgenmännchen","Wort erraten"],wordle:["Wort-Raten","5-Buchstaben-Wort"],quiz:["Quiz","10 Fragen"],chess:["Schach","Brettspiel"],connect4:["Vier gewinnt","4 in eine Reihe"],battleship:["Schiffe versenken","Versinke die feindliche Flotte"],
+hangman:["Galgenmännchen","Wort erraten"],wordle:["Wort-Raten","5-Buchstaben-Wort"],quiz:["Quiz","10 Fragen"],chess:["Schach","Brettspiel"],connect4:["Vier gewinnt","4 in eine Reihe"],battleship:["Schiffe versenken","Versinke die feindliche Flotte"],reversi:["Reversi","Drehe die Steine des Computers um"],
 stats:["Statistik & Erfolge","Deine Rekorde und Abzeichen"]},
 pl:{title:"Nowoczesne gry",subtitle:"Zoptymalizowane dla dotykowego Kindle",puzzles:"Puzzle",arcade:"Arcade",word:"Gry słowne",board:"Gry planszowe",progress:"Postęp",back:"Powrót",
 sudoku:["Sudoku","Łamigłówka logiczna"],minesweeper:["Saper","Znajdź miny"],puzzle15:["Puzzle 15","Ułóż liczby"],game2048:["2048","Łącz liczby"],tetris:["Tetris","Gra w bloki"],lightsout:["Zgaś światła","Zgaś wszystkie światła"],
 snake:["Wąż","Gra arkadowa"],reaction:["Test reakcji","Sprawdź szybkość"],tictactoe:["Kółko i krzyżyk","Przeciw komputerowi"],memory:["Memory","Znajdź pary"],simon:["Simon","Powtórz sekwencję"],
-hangman:["Wisielec","Zgadnij słowo"],wordle:["Zgadnij słowo","5-literowe słowo"],quiz:["Quiz","10 pytań"],chess:["Szachy","Gra planszowa"],connect4:["Czwórki","Ułóż 4 żetony"],battleship:["Statki","Zatop wrogą flotę"],
+hangman:["Wisielec","Zgadnij słowo"],wordle:["Zgadnij słowo","5-literowe słowo"],quiz:["Quiz","10 pytań"],chess:["Szachy","Gra planszowa"],connect4:["Czwórki","Ułóż 4 żetony"],battleship:["Statki","Zatop wrogą flotę"],reversi:["Reversi","Odwracaj pionki komputera"],
 stats:["Statystyki i osiągnięcia","Twoje rekordy i odznaki"]}};
 function changeLanguage(lang){if(!T[lang])lang='en';const t=T[lang];
 document.getElementById('title').textContent=t.title;

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reversi</title>
+<style>
+body{font-family:Georgia,serif;text-align:center;padding:15px 10px 30px;background:#fff;color:#000}
+h1{font-size:26px;margin:5px 0 10px}
+.hint{font-size:15px;color:#555;margin:0 auto 10px;max-width:440px;line-height:1.4}
+#info{font-size:18px;font-weight:bold;margin:10px auto;min-height:24px;max-width:440px}
+.legend{font-size:14px;color:#555;margin-bottom:8px}
+#sc{font-size:18px;font-weight:bold;margin-bottom:10px}
+.board{display:grid;grid-template-columns:repeat(8,38px);gap:2px;justify-content:center;margin:0 auto}
+.cell{width:38px;height:38px;border:1px solid #000;background:#fff;color:#000;font-size:26px;line-height:36px;text-align:center;box-sizing:border-box;font-family:Georgia,serif;-webkit-tap-highlight-color:transparent}
+.cell.black{background:#000;color:#fff}
+.cell.white{background:#fff;color:#000;font-weight:bold}
+.cell.can{background:#ddd;color:#333;cursor:pointer;font-size:22px;line-height:36px}
+.cell.can:active{background:#bbb}
+.controls{margin-top:22px}
+button.btn,a.btn{display:inline-block;padding:12px 25px;font-size:18px;border:2px solid #000;background:#fff;color:#000;border-radius:6px;cursor:pointer;text-decoration:none;font-weight:bold;margin:5px;font-family:Georgia,serif}
+button.btn:active,a.btn:active{background:#ddd}
+@media (max-width:360px){
+.board{grid-template-columns:repeat(8,34px)}
+.cell{width:34px;height:34px;line-height:32px;font-size:23px}
+.cell.can{font-size:19px;line-height:32px}
+}
+</style>
+</head>
+<body>
+<h1 id="t"></h1>
+<p class="hint" id="d"></p>
+<div id="info"></div>
+<div id="sc"></div>
+<div class="legend" id="lg"></div>
+<div class="board" id="board"></div>
+<div class="controls"><button class="btn" id="bn"></button> <a class="btn" href="index.html" id="bb"></a></div>
+<script>
+var L={
+en:{t:"Reversi",d:"Trap the computer's discs between two of yours to flip them. Whoever has more discs when the board is full wins.",you:"You",cpu:"Computer",yourTurn:"Your turn",cpuTurn:"Computer is thinking...",noMoves:"You have no move — turn skipped.",cpuNoMoves:"Computer has no move — your turn.",win:"Victory!",lose:"Defeat.",draw:"Draw.",bn:"New Game",bb:"Menu",wins:"Wins",lg:"· marks a square you can play"},
+uk:{t:"Реверсі",d:"Затисни фішки комп'ютера між двома своїми, щоб перевернути їх. Перемагає той, у кого більше фішок наприкінці.",you:"Ти",cpu:"Комп'ютер",yourTurn:"Твій хід",cpuTurn:"Комп'ютер думає...",noMoves:"У тебе немає ходу — пропускаємо.",cpuNoMoves:"У комп'ютера немає ходу — твій хід.",win:"Перемога!",lose:"Поразка.",draw:"Нічия.",bn:"Нова гра",bb:"Меню",wins:"Перемог",lg:"· позначає клітинку, куди можна піти"},
+de:{t:"Reversi",d:"Nimm gegnerische Steine zwischen zwei eigenen in die Zange, um sie zu drehen. Wer am Ende mehr Steine hat, gewinnt.",you:"Du",cpu:"Computer",yourTurn:"Du bist dran",cpuTurn:"Der Computer denkt nach...",noMoves:"Kein Zug möglich — Runde übersprungen.",cpuNoMoves:"Der Computer kann nicht ziehen — du bist dran.",win:"Sieg!",lose:"Niederlage.",draw:"Unentschieden.",bn:"Neues Spiel",bb:"Menü",wins:"Siege",lg:"· zeigt ein Feld, auf das du setzen kannst"},
+pl:{t:"Reversi",d:"Otocz pionki komputera dwoma swoimi, aby je odwrócić. Wygrywa ten, kto ma więcej pionków na końcu.",you:"Ty",cpu:"Komputer",yourTurn:"Twój ruch",cpuTurn:"Komputer myśli...",noMoves:"Nie masz ruchu — pominięto.",cpuNoMoves:"Komputer nie ma ruchu — twój ruch.",win:"Zwycięstwo!",lose:"Porażka.",draw:"Remis.",bn:"Nowa gra",bb:"Menu",wins:"Zwycięstwa",lg:"· oznacza pole, na którym możesz zagrać"}};
+var lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+document.documentElement.lang=lang;
+
+var SIZE=8,N=64;
+var DIRS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+var W=[
+100,-20,10,5,5,10,-20,100,
+-20,-50,-2,-2,-2,-2,-50,-20,
+10,-2,1,1,1,1,-2,10,
+5,-2,1,0,0,1,-2,5,
+5,-2,1,0,0,1,-2,5,
+10,-2,1,1,1,1,-2,10,
+-20,-50,-2,-2,-2,-2,-50,-20,
+100,-20,10,5,5,10,-20,100];
+var board=[],cells=[],turn=1,over=false,gameId=0,hints=[];
+var ME=1,AI=2;
+
+function opp(p){return p===1?2:1;}
+
+function fresh(){
+var b=[],i;
+for(i=0;i<N;i++)b.push(0);
+b[27]=1;b[36]=1;b[28]=2;b[35]=2;
+return b;
+}
+
+function flips(b,r,c,p){
+if(b[r*SIZE+c]!==0)return null;
+var out=[],d,i,rr,cc;
+for(d=0;d<DIRS.length;d++){
+var line=[],found=false;
+rr=r+DIRS[d][0];cc=c+DIRS[d][1];
+while(rr>=0&&rr<SIZE&&cc>=0&&cc<SIZE){
+var v=b[rr*SIZE+cc];
+if(v===p){found=true;break;}
+if(v===0)break;
+line.push(rr*SIZE+cc);
+rr+=DIRS[d][0];cc+=DIRS[d][1];
+}
+if(found)for(i=0;i<line.length;i++)out.push(line[i]);
+}
+return out.length?out:null;
+}
+
+function moves(b,p){
+var out=[],r,c,f;
+for(r=0;r<SIZE;r++)for(c=0;c<SIZE;c++){
+f=flips(b,r,c,p);
+if(f)out.push({r:r,c:c,f:f});
+}
+return out;
+}
+
+function play(b,m,p){
+var nb=b.slice(),i;
+nb[m.r*SIZE+m.c]=p;
+for(i=0;i<m.f.length;i++)nb[m.f[i]]=p;
+return nb;
+}
+
+function count(b){
+var mine=0,his=0,i;
+for(i=0;i<N;i++){if(b[i]===ME)mine++;else if(b[i]===AI)his++;}
+return{me:mine,ai:his};
+}
+
+function info(s){document.getElementById('info').textContent=s;}
+
+function score(){
+var n=count(board);
+document.getElementById('sc').textContent=L[lang].you+' ● '+n.me+'  —  '+L[lang].cpu+' ○ '+n.ai;
+}
+
+function build(){
+var el=document.getElementById('board'),i,d;
+el.innerHTML='';cells=[];
+for(i=0;i<N;i++){
+d=document.createElement('div');
+d.className='cell';
+el.appendChild(d);
+cells.push(d);
+}
+}
+
+function paint(){
+var i,v,cls,txt,can={};
+for(i=0;i<hints.length;i++)can[hints[i].r*SIZE+hints[i].c]=1;
+for(i=0;i<N;i++){
+v=board[i];cls='cell';txt='';
+if(v===ME){cls+=' black';txt='●';}
+else if(v===AI){cls+=' white';txt='○';}
+else if(can[i]){cls+=' can';txt='·';}
+cells[i].className=cls;
+cells[i].textContent=txt;
+}
+}
+
+function aiPick(){
+var ms=moves(board,AI),best=[],bestScore=null,i,b,s,my,op,mm;
+if(!ms.length)return null;
+for(i=0;i<ms.length;i++){
+b=play(board,ms[i],AI);
+s=W[ms[i].r*SIZE+ms[i].c]+ms[i].f.length*2;
+mm=moves(b,ME).length;
+s+=(moves(b,AI).length-mm)*3;
+my=count(b).ai;op=count(b).me;
+if(my+op>=N-4)s+=my*10;
+if(bestScore===null||s>bestScore){bestScore=s;best=[ms[i]];}
+else if(s===bestScore)best.push(ms[i]);
+}
+return best[Math.floor(Math.random()*best.length)];
+}
+
+function finish(){
+over=true;turn=0;hints=[];paint();score();
+var n=count(board),msg,key;
+if(n.me>n.ai){msg=L[lang].win;key='stats_reversi_wins';}
+else if(n.me<n.ai){msg=L[lang].lose;key=null;}
+else {msg=L[lang].draw;key=null;}
+if(key){
+var w=+(localStorage.getItem(key)||0)+1;
+localStorage.setItem(key,''+w);
+}
+var g=+(localStorage.getItem('stats_reversi_games')||0)+1;
+localStorage.setItem('stats_reversi_games',''+g);
+info(msg+' ● '+n.me+' — ○ '+n.ai);
+}
+
+function nextTurn(){
+if(over)return;
+var id=gameId;
+if(turn===ME){
+hints=moves(board,ME);
+if(!hints.length){
+if(!moves(board,AI).length){finish();return;}
+info(L[lang].noMoves);
+turn=AI;
+paint();score();
+setTimeout(function(){if(id===gameId)nextTurn();},900);
+return;
+}
+info(L[lang].yourTurn);
+paint();score();
+return;
+}
+hints=[];paint();
+if(!moves(board,AI).length){
+if(!moves(board,ME).length){finish();return;}
+info(L[lang].cpuNoMoves);
+turn=ME;
+setTimeout(function(){if(id===gameId)nextTurn();},900);
+return;
+}
+info(L[lang].cpuTurn);
+score();
+setTimeout(function(){
+if(id!==gameId)return;
+var m=aiPick();
+if(!m){turn=ME;nextTurn();return;}
+board=play(board,m,AI);
+turn=ME;
+nextTurn();
+},800);
+}
+
+function playerMove(i){
+if(over||turn!==ME)return;
+var r=Math.floor(i/SIZE),c=i%SIZE,k;
+for(k=0;k<hints.length;k++)if(hints[k].r===r&&hints[k].c===c){
+board=play(board,hints[k],ME);
+turn=AI;
+nextTurn();
+return;
+}
+}
+
+function init(){
+gameId++;
+board=fresh();
+over=false;turn=ME;hints=[];
+build();
+nextTurn();
+}
+
+document.getElementById('board').onclick=function(e){
+var el=e.target;
+if(!el||el.className.indexOf('cell')<0)return;
+var idx=cells.indexOf(el);
+if(idx>=0)playerMove(idx);
+};
+
+document.getElementById('t').textContent=L[lang].t;
+document.getElementById('d').textContent=L[lang].d;
+document.getElementById('lg').textContent=L[lang].lg;
+document.getElementById('bn').textContent=L[lang].bn;
+document.getElementById('bb').textContent=L[lang].bb;
+document.getElementById('bn').onclick=init;
+document.title=L[lang].t;
+init();
+</script>
+</body>
+</html>
