@@ -40,6 +40,11 @@ A collection of browser-based games optimized for Amazon Kindle devices.
   - Snake
   - Puzzle 15
   - Reaction Test
+  - Tetris
+  - Lights Out
+  - Simon
+  - Connect 4
+  - Battleship
 
 ### Supported Languages
 - English
@@ -84,6 +89,11 @@ A collection of browser-based games optimized for Amazon Kindle devices.
   - Змійка
   - П'ятнашки
   - Тест на реакцію
+  - Тетріс
+  - Вимкни світло
+  - Саймон
+  - Чотири поспіль
+  - Морський бій
 
 ### Підтримувані мови
 - English (Англійська)
@@ -128,6 +138,11 @@ A collection of browser-based games optimized for Amazon Kindle devices.
   - Snake
   - Puzzle 15
   - Reaktionstest
+  - Tetris
+  - Lichter aus
+  - Simon
+  - Vier gewinnt
+  - Schiffe versenken
 
 ### Unterstützte Sprachen
 - English
@@ -172,6 +187,11 @@ A collection of browser-based games optimized for Amazon Kindle devices.
   - Wąż
   - Puzzle 15
   - Test reakcji
+  - Tetris
+  - Zgaś światła
+  - Simon
+  - Czwórki
+  - Statki
 
 ### Obsługiwane języki
 - English
