@@ -7,7 +7,9 @@
     <style>
         body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #fff; color: #000; }
         h1 { font-size: 28px; }
-        
+
+        #status { font-size: 18px; margin: 10px auto; min-height: 24px; max-width: 400px; }
+
         /* Сітка Судоку */
         .sudoku-board {
             display: grid;
@@ -29,6 +31,7 @@
             font-weight: bold;
             cursor: pointer;
             border: 1px solid #ccc;
+            -webkit-tap-highlight-color: transparent;
         }
         
         /* Товстіші лінії для блоків 3x3 */
@@ -37,7 +40,7 @@
         .cell:nth-child(n+19):nth-child(-n+27),
         .cell:nth-child(n+46):nth-child(-n+54) { border-bottom: 2px solid #000; }
 
-        .cell.fixed { background: #e0e0e0; color: #000; }
+        .cell.fixed { background: #e0e0e0; color: #000; cursor: default; }
         .cell.selected { background: #ffff00; }
         .cell.error { background: #ffcccc; }
 
@@ -61,6 +64,16 @@
         }
         .num-btn:active { background: #000; color: #fff; }
 
+        #new-game {
+            padding: 15px 30px;
+            font-size: 20px;
+            background: #fff;
+            border: 2px solid #000;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
         .back-btn {
             display: inline-block;
             margin-top: 30px;
@@ -79,6 +92,7 @@
     <h1 id="t">🔢 Судоку</h1>
     <p id="d">Натисніть на клітинку, потім оберіть цифру.</p>
 
+    <div id="status"></div>
     <div class="sudoku-board" id="board"></div>
 
     <div class="numpad">
@@ -94,75 +108,161 @@
         <button class="num-btn" onclick="inputNumber('C')" style="color:red;">X</button>
     </div>
 
+    <button id="new-game" onclick="initGame()">Нова гра</button>
+    <br>
     <a href="index.html" class="back-btn" id="back-btn">← До меню</a>
 
     <script>
-        const L={
-            en:{t:"🔢 Sudoku",d:"Tap a cell, then choose a number.",bb:"← Menu"},
-            uk:{t:"🔢 Судоку",d:"Натисніть на клітинку, потім оберіть цифру.",bb:"← До меню"},
-            de:{t:"🔢 Sudoku",d:"Tippe eine Zelle an und wähle eine Zahl.",bb:"← Menü"},
-            pl:{t:"🔢 Sudoku",d:"Kliknij pole, a potem wybierz cyfrę.",bb:"← Menu"}
+        var L={
+            en:{t:"🔢 Sudoku",d:"Tap a cell, then choose a number. Duplicates turn red.",bb:"← Menu",bn:"New Game",filled:"Filled",conflicts:"conflicts",win:"Solved! Well done.",wins:"Wins"},
+            uk:{t:"🔢 Судоку",d:"Натисніть на клітинку, потім оберіть цифру. Повтори стають червоними.",bb:"← До меню",bn:"Нова гра",filled:"Заповнено",conflicts:"конфліктів",win:"Розв'язано! Вітаємо.",wins:"Перемог"},
+            de:{t:"🔢 Sudoku",d:"Tippe eine Zelle an und wähle eine Zahl. Duplikate werden rot.",bb:"← Menü",bn:"Neues Spiel",filled:"Ausgefüllt",conflicts:"Konflikte",win:"Gelöst! Gut gemacht.",wins:"Siege"},
+            pl:{t:"🔢 Sudoku",d:"Kliknij pole, a potem wybierz cyfrę. Duplikaty robią się czerwone.",bb:"← Menu",bn:"Nowa gra",filled:"Wypełniono",conflicts:"konfliktów",win:"Rozwiązano! Brawo.",wins:"Zwycięstwa"}
         };
-        let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+        var lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
         document.documentElement.lang=lang;
         document.getElementById('t').textContent=L[lang].t;
         document.getElementById('d').textContent=L[lang].d;
         document.getElementById('back-btn').textContent=L[lang].bb;
+        document.getElementById('new-game').textContent=L[lang].bn;
+        document.title=L[lang].t;
 
-        // Проста демо-сітка (0 = порожньо)
-        const initialBoard = [
-            5, 3, 0, 0, 7, 0, 0, 0, 0,
-            6, 0, 0, 1, 9, 5, 0, 0, 0,
-            0, 9, 8, 0, 0, 0, 0, 6, 0,
-            8, 0, 0, 0, 6, 0, 0, 0, 3,
-            4, 0, 0, 8, 0, 3, 0, 0, 1,
-            7, 0, 0, 0, 2, 0, 0, 0, 6,
-            0, 6, 0, 0, 0, 0, 2, 8, 0,
-            0, 0, 0, 4, 1, 9, 0, 0, 5,
-            0, 0, 0, 0, 8, 0, 0, 7, 9
-        ];
+        var HOLES=40;
+        var cells=[],grid=[],fixed=[],selectedIndex=-1,solved=false;
 
-        let boardState = [...initialBoard];
-        let selectedIndex = -1;
-        const boardElement = document.getElementById('board');
-
-        function renderBoard() {
-            boardElement.innerHTML = '';
-            boardState.forEach((value, index) => {
-                const cell = document.createElement('div');
-                cell.className = 'cell';
-                if (initialBoard[index] !== 0) {
-                    cell.classList.add('fixed');
-                    cell.textContent = value;
-                } else {
-                    cell.textContent = value === 0 ? '' : value;
-                    cell.onclick = () => selectCell(index);
-                    if (index === selectedIndex) {
-                        cell.classList.add('selected');
-                    }
-                }
-                boardElement.appendChild(cell);
-            });
-        }
-
-        function selectCell(index) {
-            selectedIndex = index;
-            renderBoard();
-        }
-
-        function inputNumber(num) {
-            if (selectedIndex === -1) return;
-            if (num === 'C') {
-                boardState[selectedIndex] = 0;
-            } else {
-                boardState[selectedIndex] = num;
+        function shuffled(){
+            var a=[1,2,3,4,5,6,7,8,9],i,j,t;
+            for(i=a.length-1;i>0;i--){
+                j=Math.floor(Math.random()*(i+1));
+                t=a[i];a[i]=a[j];a[j]=t;
             }
-            selectedIndex = -1;
+            return a;
+        }
+
+        function canPlace(g,r,c,n){
+            var i,j,br=Math.floor(r/3)*3,bc=Math.floor(c/3)*3;
+            for(i=0;i<9;i++){
+                if(g[r*9+i]===n)return false;
+                if(g[i*9+c]===n)return false;
+            }
+            for(i=0;i<3;i++)for(j=0;j<3;j++)if(g[(br+i)*9+bc+j]===n)return false;
+            return true;
+        }
+
+        function fillGrid(g,pos){
+            if(pos===81)return true;
+            var r=Math.floor(pos/9),c=pos%9,nums=shuffled(),i,n;
+            for(i=0;i<9;i++){
+                n=nums[i];
+                if(canPlace(g,r,c,n)){
+                    g[pos]=n;
+                    if(fillGrid(g,pos+1))return true;
+                    g[pos]=0;
+                }
+            }
+            return false;
+        }
+
+        function conflictList(){
+            var bad=[],i,j,r,c,br,bc,seen,n,idx;
+            for(i=0;i<81;i++)bad.push(false);
+            for(r=0;r<9;r++)for(c=0;c<9;c++){
+                n=grid[r*9+c];
+                if(n===0)continue;
+                for(j=c+1;j<9;j++)if(grid[r*9+j]===n){bad[r*9+c]=true;bad[r*9+j]=true;}
+                for(j=r+1;j<9;j++)if(grid[j*9+c]===n){bad[r*9+c]=true;bad[j*9+c]=true;}
+            }
+            for(br=0;br<9;br+=3)for(bc=0;bc<9;bc+=3){
+                seen={};
+                for(i=0;i<3;i++)for(j=0;j<3;j++){
+                    idx=(br+i)*9+bc+j;
+                    n=grid[idx];
+                    if(n===0)continue;
+                    if(seen[n]!==undefined){bad[idx]=true;bad[seen[n]]=true;}
+                    else seen[n]=idx;
+                }
+            }
+            return bad;
+        }
+
+        function buildCells(){
+            var el=document.getElementById('board'),i,d;
+            el.innerHTML='';cells=[];
+            for(i=0;i<81;i++){
+                d=document.createElement('div');
+                d.className='cell';
+                el.appendChild(d);
+                cells.push(d);
+            }
+            el.onclick=function(e){
+                var t=e.target;
+                if(!t||t.className.indexOf('cell')<0)return;
+                var idx=cells.indexOf(t);
+                if(idx>=0)selectCell(idx);
+            };
+        }
+
+        function renderBoard(){
+            var bad=conflictList(),i,cls,filled=0,conflicts=0;
+            for(i=0;i<81;i++){
+                if(grid[i]!==0)filled++;
+                if(bad[i])conflicts++;
+                cls='cell';
+                if(fixed[i])cls+=' fixed';
+                if(bad[i])cls+=' error';
+                if(i===selectedIndex)cls+=' selected';
+                cells[i].className=cls;
+                cells[i].textContent=grid[i]===0?'':''+grid[i];
+            }
+            if(!solved){
+                document.getElementById('status').textContent=L[lang].filled+': '+filled+'/81 · '+L[lang].conflicts+': '+conflicts;
+            }
+        }
+
+        function selectCell(index){
+            if(solved||fixed[index])return;
+            selectedIndex=index;
             renderBoard();
         }
 
-        // Ініціалізація
-        renderBoard();
+        function inputNumber(num){
+            if(solved||selectedIndex===-1)return;
+            grid[selectedIndex]=(num==='C')?0:num;
+            selectedIndex=-1;
+            renderBoard();
+            checkWin();
+        }
+
+        function checkWin(){
+            var i,bad;
+            for(i=0;i<81;i++)if(grid[i]===0)return;
+            bad=conflictList();
+            for(i=0;i<81;i++)if(bad[i])return;
+            solved=true;
+            var wins=+(localStorage.getItem('stats_sudoku_wins')||0)+1;
+            localStorage.setItem('stats_sudoku_wins',''+wins);
+            document.getElementById('status').textContent=L[lang].win+' '+L[lang].wins+': '+wins;
+        }
+
+        function initGame(){
+            var g=[],i,idx,picked;
+            fillGrid(g,0);
+            grid=g.slice(0);
+            picked={};
+            for(i=0;i<HOLES;i++){
+                idx=Math.floor(Math.random()*81);
+                while(picked[idx])idx=(idx+1)%81;
+                picked[idx]=true;
+                grid[idx]=0;
+            }
+            fixed=[];
+            for(i=0;i<81;i++)fixed.push(grid[i]!==0);
+            selectedIndex=-1;solved=false;
+            buildCells();
+            renderBoard();
+        }
+
+        initGame();
     </script>
 </body>
 </html>
