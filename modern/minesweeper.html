@@ -30,10 +30,10 @@
 
     <script>
         const L={
-            en:{t:"Minesweeper",d:"Tap a cell. Long press adds a flag.",mines:"Mines left",win:"You won!",lose:"You lost!",bn:"New Game",bb:"Menu"},
-            uk:{t:"Сапер",d:"Натисніть на клітинку. Довге натискання - прапорець.",mines:"Мін залишилось",win:"Ви виграли!",lose:"Ви програли!",bn:"Нова гра",bb:"До меню"},
-            de:{t:"Minesweeper",d:"Tippe eine Zelle an. Langes Drücken setzt eine Flagge.",mines:"Minen übrig",win:"Gewonnen!",lose:"Verloren!",bn:"Neues Spiel",bb:"Menü"},
-            pl:{t:"Saper",d:"Kliknij pole. Długie kliknięcie stawia flagę.",mines:"Pozostało min",win:"Wygrałeś!",lose:"Przegrałeś!",bn:"Nowa gra",bb:"Menu"}
+            en:{t:"Minesweeper",d:"Tap a cell. Long press adds a flag.",mines:"Mines left",win:"You won!",lose:"You lost!",wins:"Wins",bn:"New Game",bb:"Menu"},
+            uk:{t:"Сапер",d:"Натисніть на клітинку. Довге натискання - прапорець.",mines:"Мін залишилось",win:"Ви виграли!",lose:"Ви програли!",wins:"Перемог",bn:"Нова гра",bb:"До меню"},
+            de:{t:"Minesweeper",d:"Tippe eine Zelle an. Langes Drücken setzt eine Flagge.",mines:"Minen übrig",win:"Gewonnen!",lose:"Verloren!",wins:"Siege",bn:"Neues Spiel",bb:"Menü"},
+            pl:{t:"Saper",d:"Kliknij pole. Długie kliknięcie stawia flagę.",mines:"Pozostało min",win:"Wygrałeś!",lose:"Przegrałeś!",wins:"Zwycięstwa",bn:"Nowa gra",bb:"Menu"}
         };
         let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
         document.documentElement.lang=lang;
@@ -41,6 +41,10 @@
         document.getElementById('d').textContent=L[lang].d;
         document.getElementById('new-game').textContent=L[lang].bn;
         document.getElementById('back-btn').textContent=L[lang].bb;
+
+        function bump(key) {
+            localStorage.setItem(key, '' + (+(localStorage.getItem(key) || 0) + 1));
+        }
 
         const SIZE = 8;
         const MINES = 10;
@@ -125,6 +129,7 @@
                     }
                 }
                 gameOver = true;
+                bump('stats_ms_games');
                 document.getElementById('info').textContent = L[lang].lose;
             } else {
                 reveal(r, c);
@@ -164,7 +169,9 @@
             }
             if (revealedCount === SIZE * SIZE - MINES) {
                 gameOver = true;
-                document.getElementById('info').textContent = L[lang].win;
+                bump('stats_ms_wins');
+                bump('stats_ms_games');
+                document.getElementById('info').textContent = L[lang].win + ' | ' + L[lang].wins + ': ' + localStorage.getItem('stats_ms_wins');
             }
         }
 

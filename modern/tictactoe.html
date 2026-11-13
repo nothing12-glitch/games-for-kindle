@@ -40,6 +40,10 @@
         document.getElementById('new-game').textContent=L[lang].bn;
         document.getElementById('back-btn').textContent=L[lang].bb;
 
+        function bump(key) {
+            localStorage.setItem(key, '' + (+(localStorage.getItem(key) || 0) + 1));
+        }
+
         let board, currentPlayer, gameOver;
 
         function initGame() {
@@ -69,12 +73,14 @@
             renderBoard();
             
             if (checkWin('X')) {
+                bump('stats_ttt_wins');
                 document.getElementById('status').textContent = L[lang].win;
                 gameOver = true;
                 return;
             }
             
             if (board.every(cell => cell)) {
+                bump('stats_ttt_draws');
                 document.getElementById('status').textContent = L[lang].draw;
                 gameOver = true;
                 return;
@@ -96,12 +102,14 @@
             renderBoard();
             
             if (checkWin('O')) {
+                bump('stats_ttt_losses');
                 document.getElementById('status').textContent = L[lang].lose;
                 gameOver = true;
                 return;
             }
             
             if (board.every(cell => cell)) {
+                bump('stats_ttt_draws');
                 document.getElementById('status').textContent = L[lang].draw;
                 gameOver = true;
                 return;

@@ -40,10 +40,10 @@
 
     <script>
         const L={
-            en:{t:"Tetris",d:"Use arrow buttons to move and rotate blocks",score:"Score",over:"Game Over! Score: ",bn:"New Game",bb:"Back to Menu"},
-            uk:{t:"Тетріс",d:"Керуйте блоками стрілками — рух і обертання",score:"Рахунок",over:"Гра закінчена! Рахунок: ",bn:"Нова гра",bb:"До меню"},
-            de:{t:"Tetris",d:"Benutze die Pfeiltasten zum Bewegen und Drehen",score:"Punkte",over:"Spiel vorbei! Punkte: ",bn:"Neues Spiel",bb:"Zurück zum Menü"},
-            pl:{t:"Tetris",d:"Użyj strzałek, aby przesuwać i obracać bloki",score:"Wynik",over:"Koniec gry! Wynik: ",bn:"Nowa gra",bb:"Powrót do menu"}
+            en:{t:"Tetris",d:"Use arrow buttons to move and rotate blocks",score:"Score",over:"Game Over! Score: ",best:"Best",bn:"New Game",bb:"Back to Menu"},
+            uk:{t:"Тетріс",d:"Керуйте блоками стрілками — рух і обертання",score:"Рахунок",over:"Гра закінчена! Рахунок: ",best:"Рекорд",bn:"Нова гра",bb:"До меню"},
+            de:{t:"Tetris",d:"Benutze die Pfeiltasten zum Bewegen und Drehen",score:"Punkte",over:"Spiel vorbei! Punkte: ",best:"Rekord",bn:"Neues Spiel",bb:"Zurück zum Menü"},
+            pl:{t:"Tetris",d:"Użyj strzałek, aby przesuwać i obracać bloki",score:"Wynik",over:"Koniec gry! Wynik: ",best:"Rekord",bn:"Nowa gra",bb:"Powrót do menu"}
         };
         let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
         document.documentElement.lang=lang;
@@ -51,6 +51,10 @@
         document.getElementById('d').textContent=L[lang].d;
         document.getElementById('new-game').textContent=L[lang].bn;
         document.getElementById('back-btn').textContent=L[lang].bb;
+
+        function saveBest(key, val) {
+            if (val > +(localStorage.getItem(key) || 0)) localStorage.setItem(key, '' + val);
+        }
 
         const COLS = 10;
         const ROWS = 20;
@@ -88,7 +92,8 @@
             if (!isValidPosition(currentBlock.shape, currentBlock.x, currentBlock.y)) {
                 gameOver = true;
                 clearInterval(gameLoop);
-                document.getElementById('score').textContent = L[lang].over + score;
+                saveBest('best_tetris', score);
+                document.getElementById('score').textContent = L[lang].over + score + ' | ' + L[lang].best + ': ' + (localStorage.getItem('best_tetris') || 0);
             }
         }
 
@@ -218,6 +223,7 @@
             
             if (linesCleared > 0) {
                 score += linesCleared * 100;
+                saveBest('best_tetris', score);
             }
         }
 

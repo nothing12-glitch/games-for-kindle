@@ -29,10 +29,10 @@
 
     <script>
         const L={
-            en:{t:"Puzzle 15",d:"Arrange the numbers from 1 to 15",moves:"Moves",win:"You won in {n} moves!",bn:"New Game",bb:"Menu"},
-            uk:{t:"П'ятнашки",d:"Розташуйте числа по порядку від 1 до 15",moves:"Ходів",win:"Ви виграли за {n} ходів!",bn:"Нова гра",bb:"До меню"},
-            de:{t:"Puzzle 15",d:"Ordne die Zahlen von 1 bis 15",moves:"Züge",win:"Gewonnen in {n} Zügen!",bn:"Neues Spiel",bb:"Menü"},
-            pl:{t:"Puzzle 15",d:"Ułóż liczby od 1 do 15",moves:"Ruchy",win:"Wygrałeś w {n} ruchach!",bn:"Nowa gra",bb:"Menu"}
+            en:{t:"Puzzle 15",d:"Arrange the numbers from 1 to 15",moves:"Moves",win:"You won in {n} moves!",best:"Best",bn:"New Game",bb:"Menu"},
+            uk:{t:"П'ятнашки",d:"Розташуйте числа по порядку від 1 до 15",moves:"Ходів",win:"Ви виграли за {n} ходів!",best:"Рекорд",bn:"Нова гра",bb:"До меню"},
+            de:{t:"Puzzle 15",d:"Ordne die Zahlen von 1 bis 15",moves:"Züge",win:"Gewonnen in {n} Zügen!",best:"Rekord",bn:"Neues Spiel",bb:"Menü"},
+            pl:{t:"Puzzle 15",d:"Ułóż liczby od 1 do 15",moves:"Ruchy",win:"Wygrałeś w {n} ruchach!",best:"Rekord",bn:"Nowa gra",bb:"Menu"}
         };
         let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
         document.documentElement.lang=lang;
@@ -40,6 +40,11 @@
         document.getElementById('d').textContent=L[lang].d;
         document.getElementById('new-game').textContent=L[lang].bn;
         document.getElementById('back-btn').textContent=L[lang].bb;
+
+        function saveBestLow(key, val) {
+            const prev = +(localStorage.getItem(key) || 0);
+            if (!prev || val < prev) localStorage.setItem(key, '' + val);
+        }
 
         let tiles, emptyPos, moves;
 
@@ -114,7 +119,8 @@
             for (let i = 0; i < 15; i++) {
                 if (tiles[i] !== i + 1) return;
             }
-            document.getElementById('moves').textContent = L[lang].win.replace('{n}', moves);
+            saveBestLow('best_puzzle15', moves);
+            document.getElementById('moves').textContent = L[lang].win.replace('{n}', moves) + ' ' + L[lang].best + ': ' + localStorage.getItem('best_puzzle15');
         }
 
         initGame();

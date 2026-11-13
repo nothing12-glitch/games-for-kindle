@@ -48,10 +48,10 @@
 
     <script>
         const L={
-            en:{t:"2048",d:"Merge equal numbers to reach 2048!",score:"Score",over:"Game over! Score: ",bn:"New Game",bb:"Menu"},
-            uk:{t:"2048",d:"З'єднуйте однакові числа, щоб отримати 2048!",score:"Рахунок",over:"Гра закінчена! Рахунок: ",bn:"Нова гра",bb:"До меню"},
-            de:{t:"2048",d:"Verbinde gleiche Zahlen bis 2048!",score:"Punkte",over:"Spiel vorbei! Punkte: ",bn:"Neues Spiel",bb:"Menü"},
-            pl:{t:"2048",d:"Łącz takie same liczby, aby uzyskać 2048!",score:"Wynik",over:"Koniec gry! Wynik: ",bn:"Nowa gra",bb:"Menu"}
+            en:{t:"2048",d:"Merge equal numbers to reach 2048!",score:"Score",over:"Game over! Score: ",best:"Best",bn:"New Game",bb:"Menu"},
+            uk:{t:"2048",d:"З'єднуйте однакові числа, щоб отримати 2048!",score:"Рахунок",over:"Гра закінчена! Рахунок: ",best:"Рекорд",bn:"Нова гра",bb:"До меню"},
+            de:{t:"2048",d:"Verbinde gleiche Zahlen bis 2048!",score:"Punkte",over:"Spiel vorbei! Punkte: ",best:"Rekord",bn:"Neues Spiel",bb:"Menü"},
+            pl:{t:"2048",d:"Łącz takie same liczby, aby uzyskać 2048!",score:"Wynik",over:"Koniec gry! Wynik: ",best:"Rekord",bn:"Nowa gra",bb:"Menu"}
         };
         let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
         document.documentElement.lang=lang;
@@ -59,6 +59,10 @@
         document.getElementById('d').textContent=L[lang].d;
         document.getElementById('new-game').textContent=L[lang].bn;
         document.getElementById('back-btn').textContent=L[lang].bb;
+
+        function saveBest(key, val) {
+            if (val > +(localStorage.getItem(key) || 0)) localStorage.setItem(key, '' + val);
+        }
 
         let grid, score;
 
@@ -170,6 +174,7 @@
             if (moved) {
                 grid = newGrid;
                 addRandomTile();
+                saveBest('best_2048', score);
                 updateDisplay();
                 checkGameOver();
             }
@@ -183,7 +188,7 @@
                     if (r < 3 && grid[r][c] === grid[r + 1][c]) return;
                 }
             }
-            document.getElementById('score').textContent = L[lang].over + score;
+            document.getElementById('score').textContent = L[lang].over + score + ' | ' + L[lang].best + ': ' + (localStorage.getItem('best_2048') || 0);
         }
 
         document.addEventListener('keydown', (e) => {

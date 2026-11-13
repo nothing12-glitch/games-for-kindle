@@ -42,10 +42,10 @@
 
     <script>
         const L={
-            en:{t:"Word Guess",d:"Guess the 5-letter word in 6 tries",need:"Enter 5 letters!",win:"You won!",lose:"You lost! The word was: ",enter:"ENTER",bn:"New Game",bb:"Menu"},
-            uk:{t:"Вгадай слово",d:"Вгадайте слово з 5 літер за 6 спроб",need:"Введіть 5 літер!",win:"Ви виграли!",lose:"Ви програли! Слово було: ",enter:"ВВІД",bn:"Нова гра",bb:"До меню"},
-            de:{t:"Wort-Raten",d:"Errate das 5-Buchstaben-Wort in 6 Versuchen",need:"Gib 5 Buchstaben ein!",win:"Gewonnen!",lose:"Verloren! Das Wort war: ",enter:"EINGABE",bn:"Neues Spiel",bb:"Menü"},
-            pl:{t:"Zgadnij słowo",d:"Zgadnij 5-literowe słowo w 6 próbach",need:"Wpisz 5 liter!",win:"Wygrałeś!",lose:"Przegrałeś! Słowo brzmiało: ",enter:"ENTER",bn:"Nowa gra",bb:"Menu"}
+            en:{t:"Word Guess",d:"Guess the 5-letter word in 6 tries",need:"Enter 5 letters!",win:"You won!",lose:"You lost! The word was: ",enter:"ENTER",best:"Best",bn:"New Game",bb:"Menu"},
+            uk:{t:"Вгадай слово",d:"Вгадайте слово з 5 літер за 6 спроб",need:"Введіть 5 літер!",win:"Ви виграли!",lose:"Ви програли! Слово було: ",enter:"ВВІД",best:"Рекорд",bn:"Нова гра",bb:"До меню"},
+            de:{t:"Wort-Raten",d:"Errate das 5-Buchstaben-Wort in 6 Versuchen",need:"Gib 5 Buchstaben ein!",win:"Gewonnen!",lose:"Verloren! Das Wort war: ",enter:"EINGABE",best:"Rekord",bn:"Neues Spiel",bb:"Menü"},
+            pl:{t:"Zgadnij słowo",d:"Zgadnij 5-literowe słowo w 6 próbach",need:"Wpisz 5 liter!",win:"Wygrałeś!",lose:"Przegrałeś! Słowo brzmiało: ",enter:"ENTER",best:"Rekord",bn:"Nowa gra",bb:"Menu"}
         };
         let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
         document.documentElement.lang=lang;
@@ -53,6 +53,15 @@
         document.getElementById('d').textContent=L[lang].d;
         document.getElementById('new-game').textContent=L[lang].bn;
         document.getElementById('back-btn').textContent=L[lang].bb;
+
+        function bump(key) {
+            localStorage.setItem(key, '' + (+(localStorage.getItem(key) || 0) + 1));
+        }
+
+        function saveBestLow(key, val) {
+            const prev = +(localStorage.getItem(key) || 0);
+            if (!prev || val < prev) localStorage.setItem(key, '' + val);
+        }
 
         const words = {
             uk: ['КНИГА', 'ЕКРАН', 'СЛОВО', 'ТЕКСТ', 'АВТОР', 'ГЛАВА', 'СЦЕНА', 'ФІЛЬМ', 'ПІСНЯ', 'ВІТЕР', 'ЗЕМЛЯ', 'СОНЦЕ', 'ЗІРКА', 'РІЧКА', 'ХМАРА', 'ЛІТАК', 'ПОЇЗД', 'МІСТО', 'КВІТИ', 'ДЗВІН'],
@@ -215,10 +224,14 @@
             saveGame();
             
             if (guesses[guesses.length - 1].word === target) {
-                document.getElementById('message').textContent = L[lang].win;
+                bump('stats_wordle_wins');
+                bump('stats_wordle_games');
+                saveBestLow('best_wordle', guesses.length);
+                document.getElementById('message').textContent = L[lang].win + ' | ' + L[lang].best + ': ' + localStorage.getItem('best_wordle');
                 gameOver = true;
                 localStorage.removeItem('wordle_save');
             } else if (guesses.length === 6) {
+                bump('stats_wordle_games');
                 document.getElementById('message').textContent = L[lang].lose + target;
                 gameOver = true;
                 localStorage.removeItem('wordle_save');

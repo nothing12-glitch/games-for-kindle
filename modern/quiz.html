@@ -31,7 +31,7 @@
 
     <script>
         const L={
-            en:{t:"Quiz",q:"Question",correct:"Correct",done:"Quiz finished!",result:"Result",bn:"New Game",bb:"Menu",
+            en:{t:"Quiz",q:"Question",correct:"Correct",done:"Quiz finished!",result:"Result",best:"Best",bn:"New Game",bb:"Menu",
                 questions:[
                     {q:'What is the capital of Ukraine?',a:['Kyiv','Lviv','Odesa','Kharkiv'],correct:0},
                     {q:'How many planets are in the Solar System?',a:['7','8','9','10'],correct:1},
@@ -44,7 +44,7 @@
                     {q:'How many days are in a leap year?',a:['364','365','366','367'],correct:2},
                     {q:'Which ocean is the largest?',a:['Atlantic','Indian','Pacific','Arctic'],correct:2}
                 ]},
-            uk:{t:"Вікторина",q:"Питання",correct:"Правильних",done:"Вікторина завершена!",result:"Результат",bn:"Нова гра",bb:"До меню",
+            uk:{t:"Вікторина",q:"Питання",correct:"Правильних",done:"Вікторина завершена!",result:"Результат",best:"Рекорд",bn:"Нова гра",bb:"До меню",
                 questions:[
                     {q:'Яка столиця України?',a:['Київ','Львів','Одеса','Харків'],correct:0},
                     {q:'Скільки планет у Сонячній системі?',a:['7','8','9','10'],correct:1},
@@ -57,7 +57,7 @@
                     {q:'Скільки днів у високосному році?',a:['364','365','366','367'],correct:2},
                     {q:'Який океан найбільший?',a:['Атлантичний','Індійський','Тихий','Північний Льодовитий'],correct:2}
                 ]},
-            de:{t:"Quiz",q:"Frage",correct:"Richtig",done:"Quiz beendet!",result:"Ergebnis",bn:"Neues Spiel",bb:"Menü",
+            de:{t:"Quiz",q:"Frage",correct:"Richtig",done:"Quiz beendet!",result:"Ergebnis",best:"Rekord",bn:"Neues Spiel",bb:"Menü",
                 questions:[
                     {q:'Was ist die Hauptstadt der Ukraine?',a:['Kiew','Lwiw','Odessa','Charkiw'],correct:0},
                     {q:'Wie viele Planeten hat das Sonnensystem?',a:['7','8','9','10'],correct:1},
@@ -70,7 +70,7 @@
                     {q:'Wie viele Tage hat ein Schaltjahr?',a:['364','365','366','367'],correct:2},
                     {q:'Welcher Ozean ist der größte?',a:['Atlantik','Indik','Pazifik','Arktischer Ozean'],correct:2}
                 ]},
-            pl:{t:"Quiz",q:"Pytanie",correct:"Poprawne",done:"Quiz zakończony!",result:"Wynik",bn:"Nowa gra",bb:"Menu",
+            pl:{t:"Quiz",q:"Pytanie",correct:"Poprawne",done:"Quiz zakończony!",result:"Wynik",best:"Rekord",bn:"Nowa gra",bb:"Menu",
                 questions:[
                     {q:'Jaka jest stolica Ukrainy?',a:['Kijów','Lwów','Odessa','Charków'],correct:0},
                     {q:'Ile planet jest w Układzie Słonecznym?',a:['7','8','9','10'],correct:1},
@@ -103,9 +103,10 @@
 
         function showQuestion() {
             if (currentQ >= questions.length) {
+                if (score > +(localStorage.getItem('best_quiz') || 0)) localStorage.setItem('best_quiz', '' + score);
                 document.getElementById('question').textContent = L[lang].done;
                 document.getElementById('answers').innerHTML = '';
-                document.getElementById('score').textContent = L[lang].result + ': ' + score + '/' + questions.length;
+                document.getElementById('score').textContent = L[lang].result + ': ' + score + '/' + questions.length + ' | ' + L[lang].best + ': ' + localStorage.getItem('best_quiz') + '/' + questions.length;
                 return;
             }
             

@@ -39,10 +39,10 @@
 
     <script>
         const L={
-            en:{t:"Snake",d:"Steer the snake and eat the food!",score:"Score",over:"Game over! Score: ",bn:"New Game",bb:"Menu"},
-            uk:{t:"Змійка",d:"Керуйте змійкою та їжте їжу!",score:"Рахунок",over:"Гра закінчена! Рахунок: ",bn:"Нова гра",bb:"До меню"},
-            de:{t:"Snake",d:"Steuere die Schlange und iss das Futter!",score:"Punkte",over:"Spiel vorbei! Punkte: ",bn:"Neues Spiel",bb:"Menü"},
-            pl:{t:"Wąż",d:"Kieruj wężem i jedz jedzenie!",score:"Wynik",over:"Koniec gry! Wynik: ",bn:"Nowa gra",bb:"Menu"}
+            en:{t:"Snake",d:"Steer the snake and eat the food!",score:"Score",over:"Game over! Score: ",best:"Best",bn:"New Game",bb:"Menu"},
+            uk:{t:"Змійка",d:"Керуйте змійкою та їжте їжу!",score:"Рахунок",over:"Гра закінчена! Рахунок: ",best:"Рекорд",bn:"Нова гра",bb:"До меню"},
+            de:{t:"Snake",d:"Steuere die Schlange und iss das Futter!",score:"Punkte",over:"Spiel vorbei! Punkte: ",best:"Rekord",bn:"Neues Spiel",bb:"Menü"},
+            pl:{t:"Wąż",d:"Kieruj wężem i jedz jedzenie!",score:"Wynik",over:"Koniec gry! Wynik: ",best:"Rekord",bn:"Nowa gra",bb:"Menu"}
         };
         let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
         document.documentElement.lang=lang;
@@ -50,6 +50,10 @@
         document.getElementById('d').textContent=L[lang].d;
         document.getElementById('new-game').textContent=L[lang].bn;
         document.getElementById('back-btn').textContent=L[lang].bb;
+
+        function saveBest(key, val) {
+            if (val > +(localStorage.getItem(key) || 0)) localStorage.setItem(key, '' + val);
+        }
 
         const SIZE = 15;
         let snake, food, direction, nextDirection, score, gameOver, gameLoop;
@@ -120,7 +124,8 @@
                 snake.some(s => s.x === head.x && s.y === head.y)) {
                 gameOver = true;
                 clearInterval(gameLoop);
-                document.getElementById('score').textContent = L[lang].over + score;
+                saveBest('best_snake', score);
+                document.getElementById('score').textContent = L[lang].over + score + ' | ' + L[lang].best + ': ' + (localStorage.getItem('best_snake') || 0);
                 return;
             }
             

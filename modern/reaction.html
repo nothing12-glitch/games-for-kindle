@@ -46,14 +46,14 @@
         document.getElementById('new-game').textContent=L[lang].reset;
         document.getElementById('back-btn').textContent=L[lang].bb;
         document.getElementById('game-area').textContent=L[lang].start;
-        document.getElementById('best-time').textContent=L[lang].best+': -';
+        document.getElementById('best-time').textContent=L[lang].best+': '+(localStorage.getItem('best_reaction')?localStorage.getItem('best_reaction')+' '+L[lang].ms:'-');
         document.getElementById('attempts').textContent=L[lang].attempts+': 0';
 
         const gameArea = document.getElementById('game-area');
         let state = 'idle';
         let startTime;
         let timeoutId;
-        let bestTime = Infinity;
+        let bestTime = +(localStorage.getItem('best_reaction') || 0) || Infinity;
         let attempts = 0;
         let times = [];
 
@@ -97,6 +97,7 @@
             
             if (reactionTime < bestTime) {
                 bestTime = reactionTime;
+                localStorage.setItem('best_reaction', '' + reactionTime);
                 document.getElementById('best-time').textContent = L[lang].best + ': ' + bestTime + ' ' + L[lang].ms;
             }
             
@@ -110,12 +111,12 @@
         function resetGame() {
             clearTimeout(timeoutId);
             state = 'idle';
-            bestTime = Infinity;
+            bestTime = +(localStorage.getItem('best_reaction') || 0) || Infinity;
             attempts = 0;
             times = [];
             gameArea.className = 'result';
             gameArea.textContent = L[lang].start;
-            document.getElementById('best-time').textContent = L[lang].best + ': -';
+            document.getElementById('best-time').textContent = L[lang].best + ': ' + (bestTime === Infinity ? '-' : bestTime + ' ' + L[lang].ms);
             document.getElementById('attempts').textContent = L[lang].attempts + ': 0';
         }
     </script>
