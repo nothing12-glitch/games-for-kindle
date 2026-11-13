@@ -8,7 +8,7 @@
         body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #fff; }
         h1 { font-size: 28px; }
         #board { display: grid; grid-template-columns: repeat(8, 45px); gap: 0; max-width: 360px; margin: 20px auto; border: 3px solid #000; }
-        .square { width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; }
+        .square { width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
         .square.light { background: #fff; }
         .square.dark { background: #ccc; }
         .square.selected { background: #ffff00; }
@@ -30,30 +30,255 @@
     <a href="index.html" id="back-btn">До меню</a>
 
     <script>
-        const L={
-            en:{t:"Chess",d:"Tap a piece, then tap where to move it",white:"White's turn",black:"Black's turn",bn:"New Game",bb:"Menu"},
-            uk:{t:"Шахи",d:"Натисніть на фігуру, потім на куди перемістити",white:"Хід білих",black:"Хід чорних",bn:"Нова гра",bb:"До меню"},
-            de:{t:"Schach",d:"Tippe eine Figur an, dann das Zielfeld",white:"Weiß ist am Zug",black:"Schwarz ist am Zug",bn:"Neues Spiel",bb:"Menü"},
-            pl:{t:"Szachy",d:"Kliknij figurę, a potem pole docelowe",white:"Ruch białych",black:"Ruch czarnych",bn:"Nowa gra",bb:"Menu"}
+        var L={
+            en:{t:"Chess",d:"Tap a piece, then tap a highlighted square to move it",white:"White's turn",black:"Black's turn",check:"Check!",whiteWins:"Checkmate! White wins",blackWins:"Checkmate! Black wins",draw:"Stalemate — draw",bn:"New Game",bb:"Menu"},
+            uk:{t:"Шахи",d:"Натисніть на фігуру, потім на підсвічену клітинку",white:"Хід білих",black:"Хід чорних",check:"Шах!",whiteWins:"Мат! Білі перемогли",blackWins:"Мат! Чорні перемогли",draw:"Пат — нічия",bn:"Нова гра",bb:"До меню"},
+            de:{t:"Schach",d:"Tippe eine Figur an, dann ein markiertes Feld",white:"Weiß ist am Zug",black:"Schwarz ist am Zug",check:"Schach!",whiteWins:"Schachmatt! Weiß gewinnt",blackWins:"Schachmatt! Schwarz gewinnt",draw:"Patt — Unentschieden",bn:"Neues Spiel",bb:"Menü"},
+            pl:{t:"Szachy",d:"Kliknij figurę, a potem podświetlone pole",white:"Ruch białych",black:"Ruch czarnych",check:"Szach!",whiteWins:"Mat! Białe wygrywają",blackWins:"Mat! Czarne wygrywają",draw:"Pat — remis",bn:"Nowa gra",bb:"Menu"}
         };
-        let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
+        var lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
         document.documentElement.lang=lang;
         document.getElementById('t').textContent=L[lang].t;
         document.getElementById('d').textContent=L[lang].d;
         document.getElementById('new-game').textContent=L[lang].bn;
         document.getElementById('back-btn').textContent=L[lang].bb;
+        document.title=L[lang].t;
 
-        function setTurn(){document.getElementById('status').textContent=L[lang][currentPlayer];}
-
-        const pieces = {
-            'R': '♜', 'N': '♞', 'B': '♝', 'Q': '♛', 'K': '♚', 'P': '♟',
-            'r': '♖', 'n': '♘', 'b': '♗', 'q': '♕', 'k': '♔', 'p': '♙'
+        var GLYPH={
+            'K':'♔','Q':'♕','R':'♖','B':'♗','N':'♘','P':'♙',
+            'k':'♚','q':'♛','r':'♜','b':'♝','n':'♞','p':'♟'
         };
-        
-        let board, selected, currentPlayer;
+        var DIAG=[[1,1],[1,-1],[-1,1],[-1,-1]];
+        var ORTHO=[[1,0],[-1,0],[0,1],[0,-1]];
+        var ALLDIR=DIAG.concat(ORTHO);
+        var KNIGHT=[[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]];
 
-        function initGame() {
-            board = [
+        var board,squares,currentPlayer,selected,targets,over,ep,castle;
+
+        function status(s){document.getElementById('status').textContent=s;}
+        function setTurn(){status(L[lang][currentPlayer]);}
+        function clone(b){return b.map(function(r){return r.slice();});}
+        function inside(r,c){return r>=0&&r<8&&c>=0&&c<8;}
+        function colorOf(p){return p===''?null:(p===p.toUpperCase()?'white':'black');}
+        function other(c){return c==='white'?'black':'white';}
+
+        function kingPos(b,color){
+            var want=color==='white'?'K':'k',r,c;
+            for(r=0;r<8;r++)for(c=0;c<8;c++)if(b[r][c]===want)return [r,c];
+            return null;
+        }
+
+        function pushPawn(list,fr,fc,tr,tc,color){
+            var last=color==='white'?0:7;
+            if(tr===last)list.push({fr:fr,fc:fc,tr:tr,tc:tc,promo:color==='white'?'Q':'q'});
+            else list.push({fr:fr,fc:fc,tr:tr,tc:tc});
+        }
+
+        function addSlide(b,list,fr,fc,dirs,color){
+            for(var d=0;d<dirs.length;d++){
+                var r=fr+dirs[d][0],c=fc+dirs[d][1];
+                while(inside(r,c)){
+                    var t=b[r][c];
+                    if(t==='')list.push({fr:fr,fc:fc,tr:r,tc:c});
+                    else{if(colorOf(t)!==color)list.push({fr:fr,fc:fc,tr:r,tc:c});break;}
+                    r+=dirs[d][0];c+=dirs[d][1];
+                }
+            }
+        }
+
+        function rookOk(b,home,idx,color){
+            var p=b[home][idx];
+            return p!==''&&p.toLowerCase()==='r'&&colorOf(p)===color;
+        }
+
+        function genMoves(b,color,epT,cast){
+            var list=[],r,c,i,p;
+            for(r=0;r<8;r++)for(c=0;c<8;c++){
+                p=b[r][c];
+                if(p===''||colorOf(p)!==color)continue;
+                var t=p.toLowerCase();
+                if(t==='p'){
+                    var dir=color==='white'?-1:1,start=color==='white'?6:1,r1=r+dir,cc,tgt;
+                    if(inside(r1,c)&&b[r1][c]===''){
+                        pushPawn(list,r,c,r1,c,color);
+                        var r2=r+2*dir;
+                        if(r===start&&b[r2][c]==='')list.push({fr:r,fc:c,tr:r2,tc:c,double:true});
+                    }
+                    for(i=-1;i<=1;i+=2){
+                        cc=c+i;
+                        if(!inside(r1,cc))continue;
+                        tgt=b[r1][cc];
+                        if(tgt!==''&&colorOf(tgt)!==color)pushPawn(list,r,c,r1,cc,color);
+                        else if(epT&&epT[0]===r1&&epT[1]===cc)list.push({fr:r,fc:c,tr:r1,tc:cc,ep:true});
+                    }
+                }else if(t==='n'){
+                    for(i=0;i<KNIGHT.length;i++){
+                        var nr=r+KNIGHT[i][0],nc=c+KNIGHT[i][1];
+                        if(inside(nr,nc)&&colorOf(b[nr][nc])!==color)list.push({fr:r,fc:c,tr:nr,tc:nc});
+                    }
+                }else if(t==='b'){
+                    addSlide(b,list,r,c,DIAG,color);
+                }else if(t==='r'){
+                    addSlide(b,list,r,c,ORTHO,color);
+                }else if(t==='q'){
+                    addSlide(b,list,r,c,ALLDIR,color);
+                }else{
+                    for(i=0;i<ALLDIR.length;i++){
+                        var kr=r+ALLDIR[i][0],kc=c+ALLDIR[i][1];
+                        if(inside(kr,kc)&&colorOf(b[kr][kc])!==color)list.push({fr:r,fc:c,tr:kr,tc:kc});
+                    }
+                    if(cast){
+                        var home=color==='white'?7:0,enemy=other(color);
+                        if(r===home&&c===4){
+                            var ks=color==='white'?'wK':'bK',qs=color==='white'?'wQ':'bQ';
+                            if(cast[ks]&&b[home][5]===''&&b[home][6]===''&&rookOk(b,home,7,color)
+                                &&!attacked(b,home,4,enemy)&&!attacked(b,home,5,enemy)&&!attacked(b,home,6,enemy))
+                                list.push({fr:r,fc:c,tr:home,tc:6,castle:'K'});
+                            if(cast[qs]&&b[home][1]===''&&b[home][2]===''&&b[home][3]===''&&rookOk(b,home,0,color)
+                                &&!attacked(b,home,4,enemy)&&!attacked(b,home,3,enemy)&&!attacked(b,home,2,enemy))
+                                list.push({fr:r,fc:c,tr:home,tc:2,castle:'Q'});
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        function attacked(b,r,c,byColor){
+            var dir=byColor==='white'?1:-1,pr=r+dir,k,pc,p;
+            for(k=-1;k<=1;k+=2){
+                pc=c+k;
+                if(inside(pr,pc)){
+                    p=b[pr][pc];
+                    if(p!==''&&p.toLowerCase()==='p'&&colorOf(p)===byColor)return true;
+                }
+            }
+            var ms=genMoves(b,byColor,null,null);
+            for(var i=0;i<ms.length;i++)if(ms[i].tr===r&&ms[i].tc===c)return true;
+            return false;
+        }
+
+        function applyMove(b,m){
+            var nb=clone(b),piece=nb[m.fr][m.fc];
+            nb[m.fr][m.fc]='';
+            if(m.ep)nb[m.fr][m.tc]='';
+            nb[m.tr][m.tc]=m.promo?m.promo:piece;
+            if(m.castle){
+                if(m.castle==='K'){nb[m.fr][5]=nb[m.fr][7];nb[m.fr][7]='';}
+                else{nb[m.fr][3]=nb[m.fr][0];nb[m.fr][0]='';}
+            }
+            return nb;
+        }
+
+        function updateCastle(cast,m,piece){
+            var nc={wK:cast.wK,wQ:cast.wQ,bK:cast.bK,bQ:cast.bQ};
+            if(piece.toLowerCase()==='k'){
+                if(piece==='K'){nc.wK=false;nc.wQ=false;}else{nc.bK=false;nc.bQ=false;}
+            }
+            if(m.fr===7&&m.fc===0)nc.wQ=false;
+            if(m.fr===7&&m.fc===7)nc.wK=false;
+            if(m.fr===0&&m.fc===0)nc.bQ=false;
+            if(m.fr===0&&m.fc===7)nc.bK=false;
+            if(m.tr===7&&m.tc===0)nc.wQ=false;
+            if(m.tr===7&&m.tc===7)nc.wK=false;
+            if(m.tr===0&&m.tc===0)nc.bQ=false;
+            if(m.tr===0&&m.tc===7)nc.bK=false;
+            return nc;
+        }
+
+        function legalMoves(b,color,epT,cast){
+            var ms=genMoves(b,color,epT,cast),out=[],enemy=other(color),i,nb,k;
+            for(i=0;i<ms.length;i++){
+                nb=applyMove(b,ms[i]);
+                k=kingPos(nb,color);
+                if(k&&!attacked(nb,k[0],k[1],enemy))out.push(ms[i]);
+            }
+            return out;
+        }
+
+        function inCheck(b,color){
+            var k=kingPos(b,color);
+            return !!k&&attacked(b,k[0],k[1],other(color));
+        }
+
+        function buildBoard(){
+            var el=document.getElementById('board'),i,d;
+            el.innerHTML='';squares=[];
+            for(i=0;i<64;i++){
+                d=document.createElement('div');
+                d.className='square';
+                el.appendChild(d);
+                squares.push(d);
+            }
+            el.onclick=function(e){
+                var t=e.target;
+                if(!t||t.className.indexOf('square')<0)return;
+                var idx=squares.indexOf(t);
+                if(idx>=0)clickSquare(Math.floor(idx/8),idx%8);
+            };
+        }
+
+        function renderBoard(){
+            var r,c,i,k,cls,p,isValid;
+            for(i=0;i<64;i++){
+                r=Math.floor(i/8);c=i%8;
+                cls='square '+((r+c)%2===0?'light':'dark');
+                if(selected&&selected.r===r&&selected.c===c){
+                    cls+=' selected';
+                }else{
+                    isValid=false;
+                    for(k=0;k<targets.length;k++)if(targets[k].tr===r&&targets[k].tc===c){isValid=true;break;}
+                    if(isValid)cls+=' valid';
+                }
+                squares[i].className=cls;
+                p=board[r][c];
+                squares[i].textContent=p?GLYPH[p]:'';
+            }
+        }
+
+        function select(r,c){
+            var all=legalMoves(board,currentPlayer,ep,castle),out=[],i;
+            for(i=0;i<all.length;i++)if(all[i].fr===r&&all[i].fc===c)out.push(all[i]);
+            selected={r:r,c:c};
+            targets=out;
+            renderBoard();
+        }
+
+        function clickSquare(r,c){
+            if(over)return;
+            var p=board[r][c],i,m=null;
+            if(selected){
+                for(i=0;i<targets.length;i++)if(targets[i].tr===r&&targets[i].tc===c){m=targets[i];break;}
+                if(m){doMove(m);return;}
+                if(p&&colorOf(p)===currentPlayer){select(r,c);return;}
+                selected=null;targets=[];renderBoard();return;
+            }
+            if(p&&colorOf(p)===currentPlayer)select(r,c);
+        }
+
+        function doMove(m){
+            var piece=board[m.fr][m.fc],moves,chk;
+            board=applyMove(board,m);
+            castle=updateCastle(castle,m,piece);
+            ep=m.double?[(m.fr+m.tr)/2,m.fc]:null;
+            selected=null;targets=[];
+            currentPlayer=other(currentPlayer);
+            moves=legalMoves(board,currentPlayer,ep,castle);
+            chk=inCheck(board,currentPlayer);
+            if(moves.length===0){
+                over=true;
+                if(chk)status(currentPlayer==='white'?L[lang].blackWins:L[lang].whiteWins);
+                else status(L[lang].draw);
+            }else if(chk){
+                status(L[lang].check+' '+L[lang][currentPlayer]);
+            }else{
+                setTurn();
+            }
+            renderBoard();
+        }
+
+        function initGame(){
+            board=[
                 ['r','n','b','q','k','b','n','r'],
                 ['p','p','p','p','p','p','p','p'],
                 ['','','','','','','',''],
@@ -63,73 +288,12 @@
                 ['P','P','P','P','P','P','P','P'],
                 ['R','N','B','Q','K','B','N','R']
             ];
-            selected = null;
-            currentPlayer = 'white';
+            selected=null;targets=[];over=false;ep=null;
+            castle={wK:true,wQ:true,bK:true,bQ:true};
+            currentPlayer='white';
+            buildBoard();
             setTurn();
             renderBoard();
-        }
-
-        function renderBoard() {
-            const boardEl = document.getElementById('board');
-            boardEl.innerHTML = '';
-            
-            for (let r = 0; r < 8; r++) {
-                for (let c = 0; c < 8; c++) {
-                    const square = document.createElement('div');
-                    square.className = 'square ' + ((r + c) % 2 === 0 ? 'light' : 'dark');
-                    
-                    if (board[r][c]) {
-                        square.textContent = pieces[board[r][c]];
-                    }
-                    
-                    if (selected && selected.r === r && selected.c === c) {
-                        square.classList.add('selected');
-                    }
-                    
-                    square.onclick = () => clickSquare(r, c);
-                    boardEl.appendChild(square);
-                }
-            }
-        }
-
-        function clickSquare(r, c) {
-            const piece = board[r][c];
-            const isWhite = piece && piece === piece.toUpperCase();
-            const isBlack = piece && piece === piece.toLowerCase();
-            
-            if (selected) {
-                // Переміщення
-                if (isValidMove(selected.r, selected.c, r, c)) {
-                    board[r][c] = board[selected.r][selected.c];
-                    board[selected.r][selected.c] = '';
-                    selected = null;
-                    currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
-                    setTurn();
-                } else {
-                    selected = null;
-                }
-            } else if (piece) {
-                // Вибір фігури
-                if ((currentPlayer === 'white' && isWhite) || (currentPlayer === 'black' && isBlack)) {
-                    selected = { r, c };
-                }
-            }
-            
-            renderBoard();
-        }
-
-        function isValidMove(fromR, fromC, toR, toC) {
-            const piece = board[fromR][fromC];
-            const target = board[toR][toC];
-            const isWhite = piece === piece.toUpperCase();
-            const targetIsWhite = target && target === target.toUpperCase();
-            
-            // Не можна бити свої фігури
-            if (target && isWhite === targetIsWhite) return false;
-            
-            // Спрощена логіка: дозволяємо будь-який хід (для демо)
-            // Тут можна додати повну логіку шахів
-            return true;
         }
 
         initGame();
