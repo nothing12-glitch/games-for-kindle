@@ -698,9 +698,14 @@
         }
 
         // ===== ЛІЧИЛЬНИК ВІДВІДУВАНЬ =====
+        let visitCounted = false;
         function updateVisitCounter() {
-            let visits = parseInt(localStorage.getItem('visits') || '0', 10) + 1;
-            localStorage.setItem('visits', visits);
+            // changeLanguage calls this too, so only the first call per page load counts a visit.
+            if (!visitCounted) {
+                visitCounted = true;
+                localStorage.setItem('visits', parseInt(localStorage.getItem('visits') || '0', 10) + 1);
+            }
+            const visits = parseInt(localStorage.getItem('visits') || '0', 10);
             const t = translations[currentLang];
             const timesWord = visits === 1 ? t.visitCounterTimes : t.visitCounterTimesPlural;
             document.getElementById('visit-counter').textContent = t.visitCounter + ' ' + visits + ' ' + timesWord;
