@@ -47,23 +47,36 @@ h2{font-size:22px;margin-top:30px;margin-bottom:15px}
 <a href="../stats.html" id="game4">Stats & Achievements</a>
 </div>
 
+<h2 id="nojs-title">Without JavaScript</h2>
+<div class="game-list">
+<a href="castle/index.html" id="nojs1">Castle of Shadows - button version</a>
+<a href="detective/index.html" id="nojs2">Detective Case #47 - button version</a>
+<a href="spacestation/index.html" id="nojs3">Space Station - button version</a>
+<a href="riddles/index.html" id="nojs4">Book of Riddles - button version</a>
+<a href="../games/lighthouse/index.html" id="nojs5">Lighthouse Mystery - button version</a>
+</div>
+
 <a href="../index.html" class="back-link" id="back-btn">Back to Home</a>
 
 <script>
 const T={
 en:{title:"Classic Games",subtitle:"Optimized for Kindle with buttons",questsTitle:"Text Quests",otherTitle:"Other Games",back:"Back to Home",
 quest1:"Lighthouse Mystery",quest2:"Space Station",quest3:"Castle of Shadows",quest4:"Detective Case #47",quest5:"Shipwreck Survival",quest6:"Train No. 7 \"Comet\"",
-game1:"World Capitals - quiz",game2:"Maze - adventure",game3:"Book of Riddles (10)",game4:"Stats & Achievements"},
+game1:"World Capitals - quiz",game2:"Maze - adventure",game3:"Book of Riddles (10)",game4:"Stats & Achievements",
+nojsTitle:"Without JavaScript",nojs1:"Castle of Shadows - button version",nojs2:"Detective Case #47 - button version",nojs3:"Space Station - button version",nojs4:"Book of Riddles - button version",nojs5:"Lighthouse Mystery - button version"},
 uk:{title:"Класичні ігри",subtitle:"Оптимізовано для Kindle з кнопками",questsTitle:"Текстові квести",otherTitle:"Інші ігри",back:"На головну",
 quest1:"Таємниця маяка",quest2:"Космічна станція",quest3:"Замок Тіней",quest4:"Справа №47",quest5:"Загублений корабель",quest6:"Поїзд №7 «Комета»",
-game1:"Столиці світу",game2:"Лабіринт",game3:"Книга загадок (10)",game4:"Статистика та досягнення"},
+game1:"Столиці світу",game2:"Лабіринт",game3:"Книга загадок (10)",game4:"Статистика та досягнення",
+nojsTitle:"Без JavaScript",nojs1:"Замок Тіней - версія з кнопками",nojs2:"Справа №47 - версія з кнопками",nojs3:"Космічна станція - версія з кнопками",nojs4:"Книга загадок - версія з кнопками",nojs5:"Таємниця маяка - версія з кнопками"},
 de:{title:"Klassische Spiele",subtitle:"Optimiert für Kindle mit Tasten",questsTitle:"Text-Quests",otherTitle:"Andere Spiele",back:"Zurück",
 quest1:"Leuchtturm-Mystery",quest2:"Raumstation",quest3:"Schloss der Schatten",quest4:"Detektivfall #47",quest5:"Schiffbruch",quest6:"Zug Nr. 7 \"Komet\"",
-game1:"Hauptstädte - Quiz",game2:"Labyrinth",game3:"Rätselbuch (10)",game4:"Statistik & Erfolge"},
+game1:"Hauptstädte - Quiz",game2:"Labyrinth",game3:"Rätselbuch (10)",game4:"Statistik & Erfolge",
+nojsTitle:"Ohne JavaScript",nojs1:"Schloss der Schatten - Version mit Tasten",nojs2:"Detektivfall #47 - Version mit Tasten",nojs3:"Raumstation - Version mit Tasten",nojs4:"Rätselbuch - Version mit Tasten",nojs5:"Leuchtturm-Mystery - Version mit Tasten"},
 pl:{title:"Gry klasyczne",subtitle:"Zoptymalizowane dla Kindle z przyciskami",questsTitle:"Questy tekstowe",otherTitle:"Inne gry",back:"Powrót",
 quest1:"Tajemnica latarni",quest2:"Stacja kosmiczna",quest3:"Zamek Cieni",quest4:"Sprawa #47",quest5:"Rozbitek",quest6:"Pociąg nr 7 \"Kometa\"",
-game1:"Stolice świata",game2:"Labirynt",game3:"Księga zagadek (10)",game4:"Statystyki i osiągnięcia"}};
-const IDS={questsTitle:"quests-title",otherTitle:"other-title",back:"back-btn"};
+game1:"Stolice świata",game2:"Labirynt",game3:"Księga zagadek (10)",game4:"Statystyki i osiągnięcia",
+nojsTitle:"Bez JavaScript",nojs1:"Zamek Cieni - wersja z przyciskami",nojs2:"Sprawa #47 - wersja z przyciskami",nojs3:"Stacja kosmiczna - wersja z przyciskami",nojs4:"Księga zagadek - wersja z przyciskami",nojs5:"Tajemnica latarni - wersja z przyciskami"}};
+const IDS={questsTitle:"quests-title",otherTitle:"other-title",nojsTitle:"nojs-title",back:"back-btn"};
 function changeLanguage(lang){if(!T[lang])lang='en';const t=T[lang];
 Object.keys(t).forEach(function(k){const el=document.getElementById(IDS[k]||k);if(el)el.textContent=t[k];});
 document.getElementById('lang-en').selected=(lang==='en');
