@@ -14,6 +14,8 @@
         .cell.flagged { background: #ffcc00; }
         #info { font-size: 20px; margin: 20px 0; }
         #new-game { padding: 15px 30px; font-size: 20px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; margin: 10px; }
+        #flag-btn { padding: 12px 24px; font-size: 18px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; margin: 10px; }
+        #flag-btn.on { background: #000; color: #fff; }
         #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; border-radius: 5px; }
     </style>
 </head>
@@ -22,6 +24,7 @@
     <p id="d">Натисніть на клітинку. Довге натискання - прапорець.</p>
     
     <div id="info">Мін залишилось: 10</div>
+    <button id="flag-btn" onclick="toggleFlagMode()">Прапорець: вимкнено</button>
     <div id="board"></div>
     
     <button id="new-game" onclick="initGame()">Нова гра</button>
@@ -30,10 +33,10 @@
 
     <script>
         const L={
-            en:{t:"Minesweeper",d:"Tap a cell. Long press adds a flag.",mines:"Mines left",win:"You won!",lose:"You lost!",wins:"Wins",bn:"New Game",bb:"Menu"},
-            uk:{t:"Сапер",d:"Натисніть на клітинку. Довге натискання - прапорець.",mines:"Мін залишилось",win:"Ви виграли!",lose:"Ви програли!",wins:"Перемог",bn:"Нова гра",bb:"До меню"},
-            de:{t:"Minesweeper",d:"Tippe eine Zelle an. Langes Drücken setzt eine Flagge.",mines:"Minen übrig",win:"Gewonnen!",lose:"Verloren!",wins:"Siege",bn:"Neues Spiel",bb:"Menü"},
-            pl:{t:"Saper",d:"Kliknij pole. Długie kliknięcie stawia flagę.",mines:"Pozostało min",win:"Wygrałeś!",lose:"Przegrałeś!",wins:"Zwycięstwa",bn:"Nowa gra",bb:"Menu"}
+            en:{t:"Minesweeper",d:"Tap a cell to open it. Turn on flag mode, then tap to place a flag.",mines:"Mines left",win:"You won!",lose:"You lost!",wins:"Wins",flagOn:"Flag mode: ON",flagOff:"Flag mode: OFF",bn:"New Game",bb:"Menu"},
+            uk:{t:"Сапер",d:"Натисніть на клітинку, щоб відкрити. Увімкніть режим прапорця, потім тисніть, щоб поставити.",mines:"Мін залишилось",win:"Ви виграли!",lose:"Ви програли!",wins:"Перемог",flagOn:"Прапорець: увімкнено",flagOff:"Прапорець: вимкнено",bn:"Нова гра",bb:"До меню"},
+            de:{t:"Minesweeper",d:"Tippe eine Zelle zum Öffnen an. Schalte den Flaggen-Modus ein und tippe zum Setzen.",mines:"Minen übrig",win:"Gewonnen!",lose:"Verloren!",wins:"Siege",flagOn:"Flaggen-Modus: AN",flagOff:"Flaggen-Modus: AUS",bn:"Neues Spiel",bb:"Menü"},
+            pl:{t:"Saper",d:"Kliknij pole, aby je otworzyć. Włącz tryb flagi, potem klikaj, aby postawić flagę.",mines:"Pozostało min",win:"Wygrałeś!",lose:"Przegrałeś!",wins:"Zwycięstwa",flagOn:"Tryb flagi: WŁ",flagOff:"Tryb flagi: WYŁ",bn:"Nowa gra",bb:"Menu"}
         };
         let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
         document.documentElement.lang=lang;
@@ -48,13 +51,30 @@
 
         const SIZE = 8;
         const MINES = 10;
-        let board, revealed, flagged, gameOver, minesLeft;
+        let board, revealed, flagged, gameOver, minesLeft, flagMode = false;
+
+        function updateFlagButton() {
+            const btn = document.getElementById('flag-btn');
+            btn.textContent = flagMode ? L[lang].flagOn : L[lang].flagOff;
+            btn.className = flagMode ? 'on' : '';
+        }
+
+        function toggleFlagMode() {
+            flagMode = !flagMode;
+            updateFlagButton();
+        }
+
+        function clickCell(r, c) {
+            if (flagMode) toggleFlag(r, c); else revealCell(r, c);
+        }
 
         function initGame() {
             board = Array(SIZE).fill(null).map(() => Array(SIZE).fill(0));
             revealed = Array(SIZE).fill(null).map(() => Array(SIZE).fill(false));
             flagged = Array(SIZE).fill(null).map(() => Array(SIZE).fill(false));
             gameOver = false;
+            flagMode = false;
+            updateFlagButton();
             minesLeft = MINES;
             
             // Розміщуємо міни
@@ -111,7 +131,7 @@
                         cell.textContent = 'F';
                     }
                     
-                    cell.onclick = () => revealCell(r, c);
+                    cell.onclick = () => clickCell(r, c);
                     cell.oncontextmenu = (e) => { e.preventDefault(); toggleFlag(r, c); };
                     boardEl.appendChild(cell);
                 }
