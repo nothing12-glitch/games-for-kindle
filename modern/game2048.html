@@ -8,6 +8,7 @@
         body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #fff; }
         h1 { font-size: 28px; }
         #score { font-size: 22px; margin: 20px 0; }
+        #message { font-size: 20px; font-weight: bold; min-height: 24px; margin: -10px 0 10px; }
         #board { display: grid; grid-template-columns: repeat(4, 70px); gap: 10px; max-width: 320px; margin: 20px auto; }
         .tile { width: 70px; height: 70px; background: #ddd; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; }
         .tile-2 { background: #eee; }
@@ -33,6 +34,7 @@
     <p id="d">З'єднуйте однакові числа, щоб отримати 2048!</p>
     
     <div id="score">Рахунок: 0</div>
+    <div id="message"></div>
     <div id="board"></div>
     
     <div id="controls">
@@ -48,10 +50,10 @@
 
     <script>
         const L={
-            en:{t:"2048",d:"Merge equal numbers to reach 2048!",score:"Score",over:"Game over! Score: ",best:"Best",bn:"New Game",bb:"Menu"},
-            uk:{t:"2048",d:"З'єднуйте однакові числа, щоб отримати 2048!",score:"Рахунок",over:"Гра закінчена! Рахунок: ",best:"Рекорд",bn:"Нова гра",bb:"До меню"},
-            de:{t:"2048",d:"Verbinde gleiche Zahlen bis 2048!",score:"Punkte",over:"Spiel vorbei! Punkte: ",best:"Rekord",bn:"Neues Spiel",bb:"Menü"},
-            pl:{t:"2048",d:"Łącz takie same liczby, aby uzyskać 2048!",score:"Wynik",over:"Koniec gry! Wynik: ",best:"Rekord",bn:"Nowa gra",bb:"Menu"}
+            en:{t:"2048",d:"Merge equal numbers to reach 2048!",score:"Score",over:"Game over! Score: ",best:"Best",won:"You reached 2048! Keep going.",bn:"New Game",bb:"Menu"},
+            uk:{t:"2048",d:"З'єднуйте однакові числа, щоб отримати 2048!",score:"Рахунок",over:"Гра закінчена! Рахунок: ",best:"Рекорд",won:"Ви дійшли до 2048! Грайте далі.",bn:"Нова гра",bb:"До меню"},
+            de:{t:"2048",d:"Verbinde gleiche Zahlen bis 2048!",score:"Punkte",over:"Spiel vorbei! Punkte: ",best:"Rekord",won:"2048 erreicht! Spiel weiter.",bn:"Neues Spiel",bb:"Menü"},
+            pl:{t:"2048",d:"Łącz takie same liczby, aby uzyskać 2048!",score:"Wynik",over:"Koniec gry! Wynik: ",best:"Rekord",won:"Osiągnięto 2048! Graj dalej.",bn:"Nowa gra",bb:"Menu"}
         };
         let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
         document.documentElement.lang=lang;
@@ -64,14 +66,25 @@
             if (val > +(localStorage.getItem(key) || 0)) localStorage.setItem(key, '' + val);
         }
 
-        let grid, score;
+        let grid, score, reached2048 = false;
 
         function initGame() {
             grid = Array(4).fill(null).map(() => Array(4).fill(0));
             score = 0;
+            reached2048 = false;
+            document.getElementById('message').textContent = '';
             addRandomTile();
             addRandomTile();
             updateDisplay();
+        }
+
+        function hasTile(value) {
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 4; c++) {
+                    if (grid[r][c] === value) return true;
+                }
+            }
+            return false;
         }
 
         function addRandomTile() {
@@ -173,6 +186,11 @@
             
             if (moved) {
                 grid = newGrid;
+                if (!reached2048 && hasTile(2048)) {
+                    reached2048 = true;
+                    localStorage.setItem('stats_2048_reached', '1');
+                    document.getElementById('message').textContent = L[lang].won;
+                }
                 addRandomTile();
                 saveBest('best_2048', score);
                 updateDisplay();

@@ -103,7 +103,8 @@
 
         function changeDirection(newDir) {
             const opposites = {up: 'down', down: 'up', left: 'right', right: 'left'};
-            if (opposites[newDir] !== direction) {
+            // Compare against nextDirection: two taps inside one tick must not reverse the snake.
+            if (opposites[newDir] !== nextDirection) {
                 nextDirection = newDir;
             }
         }

@@ -114,7 +114,7 @@
         function updateDisplay() {
             const boardEl = document.getElementById('board');
             boardEl.innerHTML = '';
-            document.getElementById('score').textContent = L[lang].score + ': ' + score;
+            if (!gameOver) document.getElementById('score').textContent = L[lang].score + ': ' + score;
             
             const displayBoard = board.map(row => [...row]);
             
