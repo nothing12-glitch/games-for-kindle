@@ -44,9 +44,11 @@
             localStorage.setItem(key, '' + (+(localStorage.getItem(key) || 0) + 1));
         }
 
-        let board, currentPlayer, gameOver;
+        let board, currentPlayer, gameOver, gameId = 0, aiTimer = null;
 
         function initGame() {
+            gameId++;
+            if (aiTimer) { clearTimeout(aiTimer); aiTimer = null; }
             board = Array(9).fill('');
             currentPlayer = 'X';
             gameOver = false;
@@ -88,17 +90,57 @@
             
             currentPlayer = 'O';
             document.getElementById('status').textContent = L[lang].ai;
-            setTimeout(computerMove, 500);
+            const myGame = gameId;
+            aiTimer = setTimeout(function () { if (myGame === gameId) computerMove(); }, 500);
+        }
+
+        const LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+        function winnerOf(b) {
+            for (let i = 0; i < LINES.length; i++) {
+                const [a, c, d] = LINES[i];
+                if (b[a] && b[a] === b[c] && b[a] === b[d]) return b[a];
+            }
+            return b.every(cell => cell) ? 'draw' : '';
+        }
+
+        // Minimax with depth preference: the AI never loses and wins as fast as it can.
+        function scorePosition(b, depth) {
+            const w = winnerOf(b);
+            if (w === 'O') return 10 - depth;
+            if (w === 'X') return depth - 10;
+            if (w === 'draw') return 0;
+            let best = -Infinity;
+            for (let i = 0; i < 9; i++) {
+                if (!b[i]) {
+                    b[i] = 'O';
+                    best = Math.max(best, scorePosition(b, depth + 1));
+                    b[i] = '';
+                }
+            }
+            return best;
+        }
+
+        function bestMove() {
+            const free = [];
+            for (let i = 0; i < 9; i++) if (!board[i]) free.push(i);
+            // Occasionally slip up so the player can still win.
+            if (Math.random() < 0.25) return free[Math.floor(Math.random() * free.length)];
+            let best = -Infinity, pick = free[0];
+            for (let i = 0; i < free.length; i++) {
+                board[free[i]] = 'O';
+                const s = scorePosition(board, 1);
+                board[free[i]] = '';
+                if (s > best) { best = s; pick = free[i]; }
+            }
+            return pick;
         }
 
         function computerMove() {
+            aiTimer = null;
             if (gameOver) return;
-            
-            // Простий AI: випадковий хід
-            let available = board.map((cell, i) => cell === '' ? i : null).filter(i => i !== null);
-            let move = available[Math.floor(Math.random() * available.length)];
-            
-            board[move] = 'O';
+
+            board[bestMove()] = 'O';
             renderBoard();
             
             if (checkWin('O')) {
@@ -120,8 +162,7 @@
         }
 
         function checkWin(player) {
-            const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-            return wins.some(([a,b,c]) => board[a] === player && board[b] === player && board[c] === player);
+            return winnerOf(board) === player;
         }
 
         initGame();
