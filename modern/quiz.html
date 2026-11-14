@@ -92,9 +92,11 @@
 
         const questions = L[lang].questions;
         
-        let currentQ, score, answered;
+        let currentQ, score, answered, gameToken = 0, advanceTimer = null;
 
         function initGame() {
+            gameToken++;
+            if (advanceTimer) { clearTimeout(advanceTimer); advanceTimer = null; }
             currentQ = 0;
             score = 0;
             answered = false;
@@ -142,7 +144,10 @@
                 buttons[q.correct].classList.add('correct');
             }
             
-            setTimeout(() => {
+            const token = gameToken;
+            advanceTimer = setTimeout(() => {
+                advanceTimer = null;
+                if (token !== gameToken) return;
                 currentQ++;
                 showQuestion();
             }, 1500);
