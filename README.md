@@ -23,9 +23,15 @@ A collection of browser-based games optimized for Amazon Kindle devices.
 ### Games
 - 📜 **Classic version** (for Kindle with buttons):
   - Lighthouse Mystery - text quest
-  - Word Game
-  - Quiz
-  - Dungeon Adventure
+  - Space Station - text quest
+  - Castle of Shadows - text quest
+  - Detective Case #47 - text quest
+  - Shipwreck Survival - text quest
+  - Train No. 7 "Comet" - text quest
+  - World Capitals - quiz
+  - Maze - adventure
+  - Book of Riddles
+  - Stats & Achievements
 
 - 📱 **Modern version** (for touch Kindle):
   - Sudoku
@@ -73,9 +79,15 @@ A collection of browser-based games optimized for Amazon Kindle devices.
 ### Ігри
 - 📜 **Класична версія** (для Kindle з кнопками):
   - Таємниця маяка - текстовий квест
-  - Вгадай слово
-  - Вікторина
-  - Підземелля
+  - Космічна станція - текстовий квест
+  - Замок Тіней - текстовий квест
+  - Справа №47 - текстовий квест
+  - Загублений корабель - текстовий квест
+  - Поїзд №7 «Комета» - текстовий квест
+  - Вікторина «Столиці світу»
+  - Лабіринт - пригоди
+  - Книга загадок
+  - Статистика та досягнення
 
 - 📱 **Сучасна версія** (для сенсорного Kindle):
   - Судоку
@@ -123,9 +135,15 @@ A collection of browser-based games optimized for Amazon Kindle devices.
 ### Spiele
 - 📜 **Klassische Version** (für Kindle mit Tasten):
   - Leuchtturm-Mystery - Textquest
-  - Wortspiel
-  - Quiz
-  - Verlies-Abenteuer
+  - Raumstation - Textquest
+  - Schloss der Schatten - Textquest
+  - Detektivfall #47 - Textquest
+  - Schiffbruch - Textquest
+  - Zug Nr. 7 "Komet" - Textquest
+  - Hauptstädte - Quiz
+  - Labyrinth - Abenteuer
+  - Rätselbuch
+  - Statistik & Erfolge
 
 - 📱 **Moderne Version** (für Touch-Kindle):
   - Sudoku
@@ -173,9 +191,15 @@ A collection of browser-based games optimized for Amazon Kindle devices.
 ### Gry
 - 📜 **Wersja klasyczna** (dla Kindle z przyciskami):
   - Tajemnica latarni morskiej - quest tekstowy
-  - Gra słowna
-  - Quiz
-  - Przygoda w lochu
+  - Stacja kosmiczna - quest tekstowy
+  - Zamek Cieni - quest tekstowy
+  - Sprawa #47 - quest tekstowy
+  - Rozbitek - quest tekstowy
+  - Pociąg nr 7 "Kometa" - quest tekstowy
+  - Stolice świata - quiz
+  - Labirynt - przygoda
+  - Księga zagadek
+  - Statystyki i osiągnięcia
 
 - 📱 **Wersja nowoczesna** (dla dotykowego Kindle):
   - Sudoku
