@@ -51,6 +51,7 @@ if(seq.length>best)localStorage.setItem('best_simon',''+seq.length);
 later(next,700);}}
 else{accept=false;info(L[lang].go+' '+L[lang].b+': '+(localStorage.getItem('best_simon')||'0'));}}
 document.getElementById('t').textContent=L[lang].t;
+document.title=L[lang].t;
 document.getElementById('d').textContent=L[lang].d;
 document.getElementById('bs').textContent=L[lang].bs;
 document.getElementById('bb').textContent=L[lang].bb;

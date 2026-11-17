@@ -64,6 +64,7 @@ info(L[lang].your+' | '+L[lang].wins+': '+(localStorage.getItem('stats_c4_wins')
 const colsEl=document.getElementById('cols');
 for(let c=0;c<7;c++){(function(cc){const btn=document.createElement('button');btn.textContent='↓';btn.onclick=function(){playerDrop(cc);};colsEl.appendChild(btn);})(c);}
 document.getElementById('t').textContent=L[lang].t;
+document.title=L[lang].t;
 document.getElementById('d').textContent=L[lang].d;
 document.getElementById('bn').textContent=L[lang].bn;
 document.getElementById('bb').textContent=L[lang].bb;

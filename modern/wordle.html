@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вгадай слово</title>
+    <title>Word Guess</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #fff; }
         h1 { font-size: 28px; }
@@ -50,6 +50,7 @@
         let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
         document.documentElement.lang=lang;
         document.getElementById('t').textContent=L[lang].t;
+        document.title=L[lang].t;
         document.getElementById('d').textContent=L[lang].d;
         document.getElementById('new-game').textContent=L[lang].bn;
         document.getElementById('back-btn').textContent=L[lang].bb;

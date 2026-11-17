@@ -51,6 +51,7 @@ d.onclick=function(){if(!done)press(i,false);};b.appendChild(d);});
 const best=localStorage.getItem('best_lightsout')||'-';
 document.getElementById('info').textContent=L[lang].m+': '+moves+' | '+L[lang].b+': '+best+(done?' — '+L[lang].w:'');}
 document.getElementById('t').textContent=L[lang].t;
+document.title=L[lang].t;
 document.getElementById('d').textContent=L[lang].d;
 document.getElementById('bn').textContent=L[lang].bn;
 document.getElementById('bb').textContent=L[lang].bb;
