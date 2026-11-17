@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Загублений корабель</title>
+<title>Shipwreck Survival</title>
 <style>
 body{font-family:Georgia,serif;padding:20px;background:#fff;color:#000;max-width:600px;margin:0 auto}
 h1{font-size:28px;border-bottom:2px solid #000;padding-bottom:10px}
@@ -187,6 +187,7 @@ return out;}
 
 function applyLang(){
 var t=TXT[lang];if(!t)return;
+document.title=t.ti;
 var h=document.getElementsByTagName('h1')[0];if(h)h.textContent=t.ti;
 var scenes=document.querySelectorAll('.scene');
 for(var i=0;i<scenes.length&&i<t.sc.length;i++){
