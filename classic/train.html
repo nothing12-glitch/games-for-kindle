@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Поїзд №7</title>
+<title>Train No. 7 "Comet"</title>
 <style>
 body{font-family:Georgia,serif;padding:20px;background:#fff;color:#000;max-width:600px;margin:0 auto}
 h1{font-size:28px;border-bottom:2px solid #000;padding-bottom:10px}
@@ -51,7 +51,7 @@ p{font-size:18px;line-height:1.6;margin-bottom:20px}
 
 <div id="scene4" class="scene">
 <div class="status">Розділ 2: Лікар</div>
-<p>Лікар Ковач нервово миє руки. Від нього ледь тягне гіркотою мигдалю. «Новe мило», — каже він, не дивлячись вам в очі.</p>
+<p>Лікар Ковач нервово миє руки. Від нього ледь тягне гіркотою мигдалю. «Нове мило», — каже він, не дивлячись вам в очі.</p>
 <p>«Пеппер випив чаю перед сном. Я лише перевіряв його ввечері — серце було в нормі.»</p>
 <button class="choice" onclick="showScene(2)">1. Допитати графиню</button>
 <button class="choice" onclick="showScene(3)">2. Допитати полковника</button>
@@ -151,12 +151,85 @@ p{font-size:18px;line-height:1.6;margin-bottom:20px}
 </div>
 
 <script>
+var lang=localStorage.getItem('language')||'en';
+var TXT={
+en:{ti:"Train No. 7 “Comet”",sc:[
+["Chapter 1: A Night in the Carriage","At midnight the express Comet rumbles between Kyiv and Vienna. You are a private detective on your way to a holiday. But at 02:15 a body is found in the luxury carriage: the jeweller Arnold Pepper is dead in a compartment locked from the inside.","The conductor runs about, pale: “Nobody leaves this carriage until morning. Solve this — and the train rolls on.”","There are four suspects in the carriage: the countess, the colonel, the doctor and the conductor himself.","1. Question the countess","2. Question the colonel","3. Question the doctor"],
+["Chapter 2: The Countess","Countess Olivia is cold and composed. “At two in the morning I saw the doctor in the corridor with a black travelling bag. He was walking away from the dead man's compartment.”","On the small table beside her lies a pair of silk gloves. One of them is dirty at the fingertips.","1. Question the colonel","2. Question the doctor","3. Search the victim's compartment","4. Accuse the countess right now"],
+["Chapter 2: The Colonel","Colonel Hrytsenko growls: “I was asleep. Yesterday evening I lost my pocket watch — and now everyone thinks I sold it?”","He shows a chain with no watch on it. “And this conductor was hanging around Pepper's compartment before lights-out. Asking how much cash the man carried.”","1. Question the countess","2. Question the doctor","3. Search the victim's compartment"],
+["Chapter 2: The Doctor","Doctor Kovacs washes his hands nervously. A faint bitterness of almonds hangs about him. “New soap,” he says, without looking you in the eye.","“Pepper drank tea before bed. I only examined him in the evening — his heart was normal.”","1. Question the countess","2. Question the colonel","3. Search the victim's compartment"],
+["Chapter 3: The Victim's Compartment","In the compartment you make three finds: a cup with sediment that smells of almonds; a torn ticket in the real name “Pepper A.” (he was travelling as “Mueller”); and a button from the conductor's uniform under the seat.","Beyond the window there is only darkness. The train goes on rumbling as if nothing had happened.","1. Question the conductor","2. Set a night watch","3. Accuse the doctor at once"],
+["Chapter 3: The Conductor","The conductor Bondar is sweating. “A button? I went into Mr Mueller's compartment only AFTER I found him... Then, in my fright, I took his wallet — I have debts!”","“I swear, he had already stopped breathing! And it was the doctor who brought him the tea, back at the station!”","1. Accuse the countess","2. Accuse the doctor","3. Accuse the colonel","4. Accuse the conductor","5. Order the conductor tied up"],
+["ENDING: A False Lead","You accuse the countess. She faints into her chair. While you look for “evidence” against her, at the morning station Doctor Kovacs disappears with the black bag and Pepper's diamonds.","THE CASE IS BLOWN","Try again","Back to menu"],
+["ENDING: The Truth","“Cyanide in the tea, doctor. The almond smell comes not from soap but from your hands. You were covering Pepper's debts with your own debts to him — and you decided to cancel both, together with him.”","In Kovacs's bag they find the diamonds and an ampoule. At the Vienna station the gendarmes are already waiting for him.","CASE SOLVED!","Start over","Back to menu"],
+["ENDING: A False Lead","The colonel is furious: he really did lose the watch, but he has an alibi — a card game in the lounge car until one o'clock. While you apologize to him, the doctor has time to throw the ampoule out of the window.","THE CASE IS BLOWN","Try again","Back to menu"],
+["ENDING: A False Lead","The countess faints, the colonel demands a lawyer, and the conductor admits only to taking the wallet. The real poisoner rides calmly all the way to the border.","THE CASE IS BLOWN","Try again","Back to menu"],
+["ENDING: A False Lead","The conductor is tied up. He sobs and tells the truth about the wallet — but not about the poison. Meanwhile the doctor quietly steps onto the platform at Bratislava.","THE CASE IS BLOWN","Try again","Back to menu"],
+["ENDING: A False Lead","You decide the conductor poisoned the passenger for money. But the lab in Vienna will show: the poison was in the tea long before the conductor entered the compartment.","THE CASE IS BLOWN","Try again","Back to menu"],
+["Chapter 4: The Ambush","At 03:40 you wait quietly in the vestibule. The door of the doctor's compartment opens a little: Kovacs is rinsing his bag and pouring something straight out of the window. He notices you in the mirror.","1. Gather everyone and accuse the doctor","2. Detain him alone"],
+["Chapter 4: The Night","You turn off the light in the corridor and wait. The hours drag, but at 03:40 you hear footsteps and the creak of the doctor's compartment door.","1. Watch from the vestibule","2. Raise the alarm at once"],
+["ENDING: The Headlong Stop","You throw yourself at Kovacs in the vestibule. He is stronger than he looks — but the noise wakes the colonel, and he brings his cane down on the doctor. In the bag: Pepper's diamonds.","At the nearest station the gendarmes take the poisoner away. The countess gifts you a bottle of perfume, the colonel a handshake, and the conductor a free ticket home.","YOU CAUGHT THE CRIMINAL YOURSELF!","Start over","Back to menu"]]
+},
+de:{ti:"Zug Nr. 7 „Komet“",sc:[
+["Kapitel 1: Nacht im Waggon","Um Mitternacht rumpelt der Express Komet zwischen Kiew und Wien. Du bist Privatermittler und fährst in den Urlaub. Doch um 02:15 Uhr findet man im Luxusschlafwagen eine Leiche: Der Juwelier Arnold Pepper ist in einem von innen verschlossenen Abteil tot.","Der Schaffner läuft bleich umher: „Bis zum Morgen verlässt niemand diesen Waggon. Lösen Sie das — dann fährt der Zug weiter.“","Vier Verdächtige sind im Waggon: die Gräfin, der Oberst, der Arzt und der Schaffner selbst.","1. Die Gräfin befragen","2. Den Oberst befragen","3. Den Arzt befragen"],
+["Kapitel 2: Die Gräfin","Gräfin Olivia ist kalt und gefasst. „Um zwei in der Nacht sah ich den Arzt auf dem Gang mit einer schwarzen Reisetasche. Er kam vom Abteil des Toten.“","Auf dem Tischchen neben ihr liegt ein Paar Seidenhandschuhe. Einer ist an den Fingerspitzen verschmutzt.","1. Den Oberst befragen","2. Den Arzt befragen","3. Das Abteil des Opfers untersuchen","4. Die Gräfin sofort beschuldigen"],
+["Kapitel 2: Der Oberst","Oberst Grizenko brummt: „Ich habe geschlafen. Gestern Abend habe ich meine Taschenuhr verloren — und jetzt glaubt jeder, ich hätte sie verkauft?“","Er zeigt eine Kette ohne Uhr. „Und dieser Schaffner ist vor dem Zapfenstreich um Peppers Abteil herumgeschlichen. Er hat gefragt, wie viel Bargeld der Mann bei sich hat.“","1. Die Gräfin befragen","2. Den Arzt befragen","3. Das Abteil des Opfers untersuchen"],
+["Kapitel 2: Der Arzt","Doktor Kovacs wäscht sich nervös die Hände. Von ihm geht ein leiser Mandelgeruch aus. „Neue Seife“, sagt er, ohne dir in die Augen zu sehen.","„Pepper hat vor dem Schlafen Tee getrunken. Ich habe ihn abends nur untersucht — das Herz war in Ordnung.“","1. Die Gräfin befragen","2. Den Oberst befragen","3. Das Abteil des Opfers untersuchen"],
+["Kapitel 3: Das Abteil des Opfers","Im Abteil drei Funde: eine Tasse mit Satz, der nach Mandeln riecht; eine zerrissene Fahrkarte auf den echten Namen „Pepper A.“ (er reiste als „Müller“); und ein Knopf der Schaffneruniform unter dem Sitz.","Draußen am Fenster nur Dunkelheit. Der Zug rumpelt weiter, als wäre nichts geschehen.","1. Den Schaffner befragen","2. Nachts eine Falle stellen","3. Den Arzt sofort beschuldigen"],
+["Kapitel 3: Der Schaffner","Der Schaffner Bondar schwitzt. „Ein Knopf? Ich bin erst zu Herrn Müller gegangen, NACHDEM ich ihn gefunden hatte... Vor Schreck habe ich dann seine Brieftasche genommen — ich habe Schulden!“","„Ich schwöre, er atmete schon nicht mehr! Den Tee hat ihm der Arzt gebracht, schon am Bahnhof!“","1. Die Gräfin beschuldigen","2. Den Arzt beschuldigen","3. Den Oberst beschuldigen","4. Den Schaffner beschuldigen","5. Den Schaffner fesseln lassen"],
+["ENDE: Eine falsche Fährte","Du beschuldigst die Gräfin. Sie sinkt ohnmächtig in den Sessel. Während du nach „Beweisen“ gegen sie suchst, verschwindet Doktor Kovacs am Morgenbahnhof mit der schwarzen Tasche und Peppers Diamanten.","DER FALL IST VERPATZT","Nochmal versuchen","Zurück zum Menü"],
+["ENDE: Die Wahrheit","„Blausäure im Tee, Doktor. Der Mandelgeruch kommt nicht von der Seife, sondern von Ihren Händen. Sie haben Peppers Schulden mit Ihren eigenen Schulden ihm gegenüber beglichen — und beschlossen, beide zusammen mit ihm zu löschen.“","In Kovacs' Tasche findet man die Diamanten und eine Ampulle. Am Bahnhof in Wien warten bereits die Gendarmen auf ihn.","FALL GELÖST!","Von vorn beginnen","Zurück zum Menü"],
+["ENDE: Eine falsche Fährte","Der Oberst ist wütend: Die Uhr hat er wirklich verloren, aber er hat ein Alibi — eine Partie Karten im Salonwagen bis ein Uhr. Während du dich rechtfertigst, hat der Arzt Zeit, die Ampulle aus dem Fenster zu werfen.","DER FALL IST VERPATZT","Nochmal versuchen","Zurück zum Menü"],
+["ENDE: Eine falsche Fährte","Die Gräfin sinkt ohnmächtig zusammen, der Oberst verlangt einen Anwalt, und der Schaffner gesteht nur den Diebstahl der Brieftasche. Der wirkliche Giftmischer fährt in Ruhe bis zur Grenze.","DER FALL IST VERPATZT","Nochmal versuchen","Zurück zum Menü"],
+["ENDE: Eine falsche Fährte","Der Schaffner wird gefesselt. Er schluchzt und gesteht die Wahrheit über die Brieftasche — aber nicht über das Gift. Derweil steigt der Arzt in Bratislava ruhig auf den Bahnsteig.","DER FALL IST VERPATZT","Nochmal versuchen","Zurück zum Menü"],
+["ENDE: Eine falsche Fährte","Du glaubst, der Schaffner habe den Passagier des Geldes wegen vergiftet. Doch die Untersuchung in Wien wird zeigen: Das Gift war längst im Tee, bevor der Schaffner das Abteil betrat.","DER FALL IST VERPATZT","Nochmal versuchen","Zurück zum Menü"],
+["Kapitel 4: Die Falle","Um 03:40 wartest du leise im Übergang. Die Tür des Arztabteils öffnet sich einen Spalt: Kovacs spült seine Tasche aus und schüttet etwas einfach zum Fenster hinaus. Im Spiegel bemerkt er dich.","1. Alle versammeln und den Arzt beschuldigen","2. Ihn allein festhalten"],
+["Kapitel 4: Die Nacht","Du löschst das Licht auf dem Gang und wartest. Die Stunden dehnen sich, aber um 03:40 hörst du Schritte und das Knarren der Tür zum Arztabteil.","1. Vom Übergang aus zuschauen","2. Sofort Alarm schlagen"],
+["ENDE: Die Notbremsung","Du stürzt dich im Übergang auf Kovacs. Er ist stärker, als er aussieht — aber der Lärm weckt den Oberst, und der verpasst dem Arzt einen Hieb mit dem Stock. In der Tasche: Peppers Diamanten.","Am nächsten Bahnhof nehmen die Gendarmen den Giftmischer mit. Die Gräfin schenkt dir ein Flakon Parfum, der Oberst einen Handschlag, und der Schaffner eine Freifahrkarte nach Hause.","IHR HABT DEN VERBRECHER ALLEIN GEFASST!","Von vorn beginnen","Zurück zum Menü"]]
+},
+pl:{ti:"Pociąg nr 7 „Kometa”",sc:[
+["Rozdział 1: Noc w wagonie","O północy ekspres Kometa turgoce między Kijowem a Wiedniem. Jesteś prywatnym detektywem i jedziesz na wypoczynek. Ale o 02:15 w wagonie luksusowym znajdują ciało: jubiler Arnold Pepper nie żyje w przedziale zamkniętym od wewnątrz.","Konducent biega blady: „Do rana nikt nie opuści tego wagonu. Rozwiąż to — i pociąg jedzie dalej.”","W wagonie jest czworo podejrzanych: hrabina, pułkownik, lekarz i sam konducent.","1. Przesłuchać hrabinę","2. Przesłuchać pułkownika","3. Przesłuchać lekarza"],
+["Rozdział 2: Hrabina","Hrabina Oliwia jest zimna i opanowana. „O drugiej w nocy widziałam lekarza na korytarzu z czarną walizką. Szedł od przedziału denata.”","Na stoliku obok niej leży para jedwabnych rękawiczek. Jedna jest brudna na końcach palców.","1. Przesłuchać pułkownika","2. Przesłuchać lekarza","3. Obejrzeć przedział ofiary","4. Zaraz oskarżyć hrabinę"],
+["Rozdział 2: Pułkownik","Pułkownik Hryczenko mruczy: „Spałem. Wczoraj wieczorem zgubiłem swój zegarek kieszonkowy — i teraz wszyscy myślą, że go sprzedałem?”","Pokazuje łańcuszek bez zegarka. „A ten konducent kręcił się przed ciszą nocną przy przedziale Peppera. Pytał, ile ten ma gotówki.”","1. Przesłuchać hrabinę","2. Przesłuchać lekarza","3. Obejrzeć przedział ofiary"],
+["Rozdział 2: Lekarz","Doktor Kovacs nerwowo myje ręce. Wyczuwa się od niego ledwo gorzki zapach migdałów. „Nowe mydło” — mówi, nie patrząc ci w oczy.","„Pepper pił herbatę przed snem. Ja tylko go badałem wieczorem — serce miał w normie.”","1. Przesłuchać hrabinę","2. Przesłuchać pułkownika","3. Obejrzeć przedział ofiary"],
+["Rozdział 3: Przedział ofiary","W przedziale trzy znaleziska: filiżanka z osadem pachnącym migdałami; zerwany bilet na prawdziwe nazwisko „Pepper A.” (jechał jako „Müller”); i guzik od munduru konducenta pod siedzeniem.","Za oknem ciemność. Pociąg dalej turgoce, jakby nic się nie stało.","1. Przesłuchać konducenta","2. Zastawić nocną zasadzkę","3. Zaraz oskarżyć lekarza"],
+["Rozdział 3: Konducent","Konducent Bondar poci się. „Guzik? Wszedłem do pana Müllera dopiero PO TEM, jak go znalazłem... Ze strachu zabrałem mu portfel — mam długi!”","„Przysięgam, on już nie oddychał! A herbatę przyniósł mu lekarz, jeszcze na stacji!”","1. Oskarżyć hrabinę","2. Oskarżyć lekarza","3. Oskarżyć pułkownika","4. Oskarżyć konducenta","5. Kazać skrępować konducenta"],
+["FINAŁ: Mylny trop","Oskarżasz hrabinę. Ona mdlejąc osuwa się w fotel. Gdy szukasz „dowodów” przeciw niej, na porannym postoju doktor Kovacs znika z czarną walizką i diamentami Peppera.","ŚLEDZTWO PORAŻONE","Spróbować ponownie","Do menu"],
+["FINAŁ: Prawda","„Cyjanek w herbacie, doktorze. Zapach migdałów nie z mydła, ale z pana rąk. Leczył pan długi Peppera swoimi długami wobec niego — i postanowił je skreślić razem z nim.”","W walizce Kovacsa znajdują diamenty i ampułkę. Na stacji w Wiedniu czekają na niego żandarmi.","SPRAWA ROZWIĄZANA!","Zacząć od nowa","Do menu"],
+["FINAŁ: Mylny trop","Pułkownik jest wściekły: zegarek rzeczywiście zgubił, ale ma alibi — gra w karty w wagonie salonowym do pierwszej. Gdy tłumaczysz się przed nim, lekarz zdążył wyrzucić ampułkę przez okno.","ŚLEDZTWO PORAŻONE","Spróbować ponownie","Do menu"],
+["FINAŁ: Mylny trop","Hrabina mdleje, pułkownik żąda adwokata, a konducent przyznaje się tylko do kradzieży portfela. Prawdziwy truciciel jedzie spokojnie aż do granicy.","ŚLEDZTWO PORAŻONE","Spróbować ponownie","Do menu"],
+["FINAŁ: Mylny trop","Konducent zostaje skrępowany. Łka i mówi prawdę o portfelu — ale nie o truciznie. Lekarz tymczasem spokojnie wychodzi na peron w Bratysławie.","ŚLEDZTWO PORAŻONE","Spróbować ponownie","Do menu"],
+["FINAŁ: Mylny trop","Uważasz, że konducent otruł pasażera dla pieniędzy. Ale ekspertyza w Wiedniu wykaże: trucizna była w herbacie na długo przedtem, nim konducent wszedł do przedziału.","ŚLEDZTWO PORAŻONE","Spróbować ponownie","Do menu"],
+["Rozdział 4: Zasadzka","O 03:40 cicho czekasz w przedsionku. Drzwi przedziału lekarza uchylają się: Kovacs płucze walizkę i wylewa coś przez okno. Zauważa cię w lustrze.","1. Zebrać wszystkich i oskarżyć lekarza","2. Zatrzymać go samemu"],
+["Rozdział 4: Noc","Gasisz światło na korytarzu i czekasz. Godziny się ciągną, ale o 03:40 słyszysz kroki i skrzypienie drzwi przedziału lekarza.","1. Podpatrzyć z przedsionka","2. Zaraz bić na alarm"],
+["FINAŁ: Nagłe zatrzymanie","Rzucasz się na Kovacsa w przedsionku. Jest silniejszy, niż wygląda — ale hałas budzi pułkownika, a ten okłada lekarza laską. W walizce — diamenty Peppera.","Na najbliższej stacji żandarmi zabierają truciciela. Hrabina wręcza ci flakonik perfum, pułkownik — uścisk dłoni, a konducent — darmowy bilet do domu.","SCHWYTAŁEŚ PRZESTĘPCĘ SAM!","Zacząć od nowa","Do menu"]]
+}
+};
+
 function showScene(num){
 var scenes=document.querySelectorAll('.scene');
 for(var i=0;i<scenes.length;i++)scenes[i].className='scene';
 var target=document.getElementById('scene'+num);
 if(target)target.className='scene active';
 window.scrollTo(0,0);}
+
+function leaves(scene){
+var out=[],kids=scene.childNodes,i,el,cls;
+for(i=0;i<kids.length;i++){el=kids[i];if(el.nodeType!==1)continue;cls=el.className||'';
+if(cls==='status'||cls==='final'||cls==='back-btn'||el.tagName==='P'||el.tagName==='BUTTON')out.push(el);}
+return out;}
+
+function applyLang(){
+var t=TXT[lang];if(!t)return;
+document.title=t.ti;
+var h=document.getElementsByTagName('h1')[0];if(h)h.textContent=t.ti;
+var scenes=document.querySelectorAll('.scene');
+for(var i=0;i<scenes.length&&i<t.sc.length;i++){
+var lf=leaves(scenes[i]),a=t.sc[i];
+for(var j=0;j<lf.length&&j<a.length;j++)lf[j].textContent=a[j];}
+document.documentElement.lang=lang;}
+
+applyLang();
 </script>
 </body>
 </html>
