@@ -78,7 +78,7 @@
                     {q:'W którym roku założono Kijów?',a:['482','988','1240','1648'],correct:0},
                     {q:'Najdłuższa rzeka Ukrainy?',a:['Dniepr','Dniestr','Desna','Południowy Bug'],correct:0},
                     {q:'Ile kolorów ma tęcza?',a:['5','6','7','8'],correct:2},
-                    {q:'Który język ma najwięcej native speakerów?',a:['Angielski','Chiński','Hiszpański','Hindi'],correct:1},
+                    {q:'Który język ma najwięcej rodzimych użytkowników?',a:['Angielski','Chiński','Hiszpański','Hindi'],correct:1},
                     {q:'Kto był pierwszym człowiekiem w kosmosie?',a:['Armstrong','Gagarin','Korolow','Titow'],correct:1},
                     {q:'Ile dni ma rok przestępny?',a:['364','365','366','367'],correct:2},
                     {q:'Który ocean jest największy?',a:['Atlantycki','Indyjski','Spokojny','Arktyczny'],correct:2}
@@ -108,7 +108,7 @@
                 if (score > +(localStorage.getItem('best_quiz') || 0)) localStorage.setItem('best_quiz', '' + score);
                 document.getElementById('question').textContent = L[lang].done;
                 document.getElementById('answers').innerHTML = '';
-                document.getElementById('score').textContent = L[lang].result + ': ' + score + '/' + questions.length + ' | ' + L[lang].best + ': ' + localStorage.getItem('best_quiz') + '/' + questions.length;
+                document.getElementById('score').textContent = L[lang].result + ': ' + score + '/' + questions.length + ' | ' + L[lang].best + ': ' + (localStorage.getItem('best_quiz') || 0) + '/' + questions.length;
                 return;
             }
             
