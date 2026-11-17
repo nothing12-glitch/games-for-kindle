@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Замок Тіней</title>
+    <title>Castle of Shadows</title>
     <style>
         body { font-family: Georgia, serif; padding: 20px; background: #fff; color: #000; max-width: 600px; margin: 0 auto; }
         h1 { font-size: 28px; border-bottom: 2px solid #000; padding-bottom: 10px; }
@@ -103,7 +103,7 @@
         <p>Але ви помічаєте — їжа виглядає дивно. М'ясо... надто червоне. Овочі... рухаються?</p>
         <button class="choice" onclick="showScene(19)">1. З'їсти їжу</button>
         <button class="choice" onclick="showScene(20)">2. Відмовитися і запитати про принцесу</button>
-        <button class="choice" onclick="showScene(14)">3. Втекти на кухню і шукати темницю</button>
+        <button class="choice" onclick="showScene(14)">3. Втекти з кухні і шукати темницю</button>
     </div>
 
     <div id="scene10" class="scene">
@@ -182,7 +182,7 @@
         <p>Ви запитуєте про принцесу. Привиди мовчать. Потім один каже: "Вона в безпеці. Але вона не хоче, щоб її рятували."</p>
         <p>"Чому?" — питаєте ви. "Бо король — лиходій. А маг — її захисник."</p>
         <button class="choice" onclick="showScene(13)">1. Піти до тронної зали</button>
-        <button class="choice" onclick="showScene(29)">3. Повернутися до короля</button>
+        <button class="choice" onclick="showScene(29)">2. Повернутися до короля</button>
     </div>
 
     <div id="scene19" class="scene">
@@ -315,6 +315,139 @@
             if (target) target.className = 'scene active';
             window.scrollTo(0, 0);
         }
+
+        var lang = localStorage.getItem('language') || 'en';
+        var TXT = {
+en:{ti:"Castle of Shadows",sc:[
+["Chapter 1: The Gate","You are Sir Arthur, a knight sent by the king to rescue Princess Isabella, stolen by the black mage Malachis. The castle towers before you, ringed by mist.","The huge oak gates are shut. Beside them a small postern stands half open. On the wall, written in blood: “Whoever enters will not leave.”","Your horse is restless. It will not come near the castle. You feel a strange aura — magic, old and evil.","1. Try to open the main gates","2. Go through the postern","3. Circle the castle and look for another way in"],
+["Chapter 2: The Sentinel","You push the gates. They swing open with a dreadful creak. Before you stands a ghost in knight's armour.","“To pass, answer my riddle,” he says. “What has roots yet never grows, a trunk yet is no tree?”","You think. It is a riddle. The answer may save you... or kill you.","1. Answer: “Lineage”","2. Answer: “A ship”","3. Answer: “Family”"],
+["Chapter 2: The Secret Passage","You slip through the postern into a dark corridor. Your torch lights old frescoes on the walls.","The corridor forks. Right — music. Left — the smell of food. Straight ahead — darkness and cold.","1. Follow the music (right)","2. Follow the smell of food (left)","3. Walk into the darkness (ahead)"],
+["Chapter 2: The Circuit","You go around the castle. The walls are tall, but you find an old tower. It is partly ruined.","You could try to climb the wall. It is dangerous, but possible.","Or you can look for an underground way. At the foot of the tower you see a strange crack in the ground.","1. Climb the tower wall","2. Examine the crack"],
+["Chapter 3: The Right Answer","The ghost nods. “Right. A lineage has roots and a trunk, but is no tree.”","He dissolves into the air. The gates open fully. You enter the castle.","Before you a great courtyard. In the middle, a fountain of black water. Right — the throne hall. Left — the dungeon.","1. Go to the throne hall","2. Go to the dungeon","3. Examine the fountain"],
+["ENDING: The Wrong Answer","The ghost shakes his head. “Wrong. A ship has a mast, not a trunk.”","The floor gives way and you fall into a dark prison. The door slams shut.","In the dark you hear footsteps. Someone is coming...","YOU ARE TRAPPED","Try again","Back to menu"],
+["Chapter 3: Another Answer","The ghost considers. “Family... close, but not quite right. Still, I will accept it.”","He lets you pass. You enter the castle, but the ghost warns you: “Be careful. Not everything here is what it seems.”","1. Go to the throne hall","2. Go to the dungeon"],
+["Chapter 3: The Music","You follow the music. It grows louder. You enter a great hall. There is a feast.","Ghosts sit at the table. They eat and drink and laugh. But their eyes are empty.","One of them raises a goblet. “Join us, knight. Forget the princess. Here it is merry.”","1. Join the feast","2. Refuse and look for the princess","3. Ask about the princess"],
+["Chapter 3: The Food","You follow the smell of food and reach the kitchen. An old cook is there, preparing something strange.","“Ah, a new guest!” he says. “Hungry? Sit down and eat.”","But you notice — the food looks odd. The meat... too red. The vegetables... are they moving?","1. Eat the food","2. Refuse and ask about the princess","3. Flee and look for the dungeon"],
+["Chapter 3: The Darkness","You walk into the darkness. The cold grows stronger. Your torch goes out.","You hear a whisper. “Help us... help...”","Suddenly you see light. A door. Beyond it a room full of beds. In the beds are people. They are asleep.","1. Wake the people","2. Search the room"],
+["Chapter 3: The Tower","You climb the wall. The stone is slick, but you hold on. You reach a window.","Inside, a chamber. On the bed lies... the princess! She is asleep.","But beside her stands the black mage. He is looking at you.","1. Climb in through the window","2. Climb down and look for another way"],
+["Chapter 3: The Underground Way","You descend into the crack. It is an underground passage leading beneath the castle.","You hear voices. Someone is speaking. You creep closer and listen.","“...the princess must stay here. Until the time comes...”","1. Rush in and fight","2. Keep listening"],
+["Chapter 4: The Throne Hall","You enter the throne hall. The black mage Malachis sits on the throne. But the princess stands beside him — she is no captive, she is his pupil!","“I did not steal her,” the mage says. “She fled a forced marriage with the king. I am protecting her.”","The princess looks at you. “Sir Arthur, did Father send you? Tell him I will not come back. I love Malachis.”","1. Accept the truth and help","2. Refuse and try to rescue her by force","3. Return to the king with an answer"],
+["Chapter 4: The Dungeon","You go down into the dungeon. Prisoners are there. Dozens of people, all of them those who came here before you.","One of them is an old knight. “I came here thirty years ago,” he says. “Save the princess, but remember — not everything is what it seems.”","1. Free the prisoners","2. Go to the throne hall"],
+["Chapter 4: The Fountain","You approach the fountain. The water is black, but something glitters in it. You reach your hand out...","It is a medallion. On it a portrait of the princess, and an inscription: “Whoever wears this will see the truth.”","You put on the medallion. The world around you changes. You see the castle as it truly is.","1. Go to the throne hall with the medallion","2. Look for the princess"],
+["ENDING: The Ghosts' Feast","You join the feast. The food is rich, the wine sweet. You forget your mission.","You become one of the ghosts. Forever.","YOU HAVE FORGOTTEN YOUR QUEST","Try again","Back to menu"],
+["Chapter 4: The Refusal","You refuse. The ghosts turn angry. “Then you will die here!” they shout.","You run. They chase you. You find a door and come out into the corridor.","1. Go to the throne hall","2. Go to the dungeon"],
+["Chapter 4: The Question","You ask about the princess. The ghosts are silent. Then one says: “She is safe. But she does not want to be rescued.”","“Why?” you ask. “Because the king is the villain. The mage is her protector.”","1. Go to the throne hall","2. Return to the king"],
+["ENDING: Poisoning","You eat the food. It tastes good. But then the room begins to spin.","The cook laughs. “Another fool. Welcome to the collection.”","You fall asleep. You wake as a prisoner.","YOU HAVE BECOME A PRISONER","Try again","Back to menu"],
+["Chapter 4: The Cook","You refuse. The cook is furious. “Then get out!”","But you ask about the princess. The cook softens. “She is in the throne hall. But be careful — the mage is not what he seems.”","1. Go to the throne hall"],
+["ENDING: The Sleepers","You wake the people. They rise. They are... your predecessors. Knights who came here before you.","They tell you the truth. The princess is safe. The king is the villain.","YOU LEARNED THE TRUTH","Start over","Back to menu"],
+["Chapter 4: The Chamber","You search the room. There are diaries here. All of them left by knights who came this way.","The last entry: “The princess is no captive. She fled the king. The mage is her beloved.”","1. Go to the throne hall","2. Return to the king"],
+["ENDING: The Conversation","You come in through the window. The mage looks at you. “Have you come to kill me?”","The princess wakes. “No! Sir Arthur, don't touch him!”","You understand the truth. The mage is no villain.","YOU FOUND THE TRUTH!","Start over","Back to menu"],
+["Chapter 4: Another Way","You climb down and look for another way. You find an entrance to the castle.","1. Go to the throne hall","2. Go to the dungeon"],
+["ENDING: The Duel","You rush in and fight the mage. But he is stronger. You will lose.","They throw you into the dungeon. Forever.","YOU HAVE LOST","Try again","Back to menu"],
+["Chapter 4: Overheard","You keep listening. The mage says: “...the king wants to use her blood for the ritual. I will not allow it.”","You understand — the mage is shielding the princess from the king.","1. Go to the throne hall","2. Return to the king"],
+["ENDING: The Truth","You accept the truth. You help the princess and the mage escape. They begin a new life.","You return to the king and say the princess is dead. The king grieves, but accepts it.","YOU FOUND THE TRUTH AND HELPED!","Start over","Back to menu"],
+["ENDING: Fight with the Mage","You try to take the princess by force. The mage defends himself. You fight.","The princess screams: “Stop!” You stop. She explains the truth.","YOU UNDERSTOOD THE TRUTH","Start over","Back to menu"],
+["ENDING: The Return","You return to the king. You say the princess is dead. The king is grieved.","But you know the truth. The princess is alive and happy.","YOU KEPT THE SECRET","Start over","Back to menu"],
+["ENDING: The Release","You free the prisoners. They are grateful. Together you go to the throne hall.","The mage looks at you. “Have you come with an army?” You explain. The mage accepts the truth.","YOU FREED THE INNOCENT!","Start over","Back to menu"],
+["ENDING: The Medallion","With the medallion you see the true picture. The mage is no villain. The king is the real monster.","You help the princess. The truth comes to light.","YOU SAW THE TRUTH!","Start over","Back to menu"],
+["ENDING: The Search","You look for the princess. You find her in the garden. She is happy with the mage.","You understand — she does not need rescuing.","YOU FOUND HER HAPPY","Start over","Back to menu"]
+]},
+de:{ti:"Burg der Schatten",sc:[
+["Kapitel 1: Das Tor","Sie sind Sir Arthur, ein Ritter, den der König aussandte, die Prinzessin Isabella zu retten — sie wurde vom schwarzen Magier Malachis entführt. Das Schloss ragt vor Ihnen auf, umgeben von Nebel.","Die gewaltigen Eichentore sind geschlossen. Daneben eine kleine Pforte, halb geöffnet. An der Mauer steht in Blut geschrieben: „Wer hier eintritt, wird nicht mehr herauskommen.“","Ihr Pferd wird unruhig. Es will nicht näher an das Schloss. Sie spüren eine fremde Aura — Magie, alt und böse.","1. Die Haupttore zu öffnen versuchen","2. Durch die Pforte gehen","3. Das Schloss umgehen und einen anderen Eingang suchen"],
+["Kapitel 2: Der Wächter","Sie stoßen die Tore an. Sie öffnen sich mit einem grässlichen Knarren. Vor Ihnen steht ein Geist in Ritterrüstung.","„Wer hindurchwill, beantworte meine Frage“, sagt er. „Was hat Wurzeln und wächst doch nicht? Hat einen Stamm und ist doch kein Baum?“","Sie überlegen. Es ist ein Rätsel. Die Antwort kann Sie retten ... oder töten.","1. Antworten: „Der Stammbaum“","2. Antworten: „Das Schiff“","3. Antworten: „Die Familie“"],
+["Kapitel 2: Der geheime Gang","Sie treten durch die Pforte in einen dunklen Gang. Ihre Fackel erhellt alte Fresken an den Wänden.","Der Gang gabelt sich. Rechts — Musik. Links — Essensgeruch. Geradeaus — Dunkelheit und Kälte.","1. Der Musik folgen (rechts)","2. Dem Essensgeruch folgen (links)","3. In die Dunkelheit gehen (geradeaus)"],
+["Kapitel 2: Der Umweg","Sie umgehen das Schloss. Die Mauern sind hoch, doch Sie finden einen alten Turm. Er ist teilweise zerstört.","Sie könnten versuchen, die Mauer zu erklimmen. Das ist gefährlich, aber möglich.","Oder Sie suchen einen unterirdischen Gang. Am Fuß des Turms sehen Sie einen seltsamen Riss im Boden.","1. Die Turmmauer erklimmen","2. Den Riss untersuchen"],
+["Kapitel 3: Die richtige Antwort","Der Geist nickt. „Richtig. Ein Stammbaum hat Wurzeln und einen Stamm, ist aber kein Baum.“","Er löst sich in Luft auf. Die Tore öffnen sich ganz. Sie betreten das Schloss.","Vor Ihnen ein großer Innenhof. In der Mitte ein Brunnen mit schwarzem Wasser. Rechts: der Thronsaal. Links: das Verlies.","1. Zum Thronsaal gehen","2. Zum Verlies gehen","3. Den Brunnen untersuchen"],
+["ENDE: Die falsche Antwort","Der Geist schüttelt den Kopf. „Falsch. Ein Schiff hat einen Mast, keinen Stamm.“","Der Boden gibt nach, und Sie stürzen in ein dunkles Verlies. Die Tür schließt sich.","In der Dunkelheit hören Sie Schritte. Jemand kommt näher ...","SIE SIND IN DER FALLE","Noch einmal versuchen","Zum Menü"],
+["Kapitel 3: Eine andere Antwort","Der Geist überlegt. „Die Familie ... nahe dran, aber nicht ganz richtig. Doch ich lasse es gelten.“","Er lässt Sie durch. Sie betreten das Schloss, doch der Geist warnt: „Seien Sie vorsichtig. Hier ist nicht alles so, wie es scheint.“","1. Zum Thronsaal gehen","2. Zum Verlies gehen"],
+["Kapitel 3: Die Musik","Sie folgen der Musik. Sie wird lauter. Sie betreten eine große Halle. Dort ist ein Gastmahl.","Am Tisch sitzen Geister. Sie essen, trinken und lachen. Doch ihre Augen sind leer.","Einer hebt seinen Pokal. „Gesell dich zu uns, Ritter. Vergiss die Prinzessin. Hier ist es heiter.“","1. Am Gastmahl teilnehmen","2. Ablehnen und die Prinzessin suchen","3. Nach der Prinzessin fragen"],
+["Kapitel 3: Die Speise","Sie folgen dem Essensgeruch und gelangen in die Küche. Dort steht ein alter Koch und bereitet etwas Seltsames.","„Ah, ein neuer Gast!“, sagt er. „Hunger? Setzen Sie sich, essen Sie.“","Aber Ihnen fällt auf — das Essen sieht seltsam aus. Das Fleisch ... zu rot. Das Gemüse ... bewegt es sich?","1. Das Essen verzehren","2. Ablehnen und nach der Prinzessin fragen","3. Fliehen und das Verlies suchen"],
+["Kapitel 3: Die Dunkelheit","Sie gehen in die Dunkelheit. Die Kälte nimmt zu. Ihre Fackel erlischt.","Sie hören ein Flüstern. „Hilf uns ... hilf ...“","Plötzlich sehen Sie Licht. Eine Tür. Dahinter ein Raum mit Betten. In den Betten liegen Menschen. Sie schlafen.","1. Die Menschen wecken","2. Den Raum untersuchen"],
+["Kapitel 3: Der Turm","Sie klettern die Mauer empor. Der Stein ist glatt, doch Sie halten sich. Sie erreichen ein Fenster.","Drinnen ein Gemach. Auf dem Bett liegt ... die Prinzessin! Sie schläft.","Aber daneben steht der schwarze Magier. Er sieht Sie an.","1. Durch das Fenster eintreten","2. Hinabsteigen und einen anderen Weg suchen"],
+["Kapitel 3: Der unterirdische Gang","Sie steigen in den Riss hinab. Es ist ein unterirdischer Gang, der unter das Schloss führt.","Sie hören Stimmen. Jemand spricht. Sie schleichen näher und lauschen.","„...die Prinzessin muss hier bleiben. Bis die Zeit gekommen ist ...“","1. Hineingehen und kämpfen","2. Weiter belauschen"],
+["Kapitel 4: Der Thronsaal","Sie betreten den Thronsaal. Der schwarze Magier Malachis sitzt auf dem Thron. Doch die Prinzessin steht neben ihm — sie ist keine Gefangene, sie ist seine Schülerin!","„Ich habe sie nicht entführt“, sagt der Magier. „Sie floh vor einer erzwungenen Ehe mit dem König. Ich schütze sie.“","Die Prinzessin sieht Sie an. „Sir Arthur, hat Papa Sie geschickt? Sagen Sie ihm, dass ich nicht zurückkehre. Ich liebe Malachis.“","1. Die Wahrheit annehmen und helfen","2. Ablehnen und versuchen, sie mit Gewalt zu retten","3. Mit einer Antwort zum König zurückkehren"],
+["Kapitel 4: Das Verlies","Sie steigen ins Verlies hinab. Dort sind Gefangene. Dutzende von Menschen — all jene, die zuvor hierher kamen.","Einer von ihnen ist ein alter Ritter. „Ich kam vor dreißig Jahren hierher“, sagt er. „Rette die Prinzessin, aber denk daran — nicht alles ist so, wie es scheint.“","1. Die Gefangenen befreien","2. Zum Thronsaal gehen"],
+["Kapitel 4: Der Brunnen","Sie treten an den Brunnen. Das Wasser ist schwarz, aber etwas glitzert darin. Sie strecken die Hand hin ...","Es ist ein Medaillon. Darauf ein Bildnis der Prinzessin und die Schrift: „Wer dies trägt, wird die Wahrheit sehen.“","Sie legen das Medaillon an. Die Welt um Sie verändert sich. Sie sehen das wahre Bild des Schlosses.","1. Mit dem Medaillon zum Thronsaal gehen","2. Die Prinzessin suchen"],
+["ENDE: Das Mahl der Geister","Sie nehmen am Gastmahl teil. Das Essen ist gut, der Wein süß. Sie vergessen Ihre Aufgabe.","Sie werden einer der Geister. Für immer.","SIE HABEN IHRE AUFGABE VERGESSEN","Noch einmal versuchen","Zum Menü"],
+["Kapitel 4: Die Absage","Sie lehnen ab. Die Geister werden zornig. „Dann wirst du hier sterben!“, rufen sie.","Sie rennen. Sie verfolgen Sie. Sie finden eine Tür und gelangen auf den Gang hinaus.","1. Zum Thronsaal gehen","2. Zum Verlies gehen"],
+["Kapitel 4: Die Frage","Sie fragen nach der Prinzessin. Die Geister schweigen. Dann sagt einer: „Sie ist in Sicherheit. Aber sie will nicht gerettet werden.“","„Warum?“, fragen Sie. „Weil der König der Bösewicht ist. Der Magier ist ihr Beschützer.“","1. Zum Thronsaal gehen","2. Zum König zurückkehren"],
+["ENDE: Die Vergiftung","Sie essen. Es schmeckt gut. Doch dann dreht sich alles.","Der Koch lacht. „Wieder ein Narr. Willkommen in der Sammlung.“","Sie schlafen ein. Sie erwachen als Gefangener.","SIE SIND EIN GEFANGENER","Noch einmal versuchen","Zum Menü"],
+["Kapitel 4: Der Koch","Sie lehnen ab. Der Koch wird wütend. „Dann verschwinden Sie!“","Doch Sie fragen nach der Prinzessin. Der Koch wird milder. „Sie ist im Thronsaal. Aber seien Sie vorsichtig — der Magier ist nicht so, wie er scheint.“","1. Zum Thronsaal gehen"],
+["ENDE: Die Schlafenden","Sie wecken die Menschen. Sie erwachen. Es sind ... Ihre Vorgänger. Ritter, die vor Ihnen hierher kamen.","Sie erzählen Ihnen die Wahrheit. Die Prinzessin ist in Sicherheit. Der König ist der Bösewicht.","SIE ERFAHREN DIE WAHRHEIT","Von vorn beginnen","Zum Menü"],
+["Kapitel 4: Das Gemach","Sie untersuchen den Raum. Hier liegen Tagebücher. Alle von Rittern, die hierher kamen.","Der letzte Eintrag: „Die Prinzessin ist keine Gefangene. Sie floh vor dem König. Der Magier ist ihr Geliebter.“","1. Zum Thronsaal gehen","2. Zum König zurückkehren"],
+["ENDE: Das Gespräch","Sie steigen durch das Fenster ein. Der Magier sieht Sie an. „Sind Sie gekommen, um mich zu töten?“","Die Prinzessin erwacht. „Nein! Sir Arthur, fassen Sie ihn nicht an!“","Sie verstehen die Wahrheit. Der Magier ist kein Bösewicht.","SIE HABEN DIE WAHRHEIT GEFUNDEN!","Von vorn beginnen","Zum Menü"],
+["Kapitel 4: Ein anderer Weg","Sie steigen hinab und suchen einen anderen Weg. Sie finden einen Eingang zum Schloss.","1. Zum Thronsaal gehen","2. Zum Verlies gehen"],
+["ENDE: Der Kampf","Sie stürmen hinein und kämpfen gegen den Magier. Aber er ist stärker. Sie verlieren.","Man wirft Sie ins Verlies. Für immer.","SIE HABEN VERLOREN","Noch einmal versuchen","Zum Menü"],
+["Kapitel 4: Belauscht","Sie lauschen weiter. Der Magier spricht: „...der König will ihr Blut für das Ritual nutzen. Ich werde es nicht zulassen.“","Sie verstehen — der Magier schützt die Prinzessin vor dem König.","1. Zum Thronsaal gehen","2. Zum König zurückkehren"],
+["ENDE: Die Wahrheit","Sie nehmen die Wahrheit an. Sie helfen der Prinzessin und dem Magier zur Flucht. Sie beginnen ein neues Leben.","Sie kehren zum König zurück und sagen, die Prinzessin sei tot. Der König trauert, doch er fügt sich.","SIE HABEN DIE WAHRHEIT GEFUNDEN UND GEHOLFEN!","Von vorn beginnen","Zum Menü"],
+["ENDE: Kampf mit dem Magier","Sie versuchen, die Prinzessin mit Gewalt zu holen. Der Magier wehrt sich. Sie kämpfen.","Die Prinzessin ruft: „Haltet ein!“ Sie halten inne. Sie erklärt die Wahrheit.","SIE VERSTEHEN DIE WAHRHEIT","Von vorn beginnen","Zum Menü"],
+["ENDE: Die Heimkehr","Sie kehren zum König zurück. Sie sagen, die Prinzessin sei tot. Der König ist betrübt.","Aber Sie kennen die Wahrheit. Die Prinzessin lebt und ist glücklich.","SIE HÜTEN DAS GEHEIMNIS","Von vorn beginnen","Zum Menü"],
+["ENDE: Die Befreiung","Sie befreien die Gefangenen. Sie sind dankbar. Gemeinsam gehen Sie zum Thronsaal.","Der Magier sieht Sie an. „Kommen Sie mit einem Heer?“ Sie erklären es. Der Magier nimmt die Wahrheit an.","SIE HABEN DIE UNSCHULDIGEN BEFREIT!","Von vorn beginnen","Zum Menü"],
+["ENDE: Das Medaillon","Mit dem Medaillon sehen Sie das wahre Bild. Der Magier ist kein Bösewicht. Der König ist das eigentliche Monster.","Sie helfen der Prinzessin. Die Wahrheit kommt ans Licht.","SIE HABEN DIE WAHRHEIT GESEHEN!","Von vorn beginnen","Zum Menü"],
+["ENDE: Die Suche","Sie suchen die Prinzessin. Sie finden sie im Garten. Sie ist glücklich mit dem Magier.","Sie verstehen — sie braucht keine Rettung.","SIE HABEN SIE GLÜCKLICH GEFUNDEN","Von vorn beginnen","Zum Menü"]
+]},
+pl:{ti:"Zamek Cieni",sc:[
+["Rozdział 1: Brama","Jesteś rycerzem, ser Arturem, wysłanym przez króla, by uratować księżniczkę Izabelę, porwaną przez czarnoksiężnika Malachisa. Zamek wznosi się przed tobą, otoczony mgłą.","Ogromne dębowe wrota są zamknięte. Obok — mała furtka, na wpół otwarta. Na murze napis krwią: „Kto wejdzie, ten nie wyjdzie.”","Twój koń jest niespokojny. Nie chce zbliżać się do zamku. Czujesz dziwną aurę — magię, starą i złą.","1. Próbować otworzyć główną bramę","2. Przejść przez furtkę","3. Obejść zamek i szukać innego wejścia"],
+["Rozdział 2: Strażnik","Pychasz wrota. Otwierają się z przeraźliwym skrzypieniem. Przed tobą stoi zjawa w rycerskiej zbroi.","„Chcesz przejść — odpowiedz na moje pytanie“ — mówi. „Co ma korzenie, ale nie rośnie? Ma pień, ale nie jest drzewem?”","Myślisz. To zagadka. Odpowiedź może cię uratować... albo zabić.","1. Odpowiedzieć: „Rodowód”","2. Odpowiedzieć: „Statek”","3. Odpowiedzieć: „Rodzina”"],
+["Rozdział 2: Tajne przejście","Przechodzisz przez furtkę i trafiasz do ciemnego korytarza. Płomień pochodni oświetla stare freski na ścianach.","Korytarz rozgałęzia się. W prawo — słychać muzykę. W lewo — zapach jedzenia. Prosto — ciemność i chłód.","1. Iść za muzyką (w prawo)","2. Iść za zapachem jedzenia (w lewo)","3. Iść w ciemność (prosto)"],
+["Rozdział 2: Obejście","Obchodzisz zamek. Mury są wysokie, ale znajdujesz starą wieżę. Jest częściowo zrujnowana.","Możesz spróbować wspiąć się po murze. To niebezpieczne, ale możliwe.","Albo możesz szukać podziemnego przejścia. U podstawy wieży dostrzegasz dziwną szczelinę w ziemi.","1. Wspiąć się po murze wieży","2. Zbadać szczelinę"],
+["Rozdział 3: Poprawna odpowiedź","Zjawa kiwa głową. „Dobrze. Rodowód ma korzenie i pień, ale drzewem nie jest.”","Rozprasza się w powietrzu. Wrota otwierają się na oścież. Wchodzisz do zamku.","Przed tobą wielki dziedziniec. Pośrodku — fontanna z czarną wodą. W prawo — sala tronowa. W lewo — lochy.","1. Iść do sali tronowej","2. Iść do lochów","3. Zbadać fontannę"],
+["FINAŁ: Zła odpowiedź","Zjawa kręci głową. „Źle. Statek ma maszt, nie pień.”","Podłoga zapada się, i spadasz do mrocznego więzienia. Drzwi zamykają się.","W ciemności słyszysz kroki. Ktoś się zbliża...","WPADŁEŚ W PUŁAPKĘ","Spróbuj ponownie","Do menu"],
+["Rozdział 3: Inna odpowiedź","Zjawa się zastanawia. „Rodzina... blisko, ale nie do końca trafnie. Jednak to zaakceptuję.”","Przepuszcza cię. Wchodzisz do zamku, ale zjawa ostrzega: „Bądź ostrożny. Nie wszystko tutaj jest takie, jakim się wydaje.”","1. Iść do sali tronowej","2. Iść do lochów"],
+["Rozdział 3: Muzyka","Idziesz za muzyką. Staje się głośniejsza. Wchodzisz do wielkiej sali. Tam trwa uczta.","Przy stole siedzą zjawy. Jedzą, piją, śmieją się. Ale ich oczy są puste.","Jedna z nich unosi puchar. „Przyłącz się do nas, rycerzu. Zapomnij o księżniczce. Tutaj jest wesoło.”","1. Przyłączyć się do uczty","2. Odmówić i szukać księżniczki","3. Zapytać o księżniczkę"],
+["Rozdział 3: Jedzenie","Idziesz za zapachem jedzenia i trafiajesz do kuchni. Tam stary kucharz przyrządza coś dziwnego.","„A, nowy gość!“ — mówi. „Głodny? Siadaj, zjedz coś.”","Ale zauważasz — jedzenie wygląda dziwnie. Mięso... zbyt czerwone. Warzywa... one się ruszają?","1. Zjeść posiłek","2. Odmówić i zapytać o księżniczkę","3. Uciekać i szukać lochów"],
+["Rozdział 3: Ciemność","Idziesz w ciemność. Chłód narasta. Twoja pochodnia gaśnie.","Słyszysz szept. „Pomóż nam... pomóż...”","Nagle dostrzegasz światło. To drzwi. Za nimi — pokój z łóżkami. W łóżkach leżą ludzie. Śpią.","1. Obudzić ludzi","2. Zbadać pokój"],
+["Rozdział 3: Wieża","Wspinasz się po murze. Kamień jest śliski, ale trzymasz się. Docierasz do okna.","W środku — komnata. Na łóżku leży... księżniczka! Śpi.","Ale obok stoi czarnoksiężnik. Patrzy na ciebie.","1. Wejść przez okno","2. Zejść i szukać innej drogi"],
+["Rozdział 3: Podziemne przejście","Schodzisz do szczeliny. To podziemne przejście. Prowadzi pod zamkiem.","Słyszysz głosy. Ktoś mówi. Podkradzasz się i podsłuchujesz.","„...księżniczka musi tu zostać. Aż nadejdzie czas...”","1. Wejść i stanąć do walki","2. Nadal podsłuchiwać"],
+["Rozdział 4: Sala tronowa","Wchodzisz do sali tronowej. Czarnoksiężnik Malachis siedzi na tronie. Ale księżniczka stoi obok — nie jest jeńcem, jest jego uczennicą!","„Nie porwałem jej“ — mówi czarnoksiężnik. „Uciekła przed przymusowym małżeństwem z królem. Ja ją chronię.”","Księżniczka patrzy na ciebie. „Ser Arturze, tato cię wysłał? Powiedz mu, że nie wrócę. Kocham Malachisa.”","1. Przyjąć prawdę i pomóc","2. Odmówić i próbować uratować siłą","3. Wrócić do króla z odpowiedzią"],
+["Rozdział 4: Lochy","Schodzisz do lochów. Są tam więźniowie. Dziesiątki ludzi — wszyscy, którzy przybywali tu wcześniej.","Jeden z nich to stary rycerz. „Przybyłem tu trzydzieści lat temu“ — mówi. „Ratuj księżniczkę, ale pamiętaj — nie wszystko jest takie, jakim się wydaje.”","1. Uwolnić więźniów","2. Iść do sali tronowej"],
+["Rozdział 4: Fontanna","Podchodzisz do fontanny. Woda jest czarna, ale coś w niej błyszczy. Sięgasz ręką...","To medalion. Na nim portret księżniczki i napis: „Kto to nosi, ten zobaczy prawdę.”","Zakładasz medalion. Świat wokół ciebie się zmienia. Widzisz prawdziwy obraz zamku.","1. Iść do sali tronowej z medalionem","2. Szukać księżniczki"],
+["FINAŁ: Uczta zjaw","Przyłączasz się do uczty. Jedzenie jest smaczne, wino słodkie. Zapominasz o misji.","Stajesz się jedną ze zjaw. Na zawsze.","ZAPOMNIAŁEŚ O MISJI","Spróbuj ponownie","Do menu"],
+["Rozdział 4: Odmowa","Odmawiasz. Zjawy się gniewają. „To tutaj umrzesz!“ — krzyczą.","Uciekasz. Gonią cię. Znajdujesz drzwi i wychodzisz na korytarz.","1. Iść do sali tronowej","2. Iść do lochów"],
+["Rozdział 4: Pytanie","Pytasz o księżniczkę. Zjawy milczą. Potem jedna mówi: „Jest bezpieczna. Ale nie chce, żeby ją ratowano.”","„Dlaczego?“ — pytasz. „Bo król jest złoczyńcą. A czarnoksiężnik jej obrońcą.”","1. Iść do sali tronowej","2. Wrócić do króla"],
+["FINAŁ: Zatrucie","Jesz. Jedzenie jest smaczne. Ale potem czujesz zawrót głowy.","Kucharz śmieje się. „Kolejny głupiec. Witamy w kolekcji.”","Zasypiasz. Budzisz się jako więzień.","STAŁEŚ SIĘ WIĘZNIEM","Spróbuj ponownie","Do menu"],
+["Rozdział 4: Kucharz","Odmawiasz. Kucharz wpada w złość. „To wynoś się stąd!“","Ale pytasz o księżniczkę. Kucharz mięknie. „Jest w sali tronowej. Ale bądź ostrożny — czarnoksiężnik nie jest taki, jakim się wydaje.”","1. Iść do sali tronowej"],
+["FINAŁ: Śpiący","Budzisz ludzi. Przebudzają się. To... twoi poprzednicy. Rycerze, którzy przybywali tu przed tobą.","Opowiadają ci prawdę. Księżniczka jest bezpieczna. Król jest złoczyńcą.","POZNAŁEŚ PRAWDĘ","Zacząć od nowa","Do menu"],
+["Rozdział 4: Komnata","Przeszukujesz pokój. Są tu dzienniki. Wszystkie po rycerzach, którzy tu przybywali.","Ostatni wpis: „Księżniczka nie jest jeńcem. Uciekła od króla. Czarnoksiężnik jest jej umiłowanym.”","1. Iść do sali tronowej","2. Wrócić do króla"],
+["FINAŁ: Rozmowa","Wchodzisz przez okno. Czarnoksiężnik patrzy na ciebie. „Przyszedłeś mnie zabić?”","Księżniczka się budzi. „Nie! Ser Arturze, nie tknij go!“","Rozumiesz prawdę. Czarnoksiężnik nie jest złoczyńcą.","ODNALEŚ PRAWDĘ!","Zacząć od nowa","Do menu"],
+["Rozdział 4: Inna droga","Schodzisz w dół i szukasz innej drogi. Znajdujesz wejście do zamku.","1. Iść do sali tronowej","2. Iść do lochów"],
+["FINAŁ: Walka","Wbiegasz i walczysz z czarnoksiężnikiem. Ale jest silniejszy. Przegrasz.","Wtrącają cię do lochów. Na zawsze.","PRZEGRAŁEŚ","Spróbuj ponownie","Do menu"],
+["Rozdział 4: Podsłuchanie","Nadal podsłuchujesz. Czarnoksiężnik mówi: „...król chce użyć jej krwi do rytuału. Na to nie pozwolę.”","Rozumiesz — czarnoksiężnik chroni księżniczkę przed królem.","1. Iść do sali tronowej","2. Wrócić do króla"],
+["FINAŁ: Prawda","Akceptujesz prawdę. Pomagasz księżniczce i czarnoksiężnikowi uciec. Zaczynają nowe życie.","Wracasz do króla i mówisz, że księżniczka nie żyje. Król jest pogrążony w żalu, ale to akceptuje.","ODNALEŚ PRAWDĘ I POMOGŁEŚ!","Zacząć od nowa","Do menu"],
+["FINAŁ: Walka z czarnoksiężnikiem","Próbujesz uratować księżniczkę siłą. Czarnoksiężnik się broni. Walczycie.","Księżniczka krzyczy: „Przestańcie!“ Zatrzymujecie się. Ona wyjaśnia prawdę.","POJĄŁEŚ PRAWDĘ","Zacząć od nowa","Do menu"],
+["FINAŁ: Powrót","Wracasz do króla. Mówisz, że księżniczka nie żyje. Król jest pogrążony w smutku.","Ale znasz prawdę. Księżniczka żyje i jest szczęśliwa.","OCHRONIŁEŚ TAJEMNICĘ","Zacząć od nowa","Do menu"],
+["FINAŁ: Wyzwolenie","Uwalniasz więźniów. Są wdzięczni. Razem idziecie do sali tronowej.","Czarnoksiężnik patrzy na ciebie. „Przyszedłeś z armią?“ Wyjaśniasz. Czarnoksiężnik przyjmuje prawdę.","WYZWOLIŁEŚ NIEWINNYCH!","Zacząć od nowa","Do menu"],
+["FINAŁ: Medalion","Z medalionem widzisz prawdziwy obraz. Czarnoksiężnik nie jest złoczyńcą. Król jest prawdziwym potworem.","Pomagasz księżniczce. Prawda wychodzi na światło.","ZOBACZYŁEŚ PRAWDĘ!","Zacząć od nowa","Do menu"],
+["FINAŁ: Poszukiwania","Szukasz księżniczki. Znajdujesz ją w ogrodzie. Jest szczęśliwa z czarnoksiężnikiem.","Rozumiesz — ona nie potrzebuje ratunku.","ODNALEŚ JĄ SZCZĘŚLIWĄ","Zacząć od nowa","Do menu"]
+]}
+        };
+
+        function leaves(scene) {
+            var out = [], kids = scene.childNodes, i, el, cls;
+            for (i = 0; i < kids.length; i++) {
+                el = kids[i];
+                if (el.nodeType !== 1) continue;
+                cls = el.className || '';
+                if (cls === 'status' || cls === 'final' || cls === 'back-btn' || el.tagName === 'P' || el.tagName === 'BUTTON') out.push(el);
+            }
+            return out;
+        }
+
+        function applyLang() {
+            var t = TXT[lang];
+            if (!t) return;
+            document.title = t.ti;
+            var h = document.getElementsByTagName('h1')[0];
+            if (h) h.textContent = t.ti;
+            var scenes = document.querySelectorAll('.scene');
+            for (var i = 0; i < scenes.length && i < t.sc.length; i++) {
+                var lf = leaves(scenes[i]), a = t.sc[i];
+                for (var j = 0; j < lf.length && j < a.length; j++) lf[j].textContent = a[j];
+            }
+            document.documentElement.lang = lang;
+        }
+
+        applyLang();
     </script>
 </body>
 </html>
