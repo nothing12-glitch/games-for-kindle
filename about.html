@@ -38,6 +38,8 @@
             border-radius: 5px;
             box-shadow: 3px 3px 0px #000;
         }
+        .language-selector { text-align: right; margin-bottom: 10px; }
+        .language-selector select { font-size: 18px; padding: 8px 12px; min-height: 44px; border: 2px solid #000; background: #fff; }
         .back-btn:hover { background: #bbb; }
         .highlight {
             background: #f0f0f0;
@@ -50,78 +52,270 @@
 </head>
 <body>
 
-    <h1>About Kindle Games</h1>
+    <div class="language-selector">
+        <select onchange="changeLanguage(this.value)">
+            <option value="en" id="lang-en" selected>English</option>
+            <option value="uk" id="lang-uk">Українська</option>
+            <option value="de" id="lang-de">Deutsch</option>
+            <option value="pl" id="lang-pl">Polski</option>
+        </select>
+    </div>
+
+    <h1 data-t="h1">About Kindle Games</h1>
     
-    <p>This project was created for Kindle enthusiasts who want to enjoy games on their e-ink devices during breaks from reading.</p>
+    <p data-t="intro">This project was created for Kindle enthusiasts who want to enjoy games on their e-ink devices during breaks from reading.</p>
 
-    <h2>What is this?</h2>
-    <p>Kindle Games is a collection of browser-based games optimized for Amazon Kindle devices. All games work directly in the Kindle's experimental browser - no installation required!</p>
+    <h2 data-t="what_h">What is this?</h2>
+    <p data-t="what_p">Kindle Games is a collection of browser-based games optimized for Amazon Kindle devices. All games work directly in the Kindle's experimental browser - no installation required!</p>
 
-    <h2>Supported Devices</h2>
+    <h2 data-t="dev_h">Supported Devices</h2>
     <ul>
-        <li><strong>Old Kindle</strong> (with physical buttons): Text quests, quizzes, and puzzle games that work without JavaScript</li>
-        <li><strong>New Kindle</strong> (touchscreen): All games including Sudoku, Chess, 2048, Snake, Tetris and more</li>
-        <li><strong>Kindle Paperwhite</strong>, <strong>Kindle Oasis</strong>, <strong>Kindle Scribe</strong> - all supported!</li>
+        <li data-t="dev_li1"><strong>Old Kindle</strong> (with physical buttons): Text quests, quizzes, and puzzle games that work without JavaScript</li>
+        <li data-t="dev_li2"><strong>New Kindle</strong> (touchscreen): All games including Sudoku, Chess, Checkers, Reversi, 2048, Snake, Tetris and more</li>
+        <li data-t="dev_li3"><strong>Kindle Paperwhite</strong>, <strong>Kindle Oasis</strong>, <strong>Kindle Scribe</strong> - all supported!</li>
     </ul>
 
-    <h2>How to Play</h2>
+    <h2 data-t="how_h">How to Play</h2>
     <div class="highlight">
-        <strong>For New Kindle (touchscreen):</strong>
+        <strong data-t="hownew_s">For New Kindle (touchscreen):</strong>
         <ol>
-            <li>Open the browser on your Kindle</li>
-            <li>Navigate to this website</li>
-            <li>Select "New Kindle"</li>
-            <li>Choose a game and enjoy!</li>
+            <li data-t="hownew1">Open the browser on your Kindle</li>
+            <li data-t="hownew2">Navigate to this website</li>
+            <li data-t="hownew3">Select "New Kindle"</li>
+            <li data-t="hownew4">Choose a game and enjoy!</li>
         </ol>
     </div>
 
     <div class="highlight">
-        <strong>For Old Kindle (with buttons):</strong>
+        <strong data-t="howold_s">For Old Kindle (with buttons):</strong>
         <ol>
-            <li>Open the browser (Menu → Experimental Browser)</li>
-            <li>Navigate to this website</li>
-            <li>Select "Old Kindle"</li>
-            <li>Use the 5-way controller to navigate</li>
-            <li>Press center button to select</li>
+            <li data-t="howold1">Open the browser (Menu → Experimental Browser)</li>
+            <li data-t="howold2">Navigate to this website</li>
+            <li data-t="howold3">Select "Old Kindle"</li>
+            <li data-t="howold4">Use the 5-way controller to navigate</li>
+            <li data-t="howold5">Press center button to select</li>
         </ol>
     </div>
 
-    <h2>Features</h2>
+    <h2 data-t="feat_h">Features</h2>
     <ul>
-        <li>✅ 25+ games across different genres</li>
-        <li>✅ 4 languages: English, Ukrainian, German, Polish (menus and all New Kindle games)</li>
-        <li>✅ Optimized for E-Ink displays</li>
-        <li>✅ No installation required</li>
-        <li>✅ Works offline after first load</li>
-        <li>✅ Free and open source</li>
+        <li data-t="feat1">✅ 25+ games across different genres</li>
+        <li data-t="feat2">✅ 4 languages: English, Ukrainian, German, Polish (menus, the New Kindle games and all six text quests)</li>
+        <li data-t="feat3">✅ Optimized for E-Ink displays</li>
+        <li data-t="feat4">✅ No installation required</li>
+        <li data-t="feat5">✅ Works offline after first load</li>
+        <li data-t="feat6">✅ Free and open source</li>
     </ul>
 
-    <h2>Games List</h2>
-    <h3>For New Kindle:</h3>
+    <h2 data-t="list_h">Games List</h2>
+    <h3 data-t="lst_new_h3">For New Kindle:</h3>
     <ul>
-        <li>Sudoku, Chess, Checkers, Reversi, Connect Four, Battleship, Tic-Tac-Toe</li>
-        <li>Minesweeper, Puzzle 15, 2048, Tetris, Snake, Memory, Lights Out, Simon</li>
-        <li>Hangman, Word Guess, Quiz, Reaction Test</li>
-        <li>Text Quests: Lighthouse Mystery, Space Station, Castle of Shadows, Detective Case #47, Shipwreck Survival, Train No. 7 "Comet"</li>
+        <li data-t="lstnew1">Sudoku, Chess, Checkers, Reversi, Connect Four, Battleship, Tic-Tac-Toe</li>
+        <li data-t="lstnew2">Minesweeper, Puzzle 15, 2048, Tetris, Snake, Memory, Lights Out, Simon</li>
+        <li data-t="lstnew3">Hangman, Word Guess, Quiz, Reaction Test</li>
+        <li data-t="lstnew4">Text Quests: Lighthouse Mystery, Space Station, Castle of Shadows, Detective Case #47, Shipwreck Survival, Train No. 7 "Comet"</li>
     </ul>
 
-    <h3>For Old Kindle:</h3>
+    <h3 data-t="lst_old_h3">For Old Kindle:</h3>
     <ul>
-        <li>Text Quests (all 6 stories, 12-32 scenes each)</li>
-        <li>World Capitals Quiz</li>
-        <li>Maze Adventure</li>
-        <li>Book of Riddles (10 riddles with JavaScript, 5 as separate pages without it)</li>
+        <li data-t="lstold1">Text Quests (all 6 stories, 12-32 scenes each)</li>
+        <li data-t="lstold2">World Capitals Quiz</li>
+        <li data-t="lstold3">Maze Adventure</li>
+        <li data-t="lstold4">Book of Riddles (10 riddles with JavaScript, 5 as separate pages without it)</li>
     </ul>
 
-    <h2>Found a Bug?</h2>
-    <p>If you found a bug or have suggestions for new games, please email: <a href="mailto:workingnothing12.github@gmail.com">workingnothing12.github@gmail.com</a></p>
+    <h2 data-t="bug_h">Found a Bug?</h2>
+    <p data-t="bug_p">If you found a bug or have suggestions for new games, please email: <a href="mailto:workingnothing12.github@gmail.com">workingnothing12.github@gmail.com</a></p>
 
-    <h2>License</h2>
-    <p>This project is open source and available on GitHub: <a href="https://github.com/nothing12-glitch/games-for-kindle">github.com/nothing12-glitch/games-for-kindle</a></p>
+    <h2 data-t="lic_h">License</h2>
+    <p data-t="lic_p">This project is open source and available on GitHub: <a href="https://github.com/nothing12-glitch/games-for-kindle">github.com/nothing12-glitch/games-for-kindle</a></p>
 
-    <p style="text-align: center; margin-top: 40px; font-style: italic;">Made with ❤️ for Kindle lovers</p>
+    <p style="text-align: center; margin-top: 40px; font-style: italic;" data-t="made_p">Made with ❤️ for Kindle lovers</p>
 
-    <a href="index.html" class="back-btn">← Back to Home</a>
+    <a href="index.html" class="back-btn" data-t="back">← Back to Home</a>
 
+
+<script>
+        var lang = localStorage.getItem('language') || 'en';
+
+        // English is the inline no-JS fallback and gets cached, so switching back to
+        // it restores the original markup without a duplicated English table.
+        var nodes = document.querySelectorAll('[data-t]');
+        var ORIG = {}, i;
+        for (i = 0; i < nodes.length; i++) {
+            ORIG[nodes[i].getAttribute('data-t')] = nodes[i].innerHTML;
+        }
+
+        var AB = {
+            uk: {
+                h1: "Про Ігри для Kindle",
+                intro: "Цей проєкт створено для любителів Kindle, які хочуть грати на своїх E-Ink пристроях під час перерв від читання.",
+                what_h: "Що це таке?",
+                what_p: "Ігри для Kindle — це добірка браузерних ігор, оптимізованих для пристроїв Amazon Kindle. Усі ігри працюють безпосередньо в експериментальному браузері Kindle — встановлення не потрібне!",
+                dev_h: "Підтримувані пристрої",
+                dev_li1: "<strong>Старий Kindle</strong> (з фізичними кнопками): текстові квісти, вікторини та головоломки, що працюють без JavaScript",
+                dev_li2: "<strong>Новий Kindle</strong> (сенсорний): усі ігри, зокрема Судоку, Шахи, Шашки, Реверсі, 2048, Змійка та Тетріс",
+                dev_li3: "<strong>Kindle Paperwhite</strong>, <strong>Kindle Oasis</strong>, <strong>Kindle Scribe</strong> — усі підтримуються!",
+                how_h: "Як грати",
+                hownew_s: "Для нового Kindle (сенсорний):",
+                hownew1: "Відкрийте браузер на вашому Kindle",
+                hownew2: "Перейдіть на цей сайт",
+                hownew3: "Оберіть «Новий Kindle»",
+                hownew4: "Виберіть гру та насолоджуйтесь!",
+                howold_s: "Для старого Kindle (з кнопками):",
+                howold1: "Відкрийте браузер (Menu → Experimental Browser)",
+                howold2: "Перейдіть на цей сайт",
+                howold3: "Оберіть «Старий Kindle»",
+                howold4: "Навігуйте за допомогою 5-спрямового контролера",
+                howold5: "Натисніть центральну кнопку, щоб вибрати",
+                feat_h: "Можливості",
+                feat1: "✅ 25+ ігор у різних жанрах",
+                feat2: "✅ 4 мови: англійська, українська, німецька, польська (меню, усі ігри для нового Kindle та всі шість текстових квітів)",
+                feat3: "✅ Оптимізовано для E-Ink дисплеїв",
+                feat4: "✅ Встановлення не потрібне",
+                feat5: "✅ Працює офлайн після першого завантаження",
+                feat6: "✅ Безкоштовно та з відкритим кодом",
+                list_h: "Список ігор",
+                lst_new_h3: "Для нового Kindle:",
+                lstnew1: "Судоку, Шахи, Шашки, Реверсі, Чотири в ряд, Морський бій, Хрестики-нулики",
+                lstnew2: "Сапер, П'ятнашки, 2048, Тетріс, Змійка, Пам'ять, Lights Out, Саймон",
+                lstnew3: "Вішальник, Вгадай слово, Вікторина, Тест реакції",
+                lstnew4: "Текстові квісти: Таємниця маяка, Космічна станція «Оріон», Замок Тіней, Справа №47, Корабельна аварія, Поїзд №7 «Комета»",
+                lst_old_h3: "Для старого Kindle:",
+                lstold1: "Текстові квісти (усі 6 сюжетів, по 12–32 сцени)",
+                lstold2: "Вікторина «Столиці світу»",
+                lstold3: "Пригода в лабіринті",
+                lstold4: "Книга загадок (10 загадок із JavaScript, 5 — окремими сторінками без нього)",
+                bug_h: "Знайшли помилку?",
+                bug_p: "Якщо ви знайшли помилку або маєте пропозиції щодо нових ігор, напишіть: <a href=\"mailto:workingnothing12.github@gmail.com\">workingnothing12.github@gmail.com</a>",
+                lic_h: "Ліцензія",
+                lic_p: "Цей проєкт має відкритий код і доступний на GitHub: <a href=\"https://github.com/nothing12-glitch/games-for-kindle\">github.com/nothing12-glitch/games-for-kindle</a>",
+                made_p: "Створено з ❤️ для любителів Kindle",
+                back: "← На головну"
+            },
+            de: {
+                h1: "Über Kindle Spiele",
+                intro: "Dieses Projekt wurde für Kindle-Fans erstellt, die in Lesepausen auf ihrem E-Ink-Gerät spielen möchten.",
+                what_h: "Was ist das?",
+                what_p: "Kindle Spiele ist eine Sammlung von Browser-Spielen, optimiert für Amazon-Kindle-Geräte. Alle Spiele laufen direkt im experimentellen Browser des Kindle — keine Installation nötig!",
+                dev_h: "Unterstützte Geräte",
+                dev_li1: "<strong>Alter Kindle</strong> (mit physischen Tasten): Textabenteuer, Quizze und Knobelspiele, die ohne JavaScript funktionieren",
+                dev_li2: "<strong>Neuer Kindle</strong> (Touchscreen): alle Spiele einschließlich Sudoku, Schach, Dame, Reversi, 2048, Snake und Tetris",
+                dev_li3: "<strong>Kindle Paperwhite</strong>, <strong>Kindle Oasis</strong>, <strong>Kindle Scribe</strong> — alle werden unterstützt!",
+                how_h: "So spielen Sie",
+                hownew_s: "Für den neuen Kindle (Touchscreen):",
+                hownew1: "Öffnen Sie den Browser auf Ihrem Kindle",
+                hownew2: "Rufen Sie diese Website auf",
+                hownew3: "Wählen Sie „Neuer Kindle“",
+                hownew4: "Spiel auswählen und genießen!",
+                howold_s: "Für den alten Kindle (mit Tasten):",
+                howold1: "Öffnen Sie den Browser (Menü → Experimenteller Browser)",
+                howold2: "Rufen Sie diese Website auf",
+                howold3: "Wählen Sie „Alter Kindle“",
+                howold4: "Navigieren Sie mit dem 5-Wege-Controller",
+                howold5: "Drücken Sie zum Auswählen die mittlere Taste",
+                feat_h: "Funktionen",
+                feat1: "✅ 25+ Spiele in verschiedenen Genres",
+                feat2: "✅ 4 Sprachen: Englisch, Ukrainisch, Deutsch, Polnisch (Menüs, alle Spiele für den neuen Kindle und alle sechs Textabenteuer)",
+                feat3: "✅ Optimiert für E-Ink-Displays",
+                feat4: "✅ Keine Installation nötig",
+                feat5: "✅ Funktioniert offline nach dem ersten Laden",
+                feat6: "✅ Kostenlos und Open Source",
+                list_h: "Spielliste",
+                lst_new_h3: "Für den neuen Kindle:",
+                lstnew1: "Sudoku, Schach, Dame, Reversi, Vier gewinnt, Schiffe versenken, Tic-Tac-Toe",
+                lstnew2: "Minesweeper, 15-Puzzle, 2048, Tetris, Snake, Memory, Lights Out, Simon",
+                lstnew3: "Galgenmännchen, Wortraten, Quiz, Reaktionstest",
+                lstnew4: "Textabenteuer: Das Geheimnis des Leuchtturms, Raumstation Orion, Schloss der Schatten, Detektivfall Nr. 47, Schiffbruch, Zug Nr. 7 „Comet“",
+                lst_old_h3: "Für den alten Kindle:",
+                lstold1: "Textabenteuer (alle 6 Geschichten, je 12–32 Szenen)",
+                lstold2: "Hauptstädte-Quiz",
+                lstold3: "Labyrinth-Abenteuer",
+                lstold4: "Rätselbuch (10 Rätsel mit JavaScript, 5 als einzelne Seiten ohne es)",
+                bug_h: "Einen Fehler gefunden?",
+                bug_p: "Sie haben einen Fehler gefunden oder Wünsche für neue Spiele? Schreiben Sie uns: <a href=\"mailto:workingnothing12.github@gmail.com\">workingnothing12.github@gmail.com</a>",
+                lic_h: "Lizenz",
+                lic_p: "Dieses Projekt ist Open Source und auf GitHub verfügbar: <a href=\"https://github.com/nothing12-glitch/games-for-kindle\">github.com/nothing12-glitch/games-for-kindle</a>",
+                made_p: "Gemacht mit ❤️ für Kindle-Fans",
+                back: "← Zur Startseite"
+            },
+            pl: {
+                h1: "O Grach Kindle",
+                intro: "Ten projekt powstał dla miłośników Kindle, którzy chcą grać na swoich urządzeniach E-Ink w przerwach od czytania.",
+                what_h: "Co to jest?",
+                what_p: "Kindle Games to kolekcja gier przeglądarkowych zoptymalizowanych dla urządzeń Amazon Kindle. Wszystkie gry działają bezpośrednio w eksperymentalnej przeglądarce Kindle — bez instalacji!",
+                dev_h: "Obsługiwane urządzenia",
+                dev_li1: "<strong>Stary Kindle</strong> (z fizycznymi przyciskami): przygodówki tekstowe, quizy i łamigłówki działające bez JavaScript",
+                dev_li2: "<strong>Nowy Kindle</strong> (dotykowy): wszystkie gry, w tym Sudoku, Szachy, Warcaby, Reversi, 2048, Wąż i Tetris",
+                dev_li3: "<strong>Kindle Paperwhite</strong>, <strong>Kindle Oasis</strong>, <strong>Kindle Scribe</strong> — wszystkie obsługiwane!",
+                how_h: "Jak grać",
+                hownew_s: "Dla nowego Kindle (dotykowy):",
+                hownew1: "Otwórz przeglądarkę na swoim Kindle",
+                hownew2: "Wejdź na tę stronę",
+                hownew3: "Wybierz „Nowy Kindle”",
+                hownew4: "Wybierz grę i baw się dobrze!",
+                howold_s: "Dla starego Kindle (z przyciskami):",
+                howold1: "Otwórz przeglądarkę (Menu → Experimental Browser)",
+                howold2: "Wejdź na tę stronę",
+                howold3: "Wybierz „Stary Kindle”",
+                howold4: "Nawiguj za pomocą kontrolera 5-kierunkowego",
+                howold5: "Naciśnij środkowy przycisk, aby wybrać",
+                feat_h: "Funkcje",
+                feat1: "✅ 25+ gier w różnych gatunkach",
+                feat2: "✅ 4 języki: angielski, ukraiński, niemiecki, polski (menu, wszystkie gry dla nowego Kindle i wszystkie sześć przygodówek tekstowych)",
+                feat3: "✅ Zoptymalizowano dla wyświetlaczy E-Ink",
+                feat4: "✅ Brak wymaganej instalacji",
+                feat5: "✅ Działa offline po pierwszym załadowaniu",
+                feat6: "✅ Darmowe i open source",
+                list_h: "Lista gier",
+                lst_new_h3: "Dla nowego Kindle:",
+                lstnew1: "Sudoku, Szachy, Warcaby, Reversi, Czwórka w rzędzie, Statki, Kółko i krzyżyk",
+                lstnew2: "Saper, 15-puzzle, 2048, Tetris, Wąż, Memory, Lights Out, Simon",
+                lstnew3: "Wisielec, Zgadnij słowo, Quiz, Test reakcji",
+                lstnew4: "Przygodówki tekstowe: Tajemnica latarni morskiej, Stacja kosmiczna Orion, Zamek Cieni, Sprawa nr 47, Rozbitek, Pociąg nr 7 „Comet”",
+                lst_old_h3: "Dla starego Kindle:",
+                lstold1: "Przygodówki tekstowe (wszystkie 6 historii, po 12–32 sceny)",
+                lstold2: "Quiz: stolice świata",
+                lstold3: "Przygoda w labiryncie",
+                lstold4: "Księga zagadek (10 zagadek z JavaScript, 5 jako osobne strony bez niego)",
+                bug_h: "Znalazłeś błąd?",
+                bug_p: "Jeśli znalazłeś błąd lub masz propozycje nowych gier, napisz do nas: <a href=\"mailto:workingnothing12.github@gmail.com\">workingnothing12.github@gmail.com</a>",
+                lic_h: "Licencja",
+                lic_p: "Ten projekt jest open source i dostępny na GitHubie: <a href=\"https://github.com/nothing12-glitch/games-for-kindle\">github.com/nothing12-glitch/games-for-kindle</a>",
+                made_p: "Stworzone z ❤️ dla miłośników Kindle",
+                back: "← Na stronę główną"
+            }
+        };
+
+        var ABT = {
+            en: "About - Kindle Games",
+            uk: "Про проєкт - Ігри для Kindle",
+            de: "Über - Kindle Spiele",
+            pl: "O projekcie - Gry Kindle"
+        };
+
+        function applyLang() {
+            var t = AB[lang];
+            for (var n = 0; n < nodes.length; n++) {
+                var k = nodes[n].getAttribute('data-t');
+                nodes[n].innerHTML = (t && t[k]) ? t[k] : ORIG[k];
+            }
+            document.title = ABT[lang] || ABT.en;
+            document.documentElement.lang = lang;
+            var optId = { en: 'lang-en', uk: 'lang-uk', de: 'lang-de', pl: 'lang-pl' };
+            for (var code in optId) {
+                var opt = document.getElementById(optId[code]);
+                if (opt) opt.selected = (code === lang);
+            }
+        }
+
+        function changeLanguage(next) {
+            lang = next;
+            try { localStorage.setItem('language', lang); } catch (e) {}
+            applyLang();
+        }
+
+        applyLang();
+</script>
 </body>
 </html>
