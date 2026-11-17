@@ -31,6 +31,7 @@ let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
 let g,moves,done;
 function init(){g=Array(25).fill(0);moves=0;done=false;
 for(let i=0;i<8;i++){press(Math.floor(Math.random()*25),true);}
+if(g.every(function(x){return !x;}))press(Math.floor(Math.random()*25),true);
 render();}
 function press(i,silent){const r=Math.floor(i/5),c=i%5;
 [[0,0],[0,1],[0,-1],[1,0],[-1,0]].forEach(function(d){const nr=r+d[0],nc=c+d[1];
