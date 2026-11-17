@@ -17,6 +17,10 @@
         #flag-btn { padding: 12px 24px; font-size: 18px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; margin: 10px; }
         #flag-btn.on { background: #000; color: #fff; }
         #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; border-radius: 5px; }
+        @media (max-width:373px){
+        #board{grid-template-columns:repeat(8,34px);gap:2px}
+        .cell{width:34px;height:34px;font-size:17px}
+        }
     </style>
 </head>
 <body>

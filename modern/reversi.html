@@ -11,16 +11,17 @@ h1{font-size:26px;margin:5px 0 10px}
 #info{font-size:18px;font-weight:bold;margin:10px auto;min-height:24px;max-width:440px}
 .legend{font-size:14px;color:#555;margin-bottom:8px}
 #sc{font-size:18px;font-weight:bold;margin-bottom:10px}
-.board{display:grid;grid-template-columns:repeat(8,38px);gap:2px;justify-content:center;margin:0 auto}
-.cell{width:38px;height:38px;border:1px solid #000;background:#fff;color:#000;font-size:26px;line-height:36px;text-align:center;box-sizing:border-box;font-family:Georgia,serif;-webkit-tap-highlight-color:transparent}
+.board{display:grid;grid-template-columns:repeat(8,40px);gap:2px;justify-content:center;margin:0 auto}
+.cell{width:40px;height:40px;border:1px solid #000;background:#fff;color:#000;font-size:26px;line-height:38px;text-align:center;box-sizing:border-box;font-family:Georgia,serif;-webkit-tap-highlight-color:transparent}
 .cell.black{background:#000;color:#fff}
 .cell.white{background:#fff;color:#000;font-weight:bold}
-.cell.can{background:#ddd;color:#333;cursor:pointer;font-size:22px;line-height:36px}
+.cell.can{background:#ddd;color:#333;cursor:pointer;font-size:22px;line-height:38px}
 .cell.can:active{background:#bbb}
 .controls{margin-top:22px}
 button.btn,a.btn{display:inline-block;padding:12px 25px;font-size:18px;border:2px solid #000;background:#fff;color:#000;border-radius:6px;cursor:pointer;text-decoration:none;font-weight:bold;margin:5px;font-family:Georgia,serif}
 button.btn:active,a.btn:active{background:#ddd}
-@media (max-width:360px){
+/* 8 cells at 40px plus gaps need 354 CSS px; below that the board has to shrink */
+@media (max-width:353px){
 .board{grid-template-columns:repeat(8,34px)}
 .cell{width:34px;height:34px;line-height:32px;font-size:23px}
 .cell.can{font-size:19px;line-height:32px}

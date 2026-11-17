@@ -23,6 +23,10 @@
         button:active { background: #000; color: #fff; }
         #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; border-radius: 5px; }
         #keys { font-size: 15px; max-width: 360px; margin: 14px auto; }
+        @media (max-width:397px){
+        #board { grid-template-columns: repeat(8, 38px); }
+        .cell { width: 38px; height: 38px; font-size: 26px; }
+        }
     </style>
 </head>
 <body>
