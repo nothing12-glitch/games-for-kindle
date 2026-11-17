@@ -406,7 +406,7 @@
         <div class="footer-block themed-box">
             <h3 id="project-title">Project Info:</h3>
             <p id="project-desc">This project was created for Kindle enthusiasts. Games optimized for E-Ink displays.</p>
-            <p id="project-contact">Found a bug or have suggestions? Email: <a href="mailto:workingnothing12.github@gmail.com">workingnothing12.github@gmail.com</a></p>
+            <p id="project-contact"><span id="project-contact-text">Found a bug or have suggestions? Email:</span> <a href="mailto:workingnothing12.github@gmail.com">workingnothing12.github@gmail.com</a></p>
         </div>
 
         <div class="footer-block themed-box footer-center">
@@ -654,6 +654,7 @@
             document.getElementById('tip').textContent = t.tip;
             document.getElementById('project-title').textContent = t.projectTitle;
             document.getElementById('project-desc').textContent = t.projectDesc;
+            document.getElementById('project-contact-text').textContent = t.projectContact;
             document.getElementById('made-by').textContent = t.madeBy;
             document.getElementById('riddle-title').textContent = t.riddleTitle;
             document.getElementById('quote-title').textContent = t.quoteTitle;
