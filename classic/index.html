@@ -59,7 +59,7 @@ h2{font-size:22px;margin-top:30px;margin-bottom:15px}
 <a href="../index.html" class="back-link" id="back-btn">Back to Home</a>
 
 <script>
-const T={
+var T={
 en:{title:"Classic Games",subtitle:"Optimized for Kindle with buttons",questsTitle:"Text Quests",otherTitle:"Other Games",back:"Back to Home",
 quest1:"Lighthouse Mystery",quest2:"Space Station",quest3:"Castle of Shadows",quest4:"Detective Case #47",quest5:"Shipwreck Survival",quest6:"Train No. 7 \"Comet\"",
 game1:"World Capitals - quiz",game2:"Maze - adventure",game3:"Book of Riddles (10)",game4:"Stats & Achievements",
@@ -76,9 +76,9 @@ pl:{title:"Gry klasyczne",subtitle:"Zoptymalizowane dla Kindle z przyciskami",qu
 quest1:"Tajemnica latarni",quest2:"Stacja kosmiczna",quest3:"Zamek Cieni",quest4:"Sprawa #47",quest5:"Rozbitek",quest6:"Pociąg nr 7 \"Kometa\"",
 game1:"Stolice świata",game2:"Labirynt",game3:"Księga zagadek (10)",game4:"Statystyki i osiągnięcia",
 nojsTitle:"Bez JavaScript",nojs1:"Zamek Cieni - wersja z przyciskami",nojs2:"Sprawa #47 - wersja z przyciskami",nojs3:"Stacja kosmiczna - wersja z przyciskami",nojs4:"Księga zagadek - wersja z przyciskami",nojs5:"Tajemnica latarni - wersja z przyciskami"}};
-const IDS={questsTitle:"quests-title",otherTitle:"other-title",nojsTitle:"nojs-title",back:"back-btn"};
-function changeLanguage(lang){if(!T[lang])lang='en';const t=T[lang];
-Object.keys(t).forEach(function(k){const el=document.getElementById(IDS[k]||k);if(el)el.textContent=t[k];});
+var IDS={questsTitle:"quests-title",otherTitle:"other-title",nojsTitle:"nojs-title",back:"back-btn"};
+function changeLanguage(lang){if(!T[lang])lang='en';var t=T[lang];
+Object.keys(t).forEach(function(k){var el=document.getElementById(IDS[k]||k);if(el)el.textContent=t[k];});
 document.getElementById('lang-en').selected=(lang==='en');
 document.getElementById('lang-uk').selected=(lang==='uk');
 document.getElementById('lang-de').selected=(lang==='de');

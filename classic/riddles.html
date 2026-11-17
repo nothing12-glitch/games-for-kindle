@@ -96,8 +96,9 @@
 
     <script>
         function toggleAnswer(num) {
-            const answer = document.getElementById('answer' + num);
-            answer.classList.toggle('show');
+            var el = document.getElementById('answer' + num);
+            if (!el) return;
+            el.className = el.className.indexOf('show') === -1 ? 'answer show' : 'answer';
         }
     </script>
 </body>

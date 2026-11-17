@@ -309,8 +309,10 @@
 
     <script>
         function showScene(num) {
-            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
-            document.getElementById('scene' + num).classList.add('active');
+            var scenes = document.querySelectorAll('.scene');
+            for (var i = 0; i < scenes.length; i++) scenes[i].className = 'scene';
+            var target = document.getElementById('scene' + num);
+            if (target) target.className = 'scene active';
             window.scrollTo(0, 0);
         }
     </script>

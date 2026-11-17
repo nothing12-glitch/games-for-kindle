@@ -434,7 +434,7 @@
 
     <script>
         // ===== ПОВНІ ПЕРЕКЛАДИ (4 мови) =====
-        const translations = {
+        var translations = {
             en: {
                 title: "Kindle Games",
                 subtitle: "Choose your device version:",
@@ -562,7 +562,7 @@
         };
 
         // ===== 8 ЦИТАТ =====
-        const quotes = [
+        var quotes = [
             { en: '"Java is to JavaScript what car is to Carpet." - Chris Heilmann', uk: '"Java відноситься до JavaScript як килим до автомобіля." - Chris Heilmann', de: '"Java ist zu JavaScript, was Teppich zu Auto ist." - Chris Heilmann', pl: '"Java ma się do JavaScript jak dywan do samochodu." - Chris Heilmann' },
             { en: '"The only way to do great work is to love what you do." - Steve Jobs', uk: '"Єдиний спосіб робити великі справи - любити те, що робиш." - Steve Jobs', de: '"Der einzige Weg, großartige Arbeit zu leisten, ist zu lieben, was man tut." - Steve Jobs', pl: '"Jedyny sposób na wykonanie wielkiej pracy to kochać to, co się robi." - Steve Jobs' },
             { en: '"Code is like humor. When you have to explain it, it\'s bad." - Cory House', uk: '"Код як гумор. Якщо треба пояснювати - він поганий." - Cory House', de: '"Code ist wie Humor. Wenn man ihn erklären muss, ist er schlecht." - Cory House', pl: '"Kod jest jak humor. Kiedy trzeba go wyjaśniać, jest zły." - Cory House' },
@@ -574,7 +574,7 @@
         ];
 
         // ===== 10 ЩОДЕННИХ ЗАГАДОК =====
-        const dailyRiddles = [
+        var dailyRiddles = [
             { en: "I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?", uk: "У мене є міста, але немає будинків. Гори, але немає дерев. Вода, але немає риби. Що я?", de: "Ich habe Städte, aber keine Häuser. Berge, aber keine Bäume. Wasser, aber keine Fische. Was bin ich?", pl: "Mam miasta, ale nie mam domów. Góry, ale nie mam drzew. Wodę, ale nie mam ryb. Czym jestem?", answer: { en: "A map", uk: "Карта", de: "Eine Landkarte", pl: "Mapa" }},
             { en: "The more you take, the more you leave behind. What am I?", uk: "Чим більше береш, тим більше залишаєш позаду. Що я?", de: "Je mehr du nimmst, desto mehr lässt du zurück. Was bin ich?", pl: "Im więcej bierzesz, tym więcej zostawiasz za sobą. Czym jestem?", answer: { en: "Footsteps", uk: "Сліди", de: "Fußspuren", pl: "Ślady stóp" }},
             { en: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?", uk: "Я говорю без рота і чую без вух. У мене немає тіла, але я оживаю з вітром. Що я?", de: "Ich spreche ohne Mund und höre ohne Ohren. Ich habe keinen Körper, aber ich werde mit Wind lebendig. Was bin ich?", pl: "Mówię bez ust i słyszę bez uszu. Nie mam ciała, ale ożywam z wiatrem. Czym jestem?", answer: { en: "An echo", uk: "Луна", de: "Ein Echo", pl: "Echo" }},
@@ -587,37 +587,62 @@
             { en: "I'm not alive, but I grow; I don't have lungs, but I need air; water kills me. What am I?", uk: "Я не живий, але росту; немає легень, але потрібне повітря; вода вбиває мене. Що я?", de: "Ich bin nicht lebendig, aber ich wachse; keine Lungen, aber brauche Luft; Wasser tötet mich. Was bin ich?", pl: "Nie jestem żywy, ale rosnę; nie mam płuc, ale potrzebuję powietrza; woda mnie zabija. Czym jestem?", answer: { en: "Fire", uk: "Вогонь", de: "Feuer", pl: "Ogień" }}
         ];
 
-        let currentLang = 'en';
-        let startTime = Date.now();
-        let uiReady = false;
+        var currentLang = 'en';
+        var startTime = Date.now();
+        var uiReady = false;
+
+        // Old Kindle WebKit has no reliable classList, so classes are handled as strings.
+        function trimSpace(s) { return s.replace(/^\s+/, '').replace(/\s+$/, ''); }
+        function classListOf(el) {
+            var s = trimSpace(el.className);
+            return s === '' ? [] : s.split(/\s+/);
+        }
+        function hasCls(el, name) {
+            if (!el) return false;
+            var list = classListOf(el);
+            for (var i = 0; i < list.length; i++) { if (list[i] === name) return true; }
+            return false;
+        }
+        function addCls(el, name) { if (el && !hasCls(el, name)) el.className = classListOf(el).concat([name]).join(' '); }
+        function delCls(el, name) {
+            if (!el) return;
+            var list = classListOf(el), keep = [];
+            for (var i = 0; i < list.length; i++) { if (list[i] !== name) keep.push(list[i]); }
+            el.className = keep.join(' ');
+        }
+        function togCls(el, name) { if (hasCls(el, name)) { delCls(el, name); } else { addCls(el, name); } }
 
         // ===== ТОСТ =====
         function showToast(message) {
             if (!uiReady) return;
-            const toast = document.getElementById('toast');
+            var toast = document.getElementById('toast');
             toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2000);
+            addCls(toast, 'show');
+            setTimeout(function () { delCls(toast, 'show'); }, 2000);
         }
 
         // ===== КОНФЕТІ =====
+        function dropConfetti(node) {
+            setTimeout(function () { if (node.parentNode) node.parentNode.removeChild(node); }, 3500);
+        }
+
         function showConfetti() {
-            const colors = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff'];
-            for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement('div');
+            var colors = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff'];
+            for (var i = 0; i < 50; i++) {
+                var confetti = document.createElement('div');
                 confetti.className = 'confetti';
                 confetti.style.left = Math.random() * 100 + 'vw';
                 confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.animationDelay = Math.random() * 0.5 + 's';
                 document.body.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 3500);
+                dropConfetti(confetti);
             }
         }
 
         // ===== ЗМІНА МОВИ =====
         function changeLanguage(lang) {
             currentLang = lang;
-            const t = translations[lang];
+            var t = translations[lang];
             
             document.getElementById('title').textContent = t.title;
             document.getElementById('subtitle').textContent = t.subtitle;
@@ -641,7 +666,7 @@
             loadDailyRiddle();
             updateVisitCounter();
             
-            const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
+            var dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
             document.getElementById('quote-text').textContent = quotes[dayIndex][lang];
             
             document.getElementById('lang-en').selected = (lang === 'en');
@@ -655,13 +680,15 @@
 
         // ===== ЗМІНА ТЕМИ =====
         function changeTheme(theme) {
-            document.body.classList.remove('dark-theme', 'sepia-theme', 'green-theme');
+            delCls(document.body, 'dark-theme');
+            delCls(document.body, 'sepia-theme');
+            delCls(document.body, 'green-theme');
             if (theme !== 'light') {
-                document.body.classList.add(theme + '-theme');
+                addCls(document.body, theme + '-theme');
             }
             localStorage.setItem('theme', theme);
             
-            const t = translations[currentLang].themes;
+            var t = translations[currentLang].themes;
             document.getElementById('theme-light').textContent = t.light;
             document.getElementById('theme-dark').textContent = t.dark;
             document.getElementById('theme-sepia').textContent = t.sepia;
@@ -672,69 +699,78 @@
 
         // ===== РЕЖИМ ВЕЛИКИЙ ШРИФТ =====
         function toggleLargeFont() {
-            const isLarge = document.body.classList.toggle('large-font');
-            document.getElementById('large-font-btn').classList.toggle('active', isLarge);
+            var body = document.body;
+            var btn = document.getElementById('large-font-btn');
+            var isLarge = !hasCls(body, 'large-font');
+            if (isLarge) { addCls(body, 'large-font'); addCls(btn, 'active'); }
+            else { delCls(body, 'large-font'); delCls(btn, 'active'); }
             localStorage.setItem('largeFont', isLarge ? 'on' : 'off');
             showToast(isLarge ? translations[currentLang].toastLargeFontOn : translations[currentLang].toastLargeFontOff);
         }
 
         // ===== ЩОДЕННА ЗАГАДКА =====
         function toggleRiddle() {
-            const answer = document.getElementById('riddle-answer');
-            answer.classList.toggle('show');
+            togCls(document.getElementById('riddle-answer'), 'show');
             updateRiddleButton();
         }
 
         function updateRiddleButton() {
-            const isShown = document.getElementById('riddle-answer').classList.contains('show');
+            var isShown = hasCls(document.getElementById('riddle-answer'), 'show');
             document.getElementById('riddle-btn').textContent = isShown ? translations[currentLang].riddleBtnHide : translations[currentLang].riddleBtnShow;
         }
 
         function loadDailyRiddle() {
-            const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % dailyRiddles.length;
-            const riddle = dailyRiddles[dayIndex];
+            var dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % dailyRiddles.length;
+            var riddle = dailyRiddles[dayIndex];
             document.getElementById('riddle-text').textContent = riddle[currentLang] || riddle.en;
             document.getElementById('riddle-answer').textContent = (riddle.answer[currentLang] || riddle.answer.en);
         }
 
         // ===== ЛІЧИЛЬНИК ВІДВІДУВАНЬ =====
-        let visitCounted = false;
+        var visitCounted = false;
         function updateVisitCounter() {
             // changeLanguage calls this too, so only the first call per page load counts a visit.
             if (!visitCounted) {
                 visitCounted = true;
                 localStorage.setItem('visits', parseInt(localStorage.getItem('visits') || '0', 10) + 1);
             }
-            const visits = parseInt(localStorage.getItem('visits') || '0', 10);
-            const t = translations[currentLang];
-            const timesWord = visits === 1 ? t.visitCounterTimes : t.visitCounterTimesPlural;
+            var visits = parseInt(localStorage.getItem('visits') || '0', 10);
+            var t = translations[currentLang];
+            var timesWord = visits === 1 ? t.visitCounterTimes : t.visitCounterTimesPlural;
             document.getElementById('visit-counter').textContent = t.visitCounter + ' ' + visits + ' ' + timesWord;
         }
 
         // ===== ЛІЧИЛЬНИК ЧАСУ =====
         function updateTimeOnSite() {
-            const seconds = Math.floor((Date.now() - startTime) / 1000);
-            const minutes = Math.floor(seconds / 60);
-            const secs = seconds % 60;
+            var seconds = Math.floor((Date.now() - startTime) / 1000);
+            var minutes = Math.floor(seconds / 60);
+            var secs = seconds % 60;
             document.getElementById('time-on-site').textContent = translations[currentLang].timeOnSite + ' ' + (minutes > 0 ? minutes + 'm ' : '') + secs + 's';
         }
         setInterval(updateTimeOnSite, 1000);
 
         // ===== КЛАВІАТУРНІ ШОРТКАТИ =====
+        function keyName(e) {
+            if (e.key) return String(e.key).toLowerCase();
+            var legacy = { 84: 't', 76: 'l', 82: 'r' };
+            return legacy[e.keyCode] || '';
+        }
+
         document.addEventListener('keydown', function(e) {
-            if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+            var tag = e.target && e.target.tagName;
+            if (tag === 'SELECT' || tag === 'INPUT') return;
             
-            const key = e.key.toLowerCase();
+            var key = keyName(e);
             if (key === 't') {
-                const themes = ['light', 'dark', 'sepia', 'green'];
-                const current = localStorage.getItem('theme') || 'light';
-                const next = themes[(themes.indexOf(current) + 1) % themes.length];
-                changeTheme(next);
-                document.getElementById('theme-select').value = next;
+                var themes = ['light', 'dark', 'sepia', 'green'];
+                var current = localStorage.getItem('theme') || 'light';
+                var nextTheme = themes[(themes.indexOf(current) + 1) % themes.length];
+                changeTheme(nextTheme);
+                document.getElementById('theme-select').value = nextTheme;
             } else if (key === 'l') {
-                const langs = ['en', 'uk', 'de', 'pl'];
-                const next = langs[(langs.indexOf(currentLang) + 1) % langs.length];
-                changeLanguage(next);
+                var langs = ['en', 'uk', 'de', 'pl'];
+                var nextLang = langs[(langs.indexOf(currentLang) + 1) % langs.length];
+                changeLanguage(nextLang);
             } else if (key === 'r') {
                 toggleRiddle();
             }
@@ -742,42 +778,42 @@
 
         // ===== ДОПОМІЖНІ =====
         function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo(0, 0);
         }
 
         function showEasterEgg() {
-            document.getElementById('overlay').classList.add('show');
-            document.getElementById('easter-egg').classList.add('show');
+            addCls(document.getElementById('overlay'), 'show');
+            addCls(document.getElementById('easter-egg'), 'show');
             localStorage.setItem('egg_found', '1');
             showConfetti();
         }
 
         function hideEasterEgg() {
-            document.getElementById('overlay').classList.remove('show');
-            document.getElementById('easter-egg').classList.remove('show');
+            delCls(document.getElementById('overlay'), 'show');
+            delCls(document.getElementById('easter-egg'), 'show');
         }
 
         // ===== SCROLL: прогрес бар + кнопка вгору =====
         window.onscroll = function() {
-            const btn = document.getElementById('scroll-top');
+            var btn = document.getElementById('scroll-top');
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
                 btn.style.display = 'flex';
             } else {
                 btn.style.display = 'none';
             }
             
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = height > 0 ? (winScroll / height) * 100 : 0;
             document.getElementById('progress-bar').style.width = scrolled + '%';
         };
 
         // ===== АВТО ТЕМНА ТЕМА ВНОЧІ =====
         function autoThemeByTime() {
-            const hour = new Date().getHours();
-            const savedTheme = localStorage.getItem('theme');
+            var hour = new Date().getHours();
+            var savedTheme = localStorage.getItem('theme');
             if (!savedTheme && (hour >= 20 || hour < 6)) {
-                document.body.classList.add('dark-theme');
+                addCls(document.body, 'dark-theme');
                 document.getElementById('theme-select').value = 'dark';
                 localStorage.setItem('theme', 'dark');
             }
@@ -785,23 +821,23 @@
 
         // ===== ІНІЦІАЛІЗАЦІЯ =====
         window.onload = function() {
-            const savedLang = localStorage.getItem('language') || 'en';
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            const savedLargeFont = localStorage.getItem('largeFont') || 'off';
+            var savedLang = localStorage.getItem('language') || 'en';
+            var savedTheme = localStorage.getItem('theme') || 'light';
+            var savedLargeFont = localStorage.getItem('largeFont') || 'off';
             
             changeLanguage(savedLang);
             changeTheme(savedTheme);
             document.getElementById('theme-select').value = savedTheme;
             
             if (savedLargeFont === 'on') {
-                document.body.classList.add('large-font');
-                document.getElementById('large-font-btn').classList.add('active');
+                addCls(document.body, 'large-font');
+                addCls(document.getElementById('large-font-btn'), 'active');
             }
             
             autoThemeByTime();
             updateTimeOnSite();
             
-            const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
+            var dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % quotes.length;
             document.getElementById('quote-text').textContent = quotes[dayIndex][savedLang];
             
             uiReady = true;
