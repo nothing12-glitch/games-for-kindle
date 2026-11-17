@@ -16,11 +16,16 @@ a.btn{display:inline-block;margin-top:25px;padding:15px 30px;background:#fff;bor
 <p id="msg">This page got lost somewhere between the shelves.</p>
 <a href="index.html" class="btn" id="bb">Back to Home</a>
 <script>
-const M={en:"This page got lost somewhere between the shelves.",uk:"Ця сторінка загубилась десь між полицями.",de:"Diese Seite hat sich zwischen den Regalen verirrt.",pl:"Ta strona zgubiła się gdzieś między półkami."};
-const B={en:"Back to Home",uk:"На головну",de:"Zurück",pl:"Powrót"};
-let lang=localStorage.getItem('language')||'en';if(!M[lang])lang='en';
+var M={en:"This page got lost somewhere between the shelves.",uk:"Ця сторінка загубилась десь між полицями.",de:"Diese Seite hat sich zwischen den Regalen verirrt.",pl:"Ta strona zgubiła się gdzieś między półkami."};
+var B={en:"Back to Home",uk:"На головну",de:"Zurück zur Startseite",pl:"Powrót na stronę główną"};
+var T={en:"404 - Kindle Games",uk:"404 - Ігри для Kindle",de:"404 - Kindle Spiele",pl:"404 - Gry Kindle"};
+var lang='en';
+try{lang=localStorage.getItem('language')||'en';}catch(e){}
+if(!M[lang])lang='en';
 document.getElementById('msg').textContent=M[lang];
 document.getElementById('bb').textContent=B[lang];
+document.title=T[lang];
+document.documentElement.lang=lang;
 </script>
 </body>
 </html>
