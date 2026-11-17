@@ -28,23 +28,27 @@ uk:{t:"Саймон",d:"Дивись послідовність, потім по
 de:{t:"Simon",d:"Beobachte die Sequenz, dann wiederhole sie.",lv:"Level",b:"Best",go:"Falsch! Spiel vorbei.",ready:"Aufpassen...",go2:"Du bist dran!",bs:"Start",bb:"Menü"},
 pl:{t:"Simon",d:"Obserwuj sekwencję, potem ją powtórz.",lv:"Poziom",b:"Rekord",go:"Źle! Koniec gry.",ready:"Patrz...",go2:"Twoja kolej!",bs:"Start",bb:"Menu"}};
 let lang=localStorage.getItem('language')||'en';if(!L[lang])lang='en';
-let seq=[],pos=0,accept=false;
+let seq=[],pos=0,accept=false,gameId=0,pending=null;
 const padsEl=document.getElementById('pads');
 for(let i=0;i<4;i++){(function(ii){const d=document.createElement('div');d.className='pad pad'+ii;d.onclick=function(){tap(ii);};padsEl.appendChild(d);})(i);}
 function info(s){document.getElementById('info').textContent=s;}
-function start(){seq=[];next();}
+function cancelPending(){if(pending!==null){clearTimeout(pending);pending=null;}}
+function later(fn,ms){const myGame=gameId;cancelPending();
+pending=setTimeout(function(){pending=null;if(myGame===gameId)fn();},ms);}
+function darkPads(){for(let i=0;i<4;i++)padsEl.children[i].classList.remove('lit');}
+function start(){gameId++;cancelPending();darkPads();seq=[];pos=0;accept=false;next();}
 function next(){seq.push(Math.floor(Math.random()*4));pos=0;accept=false;
 info(L[lang].ready+' '+L[lang].lv+' '+seq.length);play(0);}
 function play(i){if(i>=seq.length){accept=true;info(L[lang].go2);return;}
 const p=padsEl.children[seq[i]];p.classList.add('lit');
-setTimeout(function(){p.classList.remove('lit');setTimeout(function(){play(i+1);},150);},350);}
+later(function(){p.classList.remove('lit');later(function(){play(i+1);},150);},350);}
 function tap(i){if(!accept)return;
 const p=padsEl.children[i];p.classList.add('lit');setTimeout(function(){p.classList.remove('lit');},200);
 if(i===seq[pos]){pos++;
 if(pos===seq.length){accept=false;
 const best=+(localStorage.getItem('best_simon')||0);
 if(seq.length>best)localStorage.setItem('best_simon',''+seq.length);
-setTimeout(next,700);}}
+later(next,700);}}
 else{accept=false;info(L[lang].go+' '+L[lang].b+': '+(localStorage.getItem('best_simon')||'0'));}}
 document.getElementById('t').textContent=L[lang].t;
 document.getElementById('d').textContent=L[lang].d;

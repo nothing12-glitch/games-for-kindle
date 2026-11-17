@@ -47,9 +47,13 @@
         }
 
         const symbols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-        let cards, flipped, matched, moves, canFlip;
+        let cards, flipped, matched, moves, canFlip, revealTimer = null;
 
         function initGame() {
+            if (revealTimer !== null) {
+                clearTimeout(revealTimer);
+                revealTimer = null;
+            }
             const pairs = [...symbols, ...symbols];
             cards = pairs.sort(() => Math.random() - 0.5);
             flipped = [];
@@ -105,7 +109,8 @@
                         document.getElementById('info').textContent = L[lang].win.replace('{n}', moves) + ' ' + L[lang].best + ': ' + localStorage.getItem('best_memory');
                     }
                 } else {
-                    setTimeout(() => {
+                    revealTimer = setTimeout(() => {
+                        revealTimer = null;
                         flipped = [];
                         canFlip = true;
                         renderBoard();
