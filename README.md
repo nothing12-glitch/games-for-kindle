@@ -62,7 +62,7 @@ A collection of browser-based games optimized for Amazon Kindle devices.
 
 ---
 
-## 🇦 Українська
+## 🇺🇦 Українська
 
 ### Як грати
 1. Відкрийте браузер на Kindle (Menu → Experimental Browser)
