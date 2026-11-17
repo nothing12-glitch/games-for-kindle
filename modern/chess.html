@@ -60,6 +60,7 @@
         var board,squares,currentPlayer,selected,targets,over,ep,castle;
 
         function status(s){document.getElementById('status').textContent=s;}
+        function bump(k){localStorage.setItem(k,''+((+(localStorage.getItem(k)||0))+1));}
         function setTurn(){status(L[lang][currentPlayer]);}
         function clone(b){return b.map(function(r){return r.slice();});}
         function inside(r,c){return r>=0&&r<8&&c>=0&&c<8;}
@@ -271,8 +272,9 @@
             chk=inCheck(board,currentPlayer);
             if(moves.length===0){
                 over=true;
-                if(chk)status(currentPlayer==='white'?L[lang].blackWins:L[lang].whiteWins);
-                else status(L[lang].draw);
+                bump('stats_chess_games');
+                if(chk){bump(currentPlayer==='white'?'stats_chess_black':'stats_chess_white');status(currentPlayer==='white'?L[lang].blackWins:L[lang].whiteWins);}
+                else{bump('stats_chess_draws');status(L[lang].draw);}
             }else if(chk){
                 status(L[lang].check+' '+L[lang][currentPlayer]);
             }else{
