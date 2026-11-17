@@ -52,6 +52,7 @@ A collection of browser-based games optimized for Amazon Kindle devices.
   - Connect 4
   - Battleship
   - Reversi
+  - Checkers
 
 ### Supported Languages
 - English
@@ -108,6 +109,7 @@ A collection of browser-based games optimized for Amazon Kindle devices.
   - Чотири поспіль
   - Морський бій
   - Реверсі
+  - Шашки
 
 ### Підтримувані мови
 - English (Англійська)
@@ -164,6 +166,7 @@ A collection of browser-based games optimized for Amazon Kindle devices.
   - Vier gewinnt
   - Schiffe versenken
   - Reversi
+  - Dame
 
 ### Unterstützte Sprachen
 - English
@@ -220,6 +223,7 @@ A collection of browser-based games optimized for Amazon Kindle devices.
   - Czwórki
   - Statki
   - Reversi
+  - Warcaby
 
 ### Obsługiwane języki
 - English

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkers for Kindle</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #fff; color: #000; }
+        h1 { font-size: 28px; margin: 10px 0; }
+        p { font-size: 18px; }
+        #status { font-size: 20px; margin: 14px auto; min-height: 26px; max-width: 360px; }
+        #info { font-size: 18px; margin: 10px auto; min-height: 24px; max-width: 360px; }
+
+        #board { display: grid; grid-template-columns: repeat(8, 44px); gap: 0; max-width: 352px; margin: 14px auto; border: 3px solid #000; }
+        .cell { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: bold; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .cell.light { background: #fff; }
+        .cell.dark { background: #c8c8c8; }
+        .cell.sel { background: #ffff00; }
+        .cell.legal { background: #90ee90; }
+        .cell.cursor { outline: 3px solid #000; outline-offset: -3px; }
+
+        button { padding: 15px 30px; font-size: 20px; background: #fff; border: 2px solid #000; border-radius: 5px; cursor: pointer; margin: 8px; }
+        button:active { background: #000; color: #fff; }
+        #back-btn { display: inline-block; padding: 15px 30px; background: #ddd; border: 2px solid #000; text-decoration: none; color: #000; font-weight: bold; border-radius: 5px; }
+        #keys { font-size: 15px; max-width: 360px; margin: 14px auto; }
+    </style>
+</head>
+<body>
+    <h1 id="t">Checkers</h1>
+    <p id="d">Tap your piece, then a highlighted square. Captures are mandatory.</p>
+
+    <div id="status">Your turn</div>
+    <div id="board"></div>
+    <div id="info"></div>
+    <p id="keys">Kindle 5-way: arrows move the frame, center selects.</p>
+
+    <button id="new-game" onclick="initGame()">New Game</button>
+    <br>
+    <a href="index.html" id="back-btn">Menu</a>
+
+    <script>
+        var L = {
+            en: { t: "Checkers", d: "Tap your piece, then a highlighted square. Captures are mandatory.", your: "Your turn", ai: "Computer is thinking...", win: "You won!", lose: "Computer won!", men: "Your pieces", kings: "Your kings", cm: "Computer pieces", cap: "Capture required", wins: "Wins", bn: "New Game", bb: "Menu", keys: "Kindle 5-way: arrows move the frame, center selects." },
+            uk: { t: "Шашки", d: "Натисніть свою шашку, потім підсвічену клітинку. Бити обов'язково.", your: "Ваш хід", ai: "Комп'ютер думає...", win: "Ви виграли!", lose: "Комп'ютер виграв!", men: "Ваші шашки", kings: "Ваші дамки", cm: "Шашки комп'ютера", cap: "Обов'язкове биття", wins: "Перемог", bn: "Нова гра", bb: "До меню", keys: "Kindle 5-way: стрілки рухають рамку, центр вибирає." },
+            de: { t: "Dame", d: "Tippe deine Figur, dann ein markiertes Feld. Schlagen ist Pflicht.", your: "Du bist dran", ai: "Computer denkt...", win: "Gewonnen!", lose: "Computer hat gewonnen!", men: "Deine Figuren", kings: "Deine Damen", cm: "Computerfiguren", cap: "Schlagen obligatorisch", wins: "Siege", bn: "Neues Spiel", bb: "Menü", keys: "Kindle 5-Wege: Pfeile bewegen den Rahmen, Mitte wählt." },
+            pl: { t: "Warcaby", d: "Kliknij swoją figurę, potem podświetlone pole. Bicie jest obowiązkowe.", your: "Twój ruch", ai: "Komputer myśli...", win: "Wygrałeś!", lose: "Komputer wygrał!", men: "Twoje figury", kings: "Twoje damki", cm: "Figury komputera", cap: "Bicie obowiązkowe", wins: "Zwycięstwa", bn: "Nowa gra", bb: "Menu", keys: "Kindle 5-drożny: strzałki ruszają ramkę, środek wybiera." }
+        };
+        var lang = localStorage.getItem('language') || 'en';
+        if (!L[lang]) lang = 'en';
+        document.documentElement.lang = lang;
+        document.getElementById('t').textContent = L[lang].t;
+        document.getElementById('d').textContent = L[lang].d;
+        document.getElementById('keys').textContent = L[lang].keys;
+        document.getElementById('new-game').textContent = L[lang].bn;
+        document.getElementById('back-btn').textContent = L[lang].bb;
+        document.title = L[lang].t;
+
+        var DEPTH = 3;
+        var board, turn, over, gameId = 0, aiTimer = null;
+        var cells = [], sel = -1, pool = [], trail = [], cursor = 60;
+
+        function inside(r, c) { return r >= 0 && r < 8 && c >= 0 && c < 8; }
+        function sideOf(v) { return v > 0 ? 'p' : (v < 0 ? 'c' : ''); }
+        function other(s) { return s === 'p' ? 'c' : 'p'; }
+
+        function dirsOf(v) {
+            if (v === 2 || v === -2) return [[-1, -1], [-1, 1], [1, -1], [1, 1]];
+            if (v > 0) return [[-1, -1], [-1, 1]];
+            return [[1, -1], [1, 1]];
+        }
+
+        function startPos() {
+            var b = [], i, r, c;
+            for (i = 0; i < 64; i++) b.push(0);
+            for (i = 0; i < 64; i++) {
+                r = Math.floor(i / 8); c = i % 8;
+                if ((r + c) % 2 !== 1) continue;
+                if (r < 3) b[i] = -1;
+                else if (r > 4) b[i] = 1;
+            }
+            return b;
+        }
+
+        // Maximal jump sequences for the piece standing on at. The board is
+        // mutated while walking and restored before returning.
+        function seqsFrom(b, at) {
+            var out = [], side = sideOf(b[at]);
+            function extend(cur, val, caps, path) {
+                var ds = dirsOf(val), pushed = 0, i, dr, dc, r0 = Math.floor(cur / 8), c0 = cur % 8;
+                var r1, c1, r2, c2, m, land, t, nv, crowned, deeper;
+                for (i = 0; i < ds.length; i++) {
+                    dr = ds[i][0]; dc = ds[i][1];
+                    r1 = r0 + dr; c1 = c0 + dc; r2 = r1 + dr; c2 = c1 + dc;
+                    if (!inside(r1, c1) || !inside(r2, c2)) continue;
+                    m = r1 * 8 + c1; land = r2 * 8 + c2; t = b[m];
+                    if (t === 0 || sideOf(t) === side) continue;
+                    if (b[land] !== 0) continue;
+                    nv = val; crowned = false;
+                    if (val === 1 && r2 === 0) { nv = 2; crowned = true; }
+                    else if (val === -1 && r2 === 7) { nv = -2; crowned = true; }
+                    b[cur] = 0; b[m] = 0; b[land] = nv;
+                    if (crowned) {
+                        out.push({ from: at, path: path.concat([land]), caps: caps.concat([m]) });
+                        pushed++;
+                    } else {
+                        deeper = extend(land, nv, caps.concat([m]), path.concat([land]));
+                        if (deeper === 0) {
+                            out.push({ from: at, path: path.concat([land]), caps: caps.concat([m]) });
+                            pushed++;
+                        } else pushed += deeper;
+                    }
+                    b[land] = 0; b[m] = t; b[cur] = val;
+                }
+                return pushed;
+            }
+            extend(at, b[at], [], []);
+            return out;
+        }
+
+        function movesFor(b, side) {
+            var caps = [], plain = [], i, k, ms, ds, r0, c0, r, c, land;
+            for (i = 0; i < 64; i++) {
+                if (b[i] === 0 || sideOf(b[i]) !== side) continue;
+                ms = seqsFrom(b, i);
+                for (k = 0; k < ms.length; k++) caps.push(ms[k]);
+            }
+            if (caps.length) return caps;
+            for (i = 0; i < 64; i++) {
+                if (b[i] === 0 || sideOf(b[i]) !== side) continue;
+                ds = dirsOf(b[i]); r0 = Math.floor(i / 8); c0 = i % 8;
+                for (k = 0; k < ds.length; k++) {
+                    r = r0 + ds[k][0]; c = c0 + ds[k][1];
+                    if (!inside(r, c)) continue;
+                    land = r * 8 + c;
+                    if (b[land] !== 0) continue;
+                    plain.push({ from: i, path: [land], caps: [] });
+                }
+            }
+            return plain;
+        }
+
+        function applyMove(b, mv) {
+            var nb = b.slice(0), p = nb[mv.from], land = mv.path[mv.path.length - 1], r, i;
+            nb[mv.from] = 0;
+            for (i = 0; i < mv.caps.length; i++) nb[mv.caps[i]] = 0;
+            r = Math.floor(land / 8);
+            if (p === 1 && r === 0) p = 2;
+            else if (p === -1 && r === 7) p = -2;
+            nb[land] = p;
+            return nb;
+        }
+
+        function count(b, side) {
+            var n = 0, i;
+            for (i = 0; i < 64; i++) if (b[i] !== 0 && sideOf(b[i]) === side) n++;
+            return n;
+        }
+
+        function kings(b, side) {
+            var n = 0, i, want = side === 'p' ? 2 : -2;
+            for (i = 0; i < 64; i++) if (b[i] === want) n++;
+            return n;
+        }
+
+        function evaluate(b) {
+            var s = 0, i, v, val, r, c, adv;
+            for (i = 0; i < 64; i++) {
+                v = b[i];
+                if (v === 0) continue;
+                r = Math.floor(i / 8); c = i % 8;
+                val = (v === 2 || v === -2) ? 260 : 100;
+                if (v === 1 || v === -1) {
+                    adv = v > 0 ? (7 - r) : r;
+                    val += adv * 4;
+                    if (r === 7 || r === 0) val += 8;
+                }
+                if (c === 0 || c === 7) val += 4;
+                if (c === 3 || c === 4) val += 2;
+                s += v > 0 ? -val : val;
+            }
+            return s;
+        }
+
+        function search(b, depth, alpha, beta, side) {
+            var ms = movesFor(b, side), best = -200001, i, sc;
+            if (!ms.length) return -100000 + depth;
+            if (depth === 0) return side === 'c' ? evaluate(b) : -evaluate(b);
+            for (i = 0; i < ms.length; i++) {
+                sc = -search(applyMove(b, ms[i]), depth - 1, -beta, -alpha, other(side));
+                if (sc > best) best = sc;
+                if (best > alpha) alpha = best;
+                if (alpha >= beta) break;
+            }
+            return best;
+        }
+
+        function bestMove() {
+            var ms = movesFor(board, 'c'), best = -200001, pick = ms.length ? ms[0] : null, i, sc;
+            for (i = 0; i < ms.length; i++) {
+                sc = -search(applyMove(board, ms[i]), DEPTH - 1, -200001, 200001, 'p');
+                if (sc > best) { best = sc; pick = ms[i]; }
+            }
+            return pick;
+        }
+
+        function clearSel() { sel = -1; pool = []; trail = []; }
+
+        function nextTargets() {
+            var set = {}, list = [], i, sq;
+            for (i = 0; i < pool.length; i++) {
+                sq = pool[i].path[trail.length];
+                if (sq !== undefined && !set[sq]) { set[sq] = true; list.push(sq); }
+            }
+            return list;
+        }
+
+        function setMsg(s) { document.getElementById('status').textContent = s; }
+
+        function showInfo() {
+            document.getElementById('info').textContent =
+                L[lang].men + ': ' + count(board, 'p') + ' · ' + L[lang].kings + ': ' + kings(board, 'p') +
+                ' · ' + L[lang].cm + ': ' + count(board, 'c');
+        }
+
+        function buildCells() {
+            var el = document.getElementById('board'), i, d;
+            el.innerHTML = ''; cells = [];
+            for (i = 0; i < 64; i++) {
+                d = document.createElement('div');
+                d.className = 'cell';
+                el.appendChild(d);
+                cells.push(d);
+            }
+            el.onclick = function (e) {
+                var t = e.target;
+                if (!t || (t.className || '').indexOf('cell') < 0) return;
+                var idx = cells.indexOf(t);
+                if (idx >= 0) { cursor = idx; clickSquare(idx); }
+            };
+        }
+
+        function render() {
+            var targets = nextTargets(), i, r, c, cls, v, txt;
+            for (i = 0; i < 64; i++) {
+                r = Math.floor(i / 8); c = i % 8;
+                cls = 'cell ' + ((r + c) % 2 === 1 ? 'dark' : 'light');
+                if (i === sel) cls += ' sel';
+                if (targets.indexOf(i) >= 0) cls += ' legal';
+                if (i === cursor) cls += ' cursor';
+                v = board[i];
+                txt = v === 1 ? '●' : v === 2 ? '★' : v === -1 ? '○' : v === -2 ? '☆' : '';
+                cells[i].className = cls;
+                cells[i].textContent = txt;
+            }
+            showInfo();
+        }
+
+        function clickSquare(i) {
+            if (over || turn !== 'p') return;
+            var targets = nextTargets(), keep = [], k, unfinished;
+            if (sel >= 0 && targets.indexOf(i) >= 0) {
+                for (k = 0; k < pool.length; k++) if (pool[k].path[trail.length] === i) keep.push(pool[k]);
+                pool = keep;
+                trail.push(i);
+                unfinished = false;
+                for (k = 0; k < pool.length; k++) if (pool[k].path.length > trail.length) unfinished = true;
+                if (unfinished) { sel = i; cursor = i; render(); return; }
+                doMove('p', pool[0]);
+                return;
+            }
+            if (board[i] !== 0 && sideOf(board[i]) === 'p') { selectPiece(i); return; }
+            clearSel();
+            render();
+        }
+
+        function selectPiece(i) {
+            var all = movesFor(board, 'p'), mine = [], k;
+            clearSel();
+            for (k = 0; k < all.length; k++) if (all[k].from === i) mine.push(all[k]);
+            if (!mine.length) { render(); return; }
+            sel = i; pool = mine;
+            if (all[0].caps.length) setMsg(L[lang].cap); else setMsg(L[lang].your);
+            render();
+        }
+
+        function doMove(side, mv) {
+            board = applyMove(board, mv);
+            clearSel();
+            turn = other(side);
+            render();
+            if (!movesFor(board, turn).length) { finish(side); return; }
+            if (turn === 'c') { setMsg(L[lang].ai); scheduleAi(); } else setMsg(L[lang].your);
+        }
+
+        function scheduleAi() {
+            var myGame = gameId;
+            if (aiTimer) clearTimeout(aiTimer);
+            aiTimer = setTimeout(function () { if (myGame === gameId) runAi(); }, 250);
+        }
+
+        function runAi() {
+            aiTimer = null;
+            if (over || turn !== 'c') return;
+            var mv = bestMove();
+            if (!mv) { finish('p'); return; }
+            doMove('c', mv);
+        }
+
+        function bump(key) {
+            localStorage.setItem(key, '' + ((+(localStorage.getItem(key) || 0)) + 1));
+        }
+
+        function finish(winner) {
+            over = true;
+            bump('stats_ck_games');
+            if (winner === 'p') {
+                bump('stats_ck_wins');
+                setMsg(L[lang].win + ' · ' + L[lang].wins + ': ' + localStorage.getItem('stats_ck_wins'));
+            } else setMsg(L[lang].lose);
+            clearSel();
+            render();
+        }
+
+        function initGame() {
+            gameId++;
+            if (aiTimer) { clearTimeout(aiTimer); aiTimer = null; }
+            board = startPos();
+            turn = 'p'; over = false;
+            cursor = 60;
+            clearSel();
+            buildCells();
+            setMsg(L[lang].your);
+            render();
+        }
+
+        function pressKey(code) {
+            var r = Math.floor(cursor / 8), c = cursor % 8;
+            if (code === 37) c--; else if (code === 39) c++;
+            else if (code === 38) r--; else if (code === 40) r++;
+            else if (code === 13 || code === 66) { clickSquare(cursor); return true; }
+            else return false;
+            if (c < 0) c = 0;
+            if (c > 7) c = 7;
+            if (r < 0) r = 0;
+            if (r > 7) r = 7;
+            cursor = r * 8 + c;
+            render();
+            return true;
+        }
+
+        if (document.addEventListener) {
+            document.addEventListener('keydown', function (e) {
+                var code = e.keyCode !== undefined ? e.keyCode : (e.which !== undefined ? e.which : 0);
+                if (pressKey(code)) { if (e.preventDefault) e.preventDefault(); }
+            });
+        }
+
+        initGame();
+    </script>
+</body>
+</html>
